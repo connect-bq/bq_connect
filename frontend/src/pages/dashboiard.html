@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Buses Públicos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <style>
+    :root {
+      --naranja: #FF6B35;
+      --blanco: #FFFFFF;
+      --gris-claro: #D9D9D9;
+      --gris-medio: #999999;
+      --negro: #333333;
+    }
+    #map {
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+</head>
+<body class="h-screen flex flex-col bg-[var(--blanco)]">
+
+  <!-- Navbar -->
+  <header class="flex items-center justify-between px-6 py-4 bg-[var(--naranja)] shadow-md">
+    <div class="flex items-center space-x-3">
+      <img src="../imgs/logo-dashboard.png" alt="Logo Connect BQ" class="h-12 w-auto">
+      <h1 class="text-xl font-bold text-[var(--blanco)]">Connect BQ </h1>
+    </div>
+    <button class="bg-[var(--blanco)] text-[var(--naranja)] px-4 py-2 rounded-lg shadow hover:bg-[var(--gris-claro)] transition">
+      Cerrar sesión
+    </button>
+  </header>
+
+  <!-- Contenedor principal -->
+  <div class="flex flex-1">
+    
+    <!-- Sidebar -->
+    <aside class="w-72 bg-[var(--blanco)] border-r border-[var(--gris-claro)] p-4 overflow-y-auto">
+      <h2 class="text-lg font-semibold text-[var(--negro)] mb-4">Lista de Buses</h2>
+      <ul id="bus-list" class="space-y-3">
+        <li class="p-3 rounded-lg border border-[var(--gris-claro)] shadow-sm hover:bg-[var(--gris-claro)] cursor-pointer">
+          🚌 Bus 101 - Activo
+        </li>
+        <li class="p-3 rounded-lg border border-[var(--gris-claro)] shadow-sm hover:bg-[var(--gris-claro)] cursor-pointer">
+          🚌 Bus 205 - En ruta
+        </li>
+        <li class="p-3 rounded-lg border border-[var(--gris-claro)] shadow-sm hover:bg-[var(--gris-claro)] cursor-pointer">
+          🚌 Bus 310 - Fuera de servicio
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Mapa -->
+    <section class="flex-1">
+      <div id="map"></div>
+    </section>
+
+  </div>
+
+  <!-- Script para el mapa -->
+  <script>
+    // Crear mapa centrado en Barranquilla (ejemplo)
+    const map = L.map('map').setView([10.9639, -74.7964], 13);
+
+    // Tile de OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Buses de ejemplo con ubicación
+    const buses = [
+      { id: "Bus 101", lat: 10.978, lng: -74.781, estado: "Activo" },
+      { id: "Bus 205", lat: 10.970, lng: -74.805, estado: "En ruta" },
+      { id: "Bus 310", lat: 10.960, lng: -74.790, estado: "Fuera de servicio" }
+    ];
+
+    buses.forEach(bus => {
+      L.marker([bus.lat, bus.lng])
+        .addTo(map)
+        .bindPopup(`<b>${bus.id}</b><br>Estado: ${bus.estado}`);
+    });
+  </script>
+
+</body>
+</html>
