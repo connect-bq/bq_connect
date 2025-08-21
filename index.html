@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <title>Document</title>
+</head>
+<body>
+  <!-- Login Form Container -->
+<div class="flex items-center justify-center min-h-screen bg-grisClaro">
+  <div class="bg-blanco border border-grisClaro rounded-2xl shadow-lg w-full max-w-md">
+    
+    <!-- Header -->
+    <div class="p-6 space-y-6 pb-8">
+      <div class="flex justify-center">
+        <img src="./public/img/Logo.png" alt="Connect BQ Logo" class="w-40">
+      </div>
+      <div class="text-center space-y-2">
+        <h1 class="text-2xl font-semibold text-negro">Iniciar Sesión</h1>
+        <p class="text-sm text-grisMedio">Ingresa tus credenciales para acceder</p>
+      </div>
+    </div>
+
+    <!-- Form  for the login-->
+    <div class="px-6 pb-6">
+      <form class="space-y-6">
+        
+        <!-- Email -->
+        <div class="space-y-2">
+          <label for="email" class="block font-medium text-negro">Correo Electrónico</label>
+          <input
+            id="email"
+            type="email"
+            placeholder="@email.com"
+            class="w-full border border-grisClaro rounded-lg py-2 px-3 outline-none"
+            required
+          />
+        </div>
+
+        <!-- Password -->
+        <div class="space-y-2">
+          <label for="password" class="block font-medium text-negro">Contraseña</label>
+          <input
+            id="password"
+            type="password"
+            placeholder="••••••••"
+            class="w-full border border-grisClaro rounded-lg py-2 px-3 outline-none"
+            required
+          />
+        </div>
+
+        <!-- Remember Me & Forgot Password -->
+        <div class="flex items-center justify-between">
+          <label class="flex items-center space-x-2 cursor-pointer">
+            <input type="checkbox" class="rounded border-grisClaro text-naranja">
+            <span class="text-sm text-grisMedio">Recordarme</span>
+          </label>
+          <a href="#" class="text-sm text-naranja hover:text-orange-500 transition-colors">
+            ¿Olvidaste tu contraseña?
+          </a>
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="w-full bg-naranja text-blanco font-medium py-2.5 rounded-lg transition-colors hover:bg-[#e85c2f] active:bg-[#cc4f29]"
+        >
+          Iniciar Sesión
+        </button>
+      </form>
+
+      <!-- Register Link -->
+      <div class="mt-6 text-center">
+        <p class="text-sm text-grisMedio">
+          ¿No tienes una cuenta?
+          <a href="#" class="text-naranja font-medium hover:text-orange-500 transition-colors">
+            Regístrate aquí
+          </a>
+        </p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
