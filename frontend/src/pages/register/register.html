@@ -1,35 +1,40 @@
-
-
-
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro - Connect BQ</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    /* Paleta personalizada */
-    :root {
-      --naranja: #FF6B35;
-      --blanco: #FFFFFF;
-      --gris-claro: #D9D9D9;
-      --gris-medio: #999999;
-      --negro: #333333;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/styles.css">
+    <title>Registro - Connect BQ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 <body class="min-h-screen flex items-center justify-center bg-[var(--blanco)]">
-  
-  <main class="w-full max-w-md bg-[var(--blanco)] rounded-2xl shadow-lg p-8 border border-[var(--gris-claro)]">
-    
-        <div class="flex justify-center mb-4">
-        <img src="../imgs/logo-register.png" alt="Logo Connect BQ" class="h-[30%] w-auto">
+
+    <main class="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl p-4 sm:p-6 md:p-8 mx-auto bg-white rounded-lg shadow-md">
+        <button class="bg-white text-center w-48 rounded-2xl h-14 relative text-black text-xl font-semibold group"
+            type="button">
+            <div
+                class="bg-[var(--naranja)] rounded-xl h-12 w-1/4 flex items-center justify-center absolute left-1 top-[4px] group-hover:w-[184px] z-10 duration-500">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" height="25px" width="25px">
+                    <path d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z" fill="#000000"></path>
+                    <path
+                        d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"
+                        fill="#000000"></path>
+                </svg>
+            </div>
+            <p class="translate-x-2">Go Back</p>
+        </button>
+
+        <div class="flex justify-center mb-4 ">
+            <img src="../../imgs/logo-register.png" alt="Logo Connect BQ" class="h-40 w-40">
         </div>
 
 
-        <h1 class="text-2xl font-bold text-center text-[var(--negro)] mb-6">Register</h1>
-        
+        <h1 class="text-2xl font-bold text-center text-[var(--negro)] mb-6">
+            Register    
+        </h1>
+
 
         <form class="space-y-4">
             <input type="text" id="ident_number" placeholder="Enter your ID"
@@ -52,32 +57,16 @@
 
             <button type="submit" id="bt-register"
                 class="w-full bg-[var(--naranja)] text-[var(--blanco)] py-3 rounded-lg shadow-md hover:bg-[#e65a29] transition">
-                save
+                Sing In
             </button>
         </form>
-  </main>
-
+    </main>
+    <!-- <script type="module" src="./register.js></script> -->
 </body>
+
 </html>
 
 
 
 
 
-
-
-
-
-
-
-    <!-- <main>
-        <h1>Register</h1>
-        <input  type="id" id="ident_number" class="id_number" placeholder="enter your ID">
-        <input type="user" id="user_full" class="user_full" placeholder="enter your user name">
-        <input type="email" id="email" class="email" placeholder="enter your email">
-        <input type="text" id="phone" class="phone" placeholder="enter your phone">
-        <input type="text" name="age" id="age" placeholder="enter your age">
-        <input type="password" id="password" class="password" placeholder="enter your password">
-        <button type="submit" id="bt-register" class="bt-register">save</button>
-         
-    </main> -->
