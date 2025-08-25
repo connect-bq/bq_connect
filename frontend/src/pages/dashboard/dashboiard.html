@@ -1,90 +1,214 @@
-
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - Buses Públicos</title>
+  <title>Connect BQ</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <style>
-    :root {
-      --naranja: #FF6B35;
-      --blanco: #FFFFFF;
-      --gris-claro: #D9D9D9;
-      --gris-medio: #999999;
-      --negro: #333333;
-    }
-    #map {
-      height: 100%;
-      width: 100%;
-    }
-  </style>
 </head>
-<body class="h-screen flex flex-col bg-[var(--blanco)]">
+
+<body class="bg-[#F5F5F5] text-[#333333]">
 
   <!-- Navbar -->
-  <header class="flex items-center justify-between px-6 py-4 bg-[var(--naranja)] shadow-md">
-    <div class="flex items-center space-x-3">
-      <img src="../imgs/logo-dashboard.png" alt="Logo Connect BQ" class="h-12 w-auto">
-      <h1 class="text-xl font-bold text-[var(--blanco)]">Connect BQ </h1>
+  <header class="bg-[#FFFFFF] border-b border-[#D9D9D9] p-3 flex justify-between items-center">
+    <div>
+      <h1 class="font-bold text-lg text-[#333333]">Connect BQ</h1>
+      <p class="text-sm text-[#999999]">Movilidad Urbana Inteligente</p>
     </div>
-    <button class="bg-[var(--blanco)] text-[var(--naranja)] px-4 py-2 rounded-lg shadow hover:bg-[var(--gris-claro)] transition">
-      Cerrar sesión
-    </button>
+    <nav class="flex gap-3">
+      <button class="bg-[#FF6B35] text-white px-3 py-1 rounded-lg">Actual</button>
+      <button class="border border-[#D9D9D9] px-3 py-1 rounded-lg">Visión 2035</button>
+      <button class="border border-[#D9D9D9] px-3 py-1 rounded-lg">Perfil</button>
+      <button class="border border-[#D9D9D9] px-3 py-1 rounded-lg">Acerca de</button>
+    </nav>
   </header>
 
   <!-- Contenedor principal -->
-  <div class="flex flex-1">
-    
+  <main class="flex p-4 gap-4">
+
     <!-- Sidebar -->
-    <aside class="w-72 bg-[var(--blanco)] border-r border-[var(--gris-claro)] p-4 overflow-y-auto">
-      <h2 class="text-lg font-semibold text-[var(--negro)] mb-4">Lista de Buses</h2>
-      <ul id="bus-list" class="space-y-3">
-        <li class="p-3 rounded-lg border border-[var(--gris-claro)] shadow-sm hover:bg-[var(--gris-claro)] cursor-pointer">
-          🚌 Bus 101 - Activo
-        </li>
-        <li class="p-3 rounded-lg border border-[var(--gris-claro)] shadow-sm hover:bg-[var(--gris-claro)] cursor-pointer">
-          🚌 Bus 205 - En ruta
-        </li>
-        <li class="p-3 rounded-lg border border-[var(--gris-claro)] shadow-sm hover:bg-[var(--gris-claro)] cursor-pointer">
-          🚌 Bus 310 - Fuera de servicio
-        </li>
-      </ul>
+    <aside class="w-[400px] flex flex-col gap-16">
+
+      <!-- Planificar ruta -->
+      <section class="bg-[#FFFFFF] shadow rounded-xl p-4">
+        <h2 class="font-semibold flex items-center gap-2">
+          <span>📍</span> Planificar Ruta
+        </h2>
+        <div class="mt-3 space-y-3">
+          <input type="text" placeholder="Desde..." class="w-full border border-[#D9D9D9] rounded-lg p-2 text-sm">
+          <input type="text" placeholder="Hasta..." class="w-full border border-[#D9D9D9] rounded-lg p-2 text-sm">
+          <button class="bg-[#FF6B35] text-white w-full py-2 rounded-lg hover:bg-[#e85d2a]">
+            Buscar Rutas
+          </button>
+        </div>
+      </section>
+
+      <!-- Opciones de Ruta -->
+      <section class="bg-[#FFFFFF] shadow rounded-xl p-4">
+        <h2 class="font-semibold flex items-center gap-2">🛣️ Opciones de Ruta</h2>
+        <button class="mt-2 mb-3 border border-[#D9D9D9] px-3 py-1 rounded-lg text-sm">Usar mi ubicación</button>
+
+        <div class="space-y-3">
+          <!-- Opción rápida -->
+          <div class="p-3 border border-[#D9D9D9] rounded-lg flex justify-between items-center bg-gray-50">
+            <div>
+              <p class="font-semibold text-[#333333]">⚡ Más Rápida</p>
+              <p class="text-sm text-[#999999]">Taxi + TransMetro</p>
+            </div>
+            <div class="text-right">
+              <p class="font-bold">25 min</p>
+              <p class="text-sm text-[#999999]">$8,500</p>
+            </div>
+          </div>
+          <!-- Opción económica -->
+          <div class="p-3 border border-[#D9D9D9] rounded-lg flex justify-between items-center">
+            <div>
+              <p class="font-semibold text-green-600">💲 Más Económica</p>
+              <p class="text-sm text-[#999999]">Bus + Caminata</p>
+            </div>
+            <div class="text-right">
+              <p class="font-bold">45 min</p>
+              <p class="text-sm text-[#999999]">$2,800</p>
+            </div>
+          </div>
+          <!-- Opción equilibrada -->
+          <div class="p-3 border border-[#FF6B35] rounded-lg flex justify-between items-center bg-orange-50">
+            <div>
+              <p class="font-semibold text-blue-600">⚖️ Equilibrada</p>
+              <p class="text-sm text-[#999999]">TransMetro + Bus</p>
+              <p class="text-xs text-green-600">1.2 kg CO₂ · 90% confiable</p>
+            </div>
+            <div class="text-right">
+              <p class="font-bold">32 min</p>
+              <p class="text-sm text-[#999999]">$4,200</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 flex gap-3">
+          <button class="flex-1 bg-[#FF6B35] text-white py-2 rounded-lg">Iniciar Navegación</button>
+          <button class="flex-1 border border-[#D9D9D9] py-2 rounded-lg">Guardar Ruta</button>
+        </div>
+      </section>
+
+      <!-- Alertas de tráfico -->
+      <section class="bg-[#FFFFFF] shadow rounded-xl p-4">
+        <h2 class="font-semibold flex items-center gap-2">⚠️ Alertas de Tráfico</h2>
+
+        <div class="flex justify-between text-center my-3">
+          <div class="flex-1">
+            <p class="font-bold text-red-600">2</p>
+            <p class="text-sm">Críticas</p>
+          </div>
+          <div class="flex-1">
+            <p class="font-bold text-yellow-500">2</p>
+            <p class="text-sm">Moderadas</p>
+          </div>
+          <div class="flex-1">
+            <p class="font-bold text-green-600">3</p>
+            <p class="text-sm">Verificadas</p>
+          </div>
+        </div>
+
+        <!-- Alerta crítica -->
+        <div class="border border-[#D9D9D9] rounded-lg p-3 mb-3 flex flex-col gap-1">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 bg-red-600 rounded-full"></span>
+            <p class="font-semibold text-red-600">Vía 40 con Calle 72</p>
+            <span class="ml-auto text-xs bg-gray-100 px-2 rounded">Verificada</span>
+          </div>
+          <p class="text-sm text-[#999999]">Congestión vehicular intensa debido a accidente</p>
+          <p class="text-xs text-[#999999]">Hace 5 min · Duración: 30-45 min</p>
+          <div class="flex justify-between text-xs mt-1">
+            <span class="text-red-600 font-semibold">Impacto Alto</span>
+            <span>👍 8 | 👎 1</span>
+          </div>
+        </div>
+
+        <!-- Alerta moderada -->
+        <div class="border border-[#D9D9D9] rounded-lg p-3 flex flex-col gap-1">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
+            <p class="font-semibold text-yellow-600">Carrera 46 con Calle 84</p>
+            <span class="ml-auto text-xs bg-gray-100 px-2 rounded">Verificada</span>
+          </div>
+          <p class="text-sm text-[#999999]">Obras de mantenimiento vial · un carril cerrado</p>
+          <p class="text-xs text-[#999999]">Hace 15 min · Duración: 2-3 horas</p>
+          <div class="flex justify-between text-xs mt-1">
+            <span class="text-yellow-600 font-semibold">Impacto Medio</span>
+            <span>👍 6 | 👎 0</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Historial de búsquedas -->
+      <section class="bg-[#FFFFFF] shadow rounded-xl p-4">
+        <h2 class="font-semibold flex items-center gap-2">⏱️ Historial de Búsquedas</h2>
+
+        <input type="text" placeholder="Buscar en historial..."
+          class="mt-3 w-full border border-[#D9D9D9] rounded-lg p-2 text-sm">
+
+        <div class="mt-3">
+          <p class="text-sm font-semibold text-[#999999]">⭐ Rutas Favoritas</p>
+          <div class="flex justify-between items-center text-sm py-2">
+            <p>Casa → Oficina</p>
+            <span class="text-xs text-[#999999]">18 min · 42x</span>
+          </div>
+          <div class="flex justify-between items-center text-sm py-2">
+            <p>Centro Comercial → Casa</p>
+            <span class="text-xs text-[#999999]">25 min · 8x</span>
+          </div>
+        </div>
+
+        <hr class="my-3">
+
+        <div class="space-y-3">
+          <div class="border border-[#D9D9D9] rounded-lg p-3">
+            <p class="text-sm font-semibold">Casa → Oficina <span class="text-blue-600 text-xs">Equilibrada</span></p>
+            <p class="text-xs text-[#999999]">Hace 1 hora · 18 min</p>
+            <p class="text-xs font-semibold">$3,200</p>
+          </div>
+          <div class="border border-[#D9D9D9] rounded-lg p-3">
+            <p class="text-sm font-semibold">Centro Comercial → Casa <span
+                class="text-green-600 text-xs">Equilibrada</span></p>
+            <p class="text-xs text-[#999999]">Hace 4 horas · 25 min</p>
+            <p class="text-xs font-semibold">$4,100</p>
+          </div>
+          <div class="border border-[#D9D9D9] rounded-lg p-3">
+            <p class="text-sm font-semibold">Centro → Aeropuerto <span class="text-blue-600 text-xs">Equilibrada</span>
+            </p>
+            <p class="text-xs text-[#999999]">Hace 6 horas · 35 min</p>
+            <p class="text-xs font-semibold">$7,200</p>
+          </div>
+        </div>
+
+        <button class="mt-3 w-full text-[#FF6B35] text-sm font-semibold">Ver Historial Completo</button>
+      </section>
     </aside>
 
     <!-- Mapa -->
-    <section class="flex-1">
-      <div id="map"></div>
+    <section class="flex-1 bg-[#FFFFFF] ml-60 shadow rounded-xl p-2">
+      <div id="map" class="w-[60rem] h-[50rem] rounded-lg"></div>
     </section>
+  </main>
 
-  </div>
-
-  <!-- Script para el mapa -->
   <script>
-    // Crear mapa centrado en Barranquilla (ejemplo)
-    const map = L.map('map').setView([10.9639, -74.7964], 13);
+    // Inicializar mapa
+    var map = L.map('map').setView([10.9685, -74.7813], 12);
 
-    // Tile de OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    // Buses de ejemplo con ubicación
-    const buses = [
-      { id: "Bus 101", lat: 10.978, lng: -74.781, estado: "Activo" },
-      { id: "Bus 205", lat: 10.970, lng: -74.805, estado: "En ruta" },
-      { id: "Bus 310", lat: 10.960, lng: -74.790, estado: "Fuera de servicio" }
-    ];
-
-    buses.forEach(bus => {
-      L.marker([bus.lat, bus.lng])
-        .addTo(map)
-        .bindPopup(`<b>${bus.id}</b><br>Estado: ${bus.estado}`);
-    });
+    // Marcadores
+    L.marker([10.9685, -74.7813]).addTo(map).bindPopup("Centro de Barranquilla");
+    L.marker([10.945, -74.8]).addTo(map).bindPopup("Suroriente");
+    L.marker([10.99, -74.77]).addTo(map).bindPopup("Norte");
   </script>
 
 </body>
+
 </html>
