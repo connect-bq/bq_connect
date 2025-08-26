@@ -14,26 +14,48 @@
 
   <!-- Navbar -->
   <header class="bg-[#FFFFFF] border-b border-[#D9D9D9] p-3 flex justify-between items-center">
-    <div>
-      <h1 class="font-bold text-lg text-[#333333]">Connect BQ</h1>
-      <p class="text-sm text-[#999999]">Movilidad Urbana Inteligente</p>
+
+    <div class="flex flex-row justify-center text-center items-center">
+      <img src="../../imgs/logo-dashboard.png" alt="logo-dashboard" class="w-20 h-20">
+      <div class="flex flex-col">
+        <h1 class="font-bold text-lg text-[#333333]">Connect BQ</h1>
+        <p class="text-sm text-[#999999]">Movilidad Urbana Inteligente</p>
+      </div>
+
+
     </div>
     <nav class="flex gap-3">
       <button class="bg-[#FF6B35] text-white px-3 py-1 rounded-lg">Actual</button>
       <button class="border border-[#D9D9D9] px-3 py-1 rounded-lg">Visión 2035</button>
       <button class="border border-[#D9D9D9] px-3 py-1 rounded-lg">Perfil</button>
       <button class="border border-[#D9D9D9] px-3 py-1 rounded-lg">Acerca de</button>
+      <button
+        class="group flex items-center justify-start w-11 h-11 bg-[#FF6B35] rounded-full cursor-pointer relative overflow-hidden transition-all duration-200 shadow-lg hover:w-32 hover:rounded-lg active:translate-x-1 active:translate-y-1">
+        <div
+          class="flex items-center justify-center w-full transition-all duration-300 group-hover:justify-start group-hover:px-3">
+          <svg class="w-4 h-4" viewBox="0 0 512 512" fill="white">
+            <path
+              d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
+            </path>
+          </svg>
+        </div>
+        <div
+          class="absolute right-5 transform translate-x-full opacity-0 text-white text-lg font-semibold transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+          Logout
+        </div>
+      </button>
+
     </nav>
   </header>
 
   <!-- Contenedor principal -->
-  <main class="flex p-4 gap-4">
+  <main class="flex p-2 gap-2">
 
     <!-- Sidebar -->
-    <aside class="w-[400px] flex flex-col gap-16">
+    <aside class="w-[400px] flex flex-col  gap-16">
 
       <!-- Planificar ruta -->
-      <section class="bg-[#FFFFFF] shadow rounded-xl p-4">
+      <section class="bg-[#FFFFFF] shadow rounded-xl p-4 ml-[5rem]">
         <h2 class="font-semibold flex items-center gap-2">
           <span>📍</span> Planificar Ruta
         </h2>
@@ -47,7 +69,7 @@
       </section>
 
       <!-- Opciones de Ruta -->
-      <section class="bg-[#FFFFFF] shadow rounded-xl p-4">
+      <section class="bg-[#FFFFFF] shadow rounded-xl p-4 ml-[5rem]">
         <h2 class="font-semibold flex items-center gap-2">🛣️ Opciones de Ruta</h2>
         <button class="mt-2 mb-3 border border-[#D9D9D9] px-3 py-1 rounded-lg text-sm">Usar mi ubicación</button>
 
@@ -95,7 +117,7 @@
       </section>
 
       <!-- Alertas de tráfico -->
-      <section class="bg-[#FFFFFF] shadow rounded-xl p-4">
+      <section class="bg-[#FFFFFF] shadow rounded-xl p-4 ml-[5rem]">
         <h2 class="font-semibold flex items-center gap-2">⚠️ Alertas de Tráfico</h2>
 
         <div class="flex justify-between text-center my-3">
@@ -145,7 +167,7 @@
       </section>
 
       <!-- Historial de búsquedas -->
-      <section class="bg-[#FFFFFF] shadow rounded-xl p-4">
+      <section class="bg-[#FFFFFF] shadow rounded-xl p-4 ml-[5rem]">
         <h2 class="font-semibold flex items-center gap-2">⏱️ Historial de Búsquedas</h2>
 
         <input type="text" placeholder="Buscar en historial..."
@@ -190,8 +212,8 @@
     </aside>
 
     <!-- Mapa -->
-    <section class="flex-1 bg-[#FFFFFF] ml-60 shadow rounded-xl p-2">
-      <div id="map" class="w-[60rem] h-[50rem] rounded-lg"></div>
+    <section class="flex-30 bg-[#FFFFFF] ml-60 shadow rounded-xl p-2">
+      <div id="map" class="w-[70rem] h-[45rem] rounded-lg"></div>
     </section>
   </main>
 
