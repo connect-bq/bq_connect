@@ -59,10 +59,17 @@ describe("User Controller", () => {
     );
   });
 
-    // Test for getUsers
-    //TODO: Fix this test
+  // Test for getUsers
+  //TODO: Fix this test
   it("should return an array of users", async () => {
-    await User.create({ name: "Ana", email: "ana@test.com", age: 25 });
+    await User.create({
+      identity_number: "123456789",
+      username: "Willman",
+      password: "1234",
+      email: "willman@test.com",
+      phone: "123-456-7890",
+      age: 20,
+    });
 
     const req = {};
     const res = mockResponse();
@@ -72,7 +79,14 @@ describe("User Controller", () => {
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith(
       expect.arrayContaining([
-        expect.objectContaining({ name: "Ana", email: "ana@test.com" }),
+        expect.objectContaining({
+          identity_number: "123456789",
+          username: "Willman",
+          password: "1234",
+          email: "willman@test.com",
+          phone: "123-456-7890",
+          age: 20,
+        }),
       ])
     );
   });
