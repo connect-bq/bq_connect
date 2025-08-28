@@ -53,6 +53,3 @@ describe("User Model", () => {
     expect(error).toBeDefined();
   });
 });
-
-
-//TODO: Add more tests for unique constraints and other fields
