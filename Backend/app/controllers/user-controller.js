@@ -6,7 +6,7 @@ const getUsers = async (req, res) => {
     const users = await User.find();
     res.status(200).json(users);
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     res.status(500).json({ error: error.message });
   }
 };
@@ -18,7 +18,7 @@ const getUserById = async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
     res.json(user);
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     res.status(500).json({ error: error.message });
   }
 };
@@ -30,7 +30,7 @@ const createUser = async (req, res) => {
     await user.save();
     res.status(201).json(user);
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     res.status(400).json({ error: error.message });
   }
 };
@@ -45,7 +45,7 @@ const updateUser = async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
     res.json(user);
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     res.status(400).json({ error: error.message });
   }
 };
@@ -57,7 +57,7 @@ const deleteUser = async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
     res.json({ message: "User deleted" });
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     res.status(500).json({ error: error.message });
   }
 };
@@ -73,7 +73,7 @@ const addRouteToUser = async (req, res) => {
 
     res.status(201).json(user);
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     res.status(400).json({ error: error.message });
   }
 };
@@ -91,7 +91,7 @@ const removeRouteFromUser = async (req, res) => {
 
     res.json(user);
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     res.status(500).json({ error: error.message });
   }
 };

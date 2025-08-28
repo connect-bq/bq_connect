@@ -51,5 +51,145 @@ describe("User Model", () => {
       error = err;
     }
     expect(error).toBeDefined();
+    expect(error.name).toBe("ValidationError");
+  });
+
+  it("should not save a user with an invalid identity number", async () => {
+    const user = new User({
+      identity_number: "abc123",
+      username: "Willman",
+      password: "1234",
+      email: "willman@test.com",
+      phone: "123-456-7890",
+      age: 20,
+    });
+    let error;
+    try {
+      await user.save();
+    } catch (err) {
+      error = err;
+    }
+    expect(error).toBeDefined();
+    expect(error.name).toBe("ValidationError");
+    expect(error.errors.identity_number).toBeDefined();
+  });
+
+  it("should not save a user with an invalid email", async () => {
+    const user = new User({
+      identity_number: "123456789",
+      username: "Willman",
+      password: "1234",
+      email: "invalid-email",
+      phone: "123-456-7890",
+      age: 20,
+    });
+    let error;
+    try {
+      await user.save();
+    } catch (err) {
+      error = err;
+    }
+    expect(error).toBeDefined();
+    expect(error.name).toBe("ValidationError");
+    expect(error.errors.email).toBeDefined();
+  });
+
+  it("should not save a user with an age less than 13", async () => {
+    const user = new User({
+      identity_number: "123456789",
+      username: "Willman",
+      password: "1234",
+      email: "willman@test.com",
+      phone: "123-456-7890",
+      age: 12,
+    });
+    let error;
+    try {
+      await user.save();
+    } catch (err) {
+      error = err;
+    }
+    expect(error).toBeDefined();
+    expect(error.name).toBe("ValidationError");
+    expect(error.errors.age).toBeDefined();
+  });
+
+  it("should not save a user with a duplicate identity number", async () => {
+    const user1 = new User({
+      identity_number: "123456789",
+      username: "Willman",
+      password: "1234",
+      email: "willman@test.com",
+      phone: "123-456-7890",
+      age: 20,
+    });
+    await user1.save();
+
+    const user2 = new User({
+      identity_number: "123456789",
+      username: "AnotherUser",
+      password: "5678",
+      email: "willman2@test.com",
+      phone: "987-654-3210",
+      age: 25,
+    });
+    let error;
+    try {
+      await user2.save();
+    } catch (err) {
+      error = err;
+    }
+    expect(error).toBeDefined();
+    expect(error.name).toBe("MongoServerError");
+    expect(error.code).toBe(11000);
+  });
+
+  it("should not save a user with a duplicate email", async () => {
+    const user1 = new User({
+      identity_number: "123456789",
+      username: "Willman",
+      password: "1234",
+      email: "willman@test.com",
+      phone: "123-456-7890",
+      age: 20,
+    });
+    await user1.save();
+
+    const user2 = new User({
+      identity_number: "987654321",
+      username: "AnotherUser",
+      password: "5678",
+      email: "willman@test.com",
+      phone: "987-654-3210",
+      age: 25,
+    });
+    let error;
+    try {
+      await user2.save();
+    } catch (err) {
+      error = err;
+    }
+    expect(error).toBeDefined();
+    expect(error.name).toBe("MongoServerError");
+    expect(error.code).toBe(11000);
+  });
+  it("should not save a user with an invalid phone number", async () => {
+    const user = new User({
+      identity_number: "123456789",
+      username: "Willman",
+      password: "1234",
+      email: "willman@test.com",
+      phone: "invalid-phone",
+      age: 20,
+    });
+    let error;
+    try {
+      await user.save();
+    } catch (err) {
+      error = err;
+    }
+    expect(error).toBeDefined();
+    expect(error.name).toBe("ValidationError");
+    expect(error.errors.phone).toBeDefined();
   });
 });
