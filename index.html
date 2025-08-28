@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="interactive system that will allow the user to search for public bus routes">
+  <meta name="keywords" content="integrative project">
+  <meta name="sitedomain" content="https://github.com/connect-bq/bq_connect.git">
+  <meta name="authors" content="StarDev">
+  <meta name="desingner" content="StarDev">
+  <meta name="copyright" content="© StarDev. All rights reserved">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="revisit-after" content="10days">
+  <title>Connect BQ: Smart Urban Mobility</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  
+</head>
+
+<body>
+  <header class="bg-white border-b border-gray-200 p-3 flex justify-between items-center relative shadow-sm">
+    <div class="flex items-center gap-2">
+      <img src="../../imgs/logo-dashboard.png" alt="Logo de Connect BQ" class="w-12 h-12">
+      <div>
+        <h1 class="font-bold text-lg">Connect BQ</h1>
+        <p class="text-sm text-gray-500">Smart Urban Mobility</p>
+      </div>
+    </div>
+
+    <button id="menu-toggle-btn" class="lg:hidden p-2 z-50">
+      <span class="block w-6 h-0.5 bg-gray-700 transition-all duration-300 transform" id="line1"></span>
+      <span class="block w-6 h-0.5 bg-gray-700 transition-all duration-300 my-1" id="line2"></span>
+      <span class="block w-6 h-0.5 bg-gray-700 transition-all duration-300 transform" id="line3"></span>
+    </button>
+
+    <nav class="hidden lg:flex gap-3 items-center" aria-label="Navegación principal">
+      <a href="#" class="bg-[#FF6B35] text-white px-3 py-1 rounded-lg">Current</a>
+      <a href="#" class="border border-gray-300 px-3 py-1 rounded-lg">Visión 2035</a>
+      <a href="#" class="border border-gray-300 px-3 py-1 rounded-lg">Profile</a>
+      <a href="#" class="border border-gray-300 px-3 py-1 rounded-lg">About</a>
+      <button id="logout-btn" class="bg-[#FF6B35] text-white px-3 py-1 rounded-lg transition-all duration-300">
+        <div class="flex items-center justify-center gap-2">
+          <svg class="w-4 h-4 fill-white" viewBox="0 0 512 512">
+            <path
+              d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
+            </path>
+          </svg>
+          <span class="hidden group-hover:block transition-all duration-300">Logout</span>
+        </div>
+      </button>
+    </nav>
+  </header>
+
+  <div id="mobile-menu-overlay"
+    class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40 opacity-0 pointer-events-none transition-all duration-300">
+    <aside id="mobile-sidebar"
+      class="bg-white w-80 h-full overflow-y-auto p-4 transform -translate-x-full transition-transform duration-300">
+      <nav class="mb-6 flex flex-col gap-2" aria-label="Navegación móvil">
+        <a href="#" class="bg-[#FF6B35] text-white px-3 py-2 rounded-lg text-center">Current</a>
+        <a href="#" class="border border-gray-300 px-3 py-2 rounded-lg text-center">Visión 2035</a>
+        <a href="#" class="border border-gray-300 px-3 py-2 rounded-lg text-center">Profile</a>
+        <a href="#" class="border border-gray-300 px-3 py-2 rounded-lg text-center">About</a>
+        <a href="#" class="bg-[#FF6B35] text-white px-3 py-2 rounded-lg text-center">Logout</a>
+      </nav>
+      <hr class="mb-6">
+      <section class="bg-gray-100 rounded-xl p-4 mb-4">
+        <h2 class="font-semibold flex items-center gap-2 text-base">📍 Plan your route</h2>
+        <form id="route-form-mobile" class="mt-3 space-y-3">
+          <input type="text" placeholder="Desde..." class="w-full border border-gray-300 rounded-lg p-2 text-sm">
+          <input type="text" placeholder="Hasta..." class="w-full border border-gray-300 rounded-lg p-2 text-sm">
+          <button type="submit"
+            class="bg-[#FF6B35] text-white w-full py-2 rounded-lg hover:bg-orange-600 transition duration-200">
+            Buscar Rutas
+          </button>
+        </form>
+      </section>
+
+      <section class="bg-gray-100 rounded-xl p-4 mb-4">
+        <h2 class="font-semibold flex items-center gap-2">🛣️ Opciones de Ruta</h2>
+        <button class="mt-2 mb-3 border border-[#D9D9D9] px-3 py-1 rounded-lg text-sm">Usar mi ubicación</button>
+        <div class="space-y-3" role="list">
+          <article class="p-3 border border-gray-300 rounded-lg flex justify-between items-center bg-gray-50">
+            <div role="listitem">
+              <h3 class="font-semibold text-gray-800">⚡ Faster</h3>
+              <p class="text-sm text-gray-500">Taxi + TransMetro</p>
+            </div>
+            <div class="text-right">
+              <p class="font-bold">25 min</p>
+              <p class="text-sm text-gray-500">$8,500</p>
+            </div>
+          </article>
+          <article class="p-3 border border-gray-300 rounded-lg flex justify-between items-center">
+            <div role="listitem">
+              <h3 class="font-semibold text-green-600">💲more economical</h3>
+              <p class="text-sm text-gray-500">Bus + Hike</p>
+            </div>
+            <div class="text-right">
+              <p class="font-bold">45 min</p>
+              <p class="text-sm text-gray-500">$2,800</p>
+            </div>
+          </article>
+          <article class="p-3 border border-orange-500 rounded-lg flex justify-between items-center bg-orange-50">
+            <div role="listitem">
+              <h3 class="font-semibold text-blue-600">⚖️ Balanced</h3>
+              <p class="text-sm text-gray-500">TransMetro + Bus</p>
+              <p class="text-xs text-green-600">1.2 kg CO₂ · 90% reliable</p>
+            </div>
+            <div class="text-right">
+              <p class="font-bold">32 min</p>
+              <p class="text-sm text-gray-500">$4,200</p>
+            </div>
+          </article>
+        </div>
+        <div class="mt-4 flex gap-3">
+          <button class="flex-1 bg-[#FF6B35] text-white py-2 rounded-lg">start navigation</button>
+          <button class="flex-1 border border-gray-300 py-2 rounded-lg">save route</button>
+        </div>
+      </section>
+
+      <section class="bg-gray-100 rounded-xl p-4 mb-4">
+        <h2 class="font-semibold flex items-center gap-2">⚠️ Traffic alerts</h2>
+        <div class="flex justify-between text-center my-3" role="list">
+          <div role="listitem" class="flex-1">
+            <p class="font-bold text-red-600">2</p>
+            <p class="text-sm">Criticisms</p>
+          </div>
+          <div role="listitem" class="flex-1">
+            <p class="font-bold text-yellow-500">2</p>
+            <p class="text-sm">Moderate</p>
+          </div>
+          <div role="listitem" class="flex-1">
+            <p class="font-bold text-green-600">3</p>
+            <p class="text-sm">Checker</p>
+          </div>
+        </div>
+
+        <div role="list">
+          <article role="listitem" class="border border-gray-300 rounded-lg p-3 mb-3 flex flex-col gap-1 bg-white">
+            <header class="flex items-center gap-2">
+              <span class="w-3 h-3 bg-red-600 rounded-full"></span>
+              <h3 class="font-semibold text-red-600">via 50 with 72nd Street</h3>
+              <span class="ml-auto text-xs bg-gray-100 px-2 rounded">verified</span>
+            </header>
+            <p class="text-sm text-gray-500">Heavy traffic congestion due to accident</p>
+            <p class="text-xs text-gray-500">Does 5 min · Duration: 30-45 min</p>
+            <footer class="flex justify-between text-xs mt-1">
+              <span class="text-red-600 font-semibold">High Impact</span>
+              <span>👍 8 | 👎 1</span>
+            </footer>
+          </article>
+          <article role="listitem" class="border border-gray-300 rounded-lg p-3 flex flex-col gap-1 bg-white">
+            <header class="flex items-center gap-2">
+              <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
+              <h3 class="font-semibold text-yellow-600">via 49 with 50nd Street</h3>
+              <span class="ml-auto text-xs bg-gray-100 px-2 rounded">Verified</span>
+            </header>
+            <p class="text-sm text-gray-500">Obras de mantenimiento vial · un carril cerrado</p>
+            <p class="text-xs text-gray-500">Road maintenance works · one lane closed</p>
+            <footer class="flex justify-between text-xs mt-1">
+              <span class="text-yellow-600 font-semibold">Medium Impact</span>
+              <span>👍 6 | 👎 0</span>
+            </footer>
+          </article>
+        </div>
+      </section>
+      <section class="bg-gray-100 rounded-xl p-4">
+        <h2 class="font-semibold flex items-center gap-2">⏱️ Historial de Búsquedas</h2>
+        <input type="text" placeholder="Buscar en historial..."
+          class="mt-3 w-full border border-gray-300 rounded-lg p-2 text-sm">
+        <div class="mt-3">
+          <p class="text-sm font-semibold text-gray-500">⭐ Favorite Routes</p>
+          <ul role="list" class="space-y-2">
+            <li class="flex justify-between items-center text-sm">
+              <p>Home → office</p>
+              <span class="text-xs text-gray-500">18 min · 42x</span>
+            </li>
+            <li class="flex justify-between items-center text-sm">
+              <p>Mall → Home</p>
+              <span class="text-xs text-gray-500">25 min · 8x</span>
+            </li>
+          </ul>
+        </div>
+        <hr class="my-3">
+        <ul role="list" class="space-y-3">
+          <li class="border border-gray-300 rounded-lg p-3 bg-white">
+            <p class="text-sm font-semibold">Home → Oficina <span class="text-blue-600 text-xs">Balanced</span></p>
+            <p class="text-xs text-gray-500">Hace 1 hora · 18 min</p>
+            <p class="text-xs font-semibold">$3,200</p>
+          </li>
+          <li class="border border-gray-300 rounded-lg p-3 bg-white">
+            <p class="text-sm font-semibold">Mall → Home <span class="text-green-600 text-xs">Balanced</span></p>
+            <p class="text-xs text-gray-500">Hace 4 horas · 25 min</p>
+            <p class="text-xs font-semibold">$4,100</p>
+          </li>
+          <li class="border border-gray-300 rounded-lg p-3 bg-white">
+            <p class="text-sm font-semibold">Centro → Aeropuerto <span class="text-blue-600 text-xs">Balanced</span></p>
+            <p class="text-xs text-gray-500">Hace 6 horas · 35 min</p>
+            <p class="text-xs font-semibold">$7,200</p>
+          </li>
+        </ul>
+        <button class="mt-3 w-full text-[#FF6B35] text-sm font-semibold">Ver Historial Completo</button>
+      </section>
+    </aside>
+
+    <main id="map-container" class="flex-1 bg-white shadow rounded-xl p-2 w-full h-[600px] lg:h-auto">
+      <div id="map" class="w-full h-full rounded-lg"></div>
+    </main>
+    </main>
+    <script src="./oo.js" defer></script>
+</body>
+
+</html>
