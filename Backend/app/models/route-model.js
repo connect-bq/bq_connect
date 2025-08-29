@@ -1,49 +1,84 @@
-// Import Mongoose and other models
 const mongoose = require("mongoose");
-const StopSchema = require("./stop-model"); // Schema for stops
-const AlertSchema = require("./alert-model"); // Schema for alerts
 
-// Define the schema for routes
-const routeSchema = new mongoose.Schema({
-  name: {
+// Esquema para las alertas (sub-documento)
+const alertSchema = new mongoose.Schema({
+  type: {
     type: String,
-    required: [true, "Route name is required."], // Ensure name is provided
-    unique: true, // Route name must be unique
-    trim: true, // 1. Trim spaces around the name
+    enum: ["Traffic", "Accident", "Closure", "Hazard", "Other"],
+    required: [true, "El tipo de alerta es obligatorio."],
   },
-  initial_point: {
-    type: StopSchema,
-    required: [true, "Initial point is required."], // Ensure initial point is provided
+  severity: {
+    type: String,
+    enum: ["Low", "Medium", "High"],
+    required: [true, "La severidad de la alerta es obligatoria."],
   },
-  end_point: {
-    type: StopSchema,
-    required: [true, "End point is required."], // Ensure end point is provided
+  description: {
+    type: String,
+    trim: true,
   },
-  distance: {
-    type: Number,
-    required: [true, "Distance is required."], // Ensure distance is provided
-    min: [0, "Distance cannot be negative."], // 2. Add validation for non-negative distance
+  reported_at: {
+    type: Date,
+    default: Date.now,
   },
-  estimated_time: {
-    type: Number,
-    required: [true, "Estimated time is required."], // Ensure estimated time is provided
-    min: [0, "Estimated time cannot be negative."], // 3. Add validation for non-negative time
-  },
-  estimated_cost: {
-    type: Number,
-    required: [true, "Estimated cost is required."], // Ensure estimated cost is provided
-    min: [0, "Estimated cost cannot be negative."], // 4. Add validation for non-negative cost
-  },
-  path: {
-    type: [StopSchema],
-    default: [], // Default value is an empty array
-  },
-  alerts: {
-    type: [AlertSchema],
-    default: [], // Default value is an empty array
+  username: {
+    type: String,
+    required: [true, "El nombre de usuario es obligatorio."],
   },
 });
 
-// Create and export the Route model based on the schema
-const Route = mongoose.model('Route', routeSchema);
+// Esquema para los puntos de la ruta
+const pointSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "El nombre del punto es obligatorio."],
+    },
+    coordinates: {
+      latitude: { type: Number, required: true },
+      longitude: { type: Number, required: true },
+    },
+  },
+  { _id: false }
+);
+
+// Esquema principal para las rutas
+const routeSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "El nombre de la ruta es obligatorio."],
+      unique: true,
+      trim: true,
+    },
+    initial_point: {
+      type: pointSchema,
+      required: [true, "El punto de inicio es obligatorio."],
+    },
+    end_point: {
+      type: pointSchema,
+      required: [true, "El punto final es obligatorio."],
+    },
+    distance: {
+      type: Number,
+      required: [true, "La distancia es obligatoria."],
+      min: [0, "La distancia no puede ser negativa."],
+    },
+    estimated_time: {
+      type: Number,
+      required: [true, "El tiempo estimado es obligatorio."],
+      min: [0, "El tiempo estimado no puede ser negativo."],
+    },
+    estimated_cost: {
+      type: Number,
+      required: [true, "El costo estimado es obligatorio."],
+      min: [0, "El costo estimado no puede ser negativo."],
+      max: [999999999, "El costo no puede ser mayor a 999.999.999."],
+    },
+    alerts: [alertSchema], // Un array de sub-documentos de alerta
+  },
+  { timestamps: true }
+);
+
+const Route = mongoose.model("Route", routeSchema);
+
 module.exports = Route;
