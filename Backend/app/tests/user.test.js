@@ -193,3 +193,4 @@ describe("User Model", () => {
     expect(error.errors.phone).toBeDefined();
   });
 });
+
