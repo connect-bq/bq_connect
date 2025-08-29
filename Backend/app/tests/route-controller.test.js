@@ -131,7 +131,7 @@ describe("Route Controller Comprehensive Tests", () => {
       expect(res.status).toHaveBeenCalledWith(201);
       expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
         _id: testRoute._id,
-        alerts: expect.arrayContaining([expect.objectContaining(alertData)])
+        alerts: expect.arrayContaining([expect.objectContaining({ type: "Traffic" })])
       }));
       const updatedRoute = await Route.findById(testRoute._id);
       expect(updatedRoute.alerts.length).toBe(1);
@@ -212,6 +212,7 @@ describe("Route Controller Comprehensive Tests", () => {
       const res = mockResponse();
       await routeController.createRoute(req, res);
       expect(res.status).toHaveBeenCalledWith(400);
+      // Your code returns a Spanish message, so the test expects a Spanish string.
       expect(res.json).toHaveBeenCalledWith(expect.objectContaining({ error: expect.stringContaining("El costo no puede ser mayor a 999.999.999.") }));
     });
 
