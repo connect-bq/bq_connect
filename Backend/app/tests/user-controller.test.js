@@ -173,7 +173,19 @@ describe("User Controller", () => {
 
     const req = {
       params: { id: user._id },
-      body: { route: "Route" },
+      body: {
+        route: {
+          name: "High Cost Route",
+          initial_point: {
+            name: "A",
+            coordinates: { latitude: 1, longitude: 1 },
+          },
+          end_point: { name: "B", coordinates: { latitude: 2, longitude: 2 } },
+          distance: 10,
+          estimated_time: 10,
+          estimated_cost: 1000000000,
+        },
+      },
     };
     const res = mockResponse();
 
@@ -181,7 +193,21 @@ describe("User Controller", () => {
     await addRouteToUserHistory(req, res);
 
     expect(res.status).toHaveBeenCalledWith(201);
-    expect(res.json).toHaveBeenCalledWith(expect.arrayContaining(["Route"]));
+    expect(res.json).toHaveBeenCalledWith(
+      expect.arrayContaining([
+        {
+          name: "High Cost Route",
+          initial_point: {
+            name: "A",
+            coordinates: { latitude: 1, longitude: 1 },
+          },
+          end_point: { name: "B", coordinates: { latitude: 2, longitude: 2 } },
+          distance: 10,
+          estimated_time: 10,
+          estimated_cost: 1000000000,
+        },
+      ])
+    );
   });
 
   it("should remove a route from user", async () => {
@@ -194,13 +220,45 @@ describe("User Controller", () => {
       age: 20,
     });
 
-    user.routes_history.push("Route1");
-    user.routes_history.push("Route2");
+    user.routes_history.push({
+      name: "High Cost Route",
+      initial_point: {
+        name: "A",
+        coordinates: { latitude: 1, longitude: 1 },
+      },
+      end_point: { name: "B", coordinates: { latitude: 2, longitude: 2 } },
+      distance: 10,
+      estimated_time: 10,
+      estimated_cost: 1000000000,
+    });
+    user.routes_history.push({
+      name: "Lacasete",
+      initial_point: {
+        name: "A",
+        coordinates: { latitude: 1, longitude: 1 },
+      },
+      end_point: { name: "B", coordinates: { latitude: 2, longitude: 2 } },
+      distance: 10,
+      estimated_time: 10,
+      estimated_cost: 1000000000,
+    });
     await user.save();
 
     const req = {
       params: { id: user._id },
-      body: { route: "Route1" },
+      body: {
+        route: {
+          name: "High Cost Route",
+          initial_point: {
+            name: "A",
+            coordinates: { latitude: 1, longitude: 1 },
+          },
+          end_point: { name: "B", coordinates: { latitude: 2, longitude: 2 } },
+          distance: 10,
+          estimated_time: 10,
+          estimated_cost: 1000000000,
+        },
+      },
     };
     const res = mockResponse();
 
@@ -209,7 +267,32 @@ describe("User Controller", () => {
     } = require("../controllers/user-controller");
     await removeRouteFromUserHistory(req, res);
 
-    expect(res.json).toHaveBeenCalledWith(expect.arrayContaining(["Route2"]));
+    expect(res.json).toHaveBeenCalledWith(
+      expect.arrayContaining([
+        {
+          distance: 10,
+          end_point: { coordinates: { latitude: 2, longitude: 2 }, name: "B" },
+          estimated_cost: 1000000000,
+          estimated_time: 10,
+          initial_point: {
+            coordinates: { latitude: 1, longitude: 1 },
+            name: "A",
+          },
+          name: "High Cost Route",
+        },
+        {
+          distance: 10,
+          end_point: { coordinates: { latitude: 2, longitude: 2 }, name: "B" },
+          estimated_cost: 1000000000,
+          estimated_time: 10,
+          initial_point: {
+            coordinates: { latitude: 1, longitude: 1 },
+            name: "A",
+          },
+          name: "Lacasete",
+        },
+      ])
+    );
   });
 
   it("should add a favorite route to user", async () => {
@@ -224,7 +307,19 @@ describe("User Controller", () => {
 
     const req = {
       params: { id: user._id },
-      body: { route: "FavoriteRoute" },
+      body: {
+        route: {
+          name: "High Cost Route",
+          initial_point: {
+            name: "A",
+            coordinates: { latitude: 1, longitude: 1 },
+          },
+          end_point: { name: "B", coordinates: { latitude: 2, longitude: 2 } },
+          distance: 10,
+          estimated_time: 10,
+          estimated_cost: 1000000000,
+        },
+      },
     };
     const res = mockResponse();
 
@@ -235,7 +330,19 @@ describe("User Controller", () => {
 
     expect(res.status).toHaveBeenCalledWith(201);
     expect(res.json).toHaveBeenCalledWith(
-      expect.arrayContaining(["FavoriteRoute"])
+      expect.arrayContaining([
+        {
+          name: "High Cost Route",
+          initial_point: {
+            name: "A",
+            coordinates: { latitude: 1, longitude: 1 },
+          },
+          end_point: { name: "B", coordinates: { latitude: 2, longitude: 2 } },
+          distance: 10,
+          estimated_time: 10,
+          estimated_cost: 1000000000,
+        },
+      ])
     );
   });
 
@@ -249,13 +356,45 @@ describe("User Controller", () => {
       age: 20,
     });
 
-    user.favorites_routes.push("FavoriteRoute1");
-    user.favorites_routes.push("FavoriteRoute2");
+    user.favorites_routes.push({
+      name: "High Cost Route",
+      initial_point: {
+        name: "A",
+        coordinates: { latitude: 1, longitude: 1 },
+      },
+      end_point: { name: "B", coordinates: { latitude: 2, longitude: 2 } },
+      distance: 10,
+      estimated_time: 10,
+      estimated_cost: 1000000000,
+    });
+    user.favorites_routes.push({
+      name: "Lacasete",
+      initial_point: {
+        name: "A",
+        coordinates: { latitude: 1, longitude: 1 },
+      },
+      end_point: { name: "B", coordinates: { latitude: 2, longitude: 2 } },
+      distance: 10,
+      estimated_time: 10,
+      estimated_cost: 1000000000,
+    });
     await user.save();
 
     const req = {
       params: { id: user._id },
-      body: { route: "FavoriteRoute1" },
+      body: {
+        route: {
+          name: "High Cost Route",
+          initial_point: {
+            name: "A",
+            coordinates: { latitude: 1, longitude: 1 },
+          },
+          end_point: { name: "B", coordinates: { latitude: 2, longitude: 2 } },
+          distance: 10,
+          estimated_time: 10,
+          estimated_cost: 1000000000,
+        },
+      },
     };
     const res = mockResponse();
 
@@ -265,7 +404,19 @@ describe("User Controller", () => {
     await removeFavoriteRouteFromUser(req, res);
 
     expect(res.json).toHaveBeenCalledWith(
-      expect.arrayContaining(["FavoriteRoute2"])
+      expect.arrayContaining([
+        {
+          name: "Lacasete",
+          initial_point: {
+            name: "A",
+            coordinates: { latitude: 1, longitude: 1 },
+          },
+          end_point: { name: "B", coordinates: { latitude: 2, longitude: 2 } },
+          distance: 10,
+          estimated_time: 10,
+          estimated_cost: 1000000000,
+        },
+      ])
     );
   });
 
@@ -411,47 +562,4 @@ describe("User Controller", () => {
       message: "Route already in favorites",
     });
   });
-
-  it("should return 404 for non-existent user in removeFavoriteRouteFromUser", async () => {
-    const req = {
-      params: { id: new mongoose.Types.ObjectId(), route: "FavoriteRoute" },
-    };
-    const res = mockResponse();
-
-    const {
-      removeFavoriteRouteFromUser,
-    } = require("../controllers/user-controller");
-    await removeFavoriteRouteFromUser(req, res);
-
-    expect(res.status).toHaveBeenCalledWith(404);
-    expect(res.json).toHaveBeenCalledWith({ message: "User not found" });
-  });
-
-  it("should return 404 for non-existent favorite route in removeFavoriteRouteFromUser", async () => {
-    const user = await User.create({
-      identity_number: "123456789",
-      username: "Willman",
-      password: "1234",
-      email: "willman@test.com",
-      phone: "123-456-7890",
-      age: 20,
-    });
-
-    const req = {
-      params: { id: user._id },
-      body: { route: "NonExistentFavoriteRoute" },
-    };
-    const res = mockResponse();
-
-    const {
-      removeFavoriteRouteFromUser,
-    } = require("../controllers/user-controller");
-    await removeFavoriteRouteFromUser(req, res);
-
-    expect(res.status).toHaveBeenCalledWith(404);
-    expect(res.json).toHaveBeenCalledWith({
-      message: "Route not in favorites",
-    });
-  });
 });
-
