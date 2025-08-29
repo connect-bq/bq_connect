@@ -1,4 +1,4 @@
-const Route = require('../models/Route');
+const Route = require('../models/route-model');
 
 // Get all Routes
 const getRoutes = async (req, res) => {
@@ -6,7 +6,7 @@ const getRoutes = async (req, res) => {
         const routes = await Route.find();
         res.status(200).json(routes);
     } catch (error) {
-        console.error(error);
+        console.error(error.message);
         res.status(500).json({ error: error.message });
     }
 };
@@ -20,7 +20,7 @@ const getRouteById = async (req, res) => {
         }
         res.json(route);
     } catch (error) {
-        console.error(error);
+        console.error(error.message);
         res.status(500).json({ error: error.message });
     }
 };
@@ -32,7 +32,7 @@ const createRoute = async (req, res) => {
         await newRoute.save();
         res.status(201).json(newRoute);
     } catch (error) {
-        console.error(error);
+        console.error(error.message);
         res.status(400).json({ error: error.message });
     }
 };
@@ -49,7 +49,7 @@ const updateRoute = async (req, res) => {
         }
         res.json(updatedRoute);
     } catch (error) {
-        console.error(error);
+        console.error(error.message);
         res.status(400).json({ error: error.message });
     }
 };
@@ -63,7 +63,7 @@ const deleteRoute = async (req, res) => {
         }
         res.json({ message: 'Route deleted successfully' });
     } catch (error) {
-        console.error(error);
+        console.error(error.message);
         res.status(500).json({ error: error.message });
     }
 };
@@ -79,7 +79,7 @@ const addAlertToRoute = async (req, res) => {
         await route.save();
         res.status(201).json(route);
     } catch (error) {
-        console.error(error);
+        console.error(error.message);
         res.status(400).json({ error: error.message });
     }
 };
@@ -97,7 +97,7 @@ const removeAlertFromRoute = async (req, res) => {
         await route.save();
         res.json(route);
     } catch (error) {
-        console.error(error);
+        console.error(error.message);
         res.status(500).json({ error: error.message });
     }
 };
