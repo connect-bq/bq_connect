@@ -5,10 +5,10 @@ const {
   getUserById,
   updateUser,
   deleteUser,
-  addRouteToHistory,
-  removeRouteFromHistory,
-  addRouteToFavorites,
-  removeRouteFromFavorites,
+  addRouteToUserHistory,
+  removeRouteFromUserHistory,
+  addFavoriteRouteToUser,
+  removeFavoriteRouteFromUser,
 } = require("../controllers/user-controller");
 
 const router = express.Router();
@@ -19,9 +19,9 @@ router.get("/", getUsers);
 router.get("/:id", getUserById);
 router.put("/:id", updateUser);
 router.delete("/:id", deleteUser);
-router.post("/history/:id", addRouteToHistory);
-router.delete("/history/:id", removeRouteFromHistory);
-router.post("/favorites/:id", addRouteToFavorites);
-router.delete("/favorites/:id", removeRouteFromFavorites);
+router.post("/history/:id", addRouteToUserHistory);
+router.delete("/history/:id", removeRouteFromUserHistory);
+router.post("/favorites/:id", addFavoriteRouteToUser);
+router.delete("/favorites/:id", removeFavoriteRouteFromUser);
 
 module.exports = router;
