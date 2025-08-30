@@ -67,10 +67,14 @@ const createRoute = async (req, res) => {
 const updateRoute = async (req, res) => {
   try {
     // Find the route by ID and update it. `new: true` returns the updated document, and `runValidators: true` applies schema validation.
-    const updatedRoute = await Route.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+    const updatedRoute = await Route.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
     // If the route to update is not found, return a 404 Not Found.
     if (!updatedRoute) {
       return res.status(404).json({ message: "Route not found" });
@@ -165,9 +169,7 @@ const removeAlertFromRoute = async (req, res) => {
     );
     // If the alert is not found, return a 404 Not Found.
     if (alertIndex === -1) {
-      return res
-        .status(404)
-        .json({ message: "Alert not found in this route" });
+      return res.status(404).json({ message: "Alert not found in this route" });
     }
     // Use splice() to remove the alert at the found index.
     route.alerts.splice(alertIndex, 1);
@@ -186,70 +188,6 @@ const removeAlertFromRoute = async (req, res) => {
   }
 };
 
-// Search by start and end points
-const searchRoutes = async (req, res) => {
-  try {
-    const { startLat, startLon, endLat, endLon } = req.query;
-    // Check if any required query parameters are missing.
-    if (!startLat || !startLon || !endLat || !endLon) {
-      return res.status(400).json({ error: "Missing search parameters" });
-    }
-    // Find routes that match the provided coordinates.
-    const routes = await Route.find({
-      "initial_point.coordinates.latitude": startLat,
-      "initial_point.coordinates.longitude": startLon,
-      "end_point.coordinates.latitude": endLat,
-      "end_point.coordinates.longitude": endLon,
-    });
-    // Respond with a 200 OK status and the search results.
-    res.status(200).json(routes);
-  } catch (error) {
-    // Handle server errors.
-    res.status(500).json({ error: "Server error" });
-  }
-};
-
-// Search by distance range
-const searchRoutesByDistance = async (req, res) => {
-  try {
-    const { minDistance, maxDistance } = req.query;
-    // Check for missing query parameters.
-    if (!minDistance || !maxDistance) {
-      return res.status(400).json({ error: "Missing search parameters" });
-    }
-    // Find routes where the distance is within the specified range.
-    const routes = await Route.find({
-      distance: { $gte: minDistance, $lte: maxDistance },
-    });
-    // Respond with a 200 OK status and the search results.
-    res.status(200).json(routes);
-  } catch (error) {
-    // Handle server errors.
-    res.status(500).json({ error: "Server error" });
-  }
-};
-
-// Search by cost and time criteria
-const searchRoutesByCriteria = async (req, res) => {
-  try {
-    const { maxTime, maxCost } = req.query;
-    // Check for missing query parameters.
-    if (!maxTime || !maxCost) {
-      return res.status(400).json({ error: "Missing search parameters" });
-    }
-    // Find routes that meet the maximum time and cost criteria.
-    const routes = await Route.find({
-      estimated_time: { $lte: maxTime },
-      estimated_cost: { $lte: maxCost },
-    });
-    // Respond with a 200 OK status and the search results.
-    res.status(200).json(routes);
-  } catch (error) {
-    // Handle server errors.
-    res.status(500).json({ error: "Server error" });
-  }
-};
-
 // Export all controller functions.
 module.exports = {
   getRoutes,
@@ -259,7 +197,4 @@ module.exports = {
   deleteRoute,
   addAlertToRoute,
   removeAlertFromRoute,
-  searchRoutes,
-  searchRoutesByDistance,
-  searchRoutesByCriteria,
 };

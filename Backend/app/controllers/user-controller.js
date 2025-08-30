@@ -110,11 +110,6 @@ const removeRouteFromUserHistory = async (req, res) => {
       return res.status(400).json({ message: "Route is required" });
     }
 
-    if (!user.routes_history.includes(req.body.route)) {
-      console.error("Route not in history");
-      return res.status(404).json({ message: "Route not in history" });
-    }
-
     user.routes_history = user.routes_history.filter(
       (route) => route !== req.body.route
     );
@@ -169,11 +164,6 @@ const removeFavoriteRouteFromUser = async (req, res) => {
     if (!req.body.route) {
       console.error("Route is required");
       return res.status(400).json({ message: "Route is required" });
-    }
-
-    if (!user.favorites_routes.includes(req.body.route)) {
-      console.error("Route not in favorites");
-      return res.status(404).json({ message: "Route not in favorites" });
     }
 
     user.favorites_routes = user.favorites_routes.filter(

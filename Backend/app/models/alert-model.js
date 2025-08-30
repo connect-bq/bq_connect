@@ -1,12 +1,15 @@
-const mongoose = require('mongoose');
-const reportSchema = require('./report-model');
+const mongoose = require("mongoose");
+const reportSchema = require("./report-model");
 
 // Schema for Alerts
-const alertSchema = new mongoose.Schema({
+const alertSchema = new mongoose.Schema(
+  {
     type: { type: String, required: true },
     severity: { type: String, required: true },
     username: { type: String, required: true },
     reports: { type: [reportSchema], default: [] },
-}, { _id: false });
+  },
+  { timestamps: true }
+);
 
 module.exports = alertSchema;
