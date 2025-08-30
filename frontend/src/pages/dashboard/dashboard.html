@@ -1,210 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="interactive system that will allow the user to search for public bus routes"
-    />
-    <meta name="keywords" content="integrative project" />
-    <meta
-      name="sitedomain"
-      content="https://github.com/connect-bq/bq_connect.git"
-    />
-    <meta name="authors" content="StarDev" />
-    <meta name="desingner" content="StarDev" />
-    <meta name="copyright" content="© StarDev. All rights reserved" />
-    <meta name="robots" content="index, follow" />
-    <meta name="googlebot" content="index, follow" />
-    <meta name="revisit-after" content="10days" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>BQ_connect</title>
-  </head>
 
-  <body>
-    <!-- Here is the header, there are options to logout and drakmode -->
-    <header class="w-full flex justify-between pt-10">
-      <article class="flex gap-5 ml-10 items-center">
-        <img src="../img/usuario.png" class="w-15" alt="usuario-image" />
-        <div>
-          <h1 class="font-bold">My Profile</h1>
-          <p class="text-xs text-gray-600">
-            Manage your time and report incidents.
-          </p>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Interactive system that allows users to search for public bus routes" />
+  <meta name="keywords" content="integrative project" />
+  <meta name="sitedomain" content="https://github.com/connect-bq/bq_connect.git" />
+  <meta name="authors" content="StarDev" />
+  <meta name="designer" content="StarDev" />
+  <meta name="copyright" content="© StarDev. All rights reserved" />
+  <meta name="robots" content="index, follow" />
+  <meta name="googlebot" content="index, follow" />
+  <meta name="revisit-after" content="10days" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <title>BQ_connect</title>
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans">
+  <!-- Header -->
+  <header class="w-full flex justify-between items-center py-6 px-12 bg-white shadow-md">
+    <article class="flex gap-6 items-center">
+      <img src="../../assets/icon/usuario.svg" class="w-14 h-14 rounded-full" alt="User Image" />
+      <div>
+        <h1 class="font-bold text-2xl text-gray-800">My Profile</h1>
+        <p class="text-sm text-gray-500">Manage your time and report incidents.</p>
+      </div>
+    </article>
+    <article class="flex gap-6 items-center">
+      <!-- Logout Button -->
+      <button id="logout-btn"
+        class="group flex items-center justify-start w-11 h-11 bg-[#FF6B35] rounded-full cursor-pointer relative overflow-hidden transition-all duration-200 shadow-lg hover:w-32 hover:rounded-lg active:translate-x-1 active:translate-y-1">
+        <div
+          class="flex items-center justify-center w-full transition-all duration-300 group-hover:justify-start group-hover:px-3">
+          <svg class="w-4 h-4" viewBox="0 0 512 512" fill="white">
+            <path
+              d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
+            </path>
+          </svg>
+        </div>
+        <div
+          class="absolute right-5 transform translate-x-full opacity-0 text-white text-lg font-semibold transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+          Logout
+        </div>
+      </button>
+
+      <!-- Dark Mode Toggle -->
+      <img id="dark-mode-toggle" src="../../assets/icon/dark_mode.svg"
+        class="w-10 h-10 hover:opacity-80 cursor-pointer" alt="Dark Mode Icon" />
+    </article>
+  </header>
+
+  <!-- Main Content -->
+  <main class="mt-12 space-y-12">
+    <!-- Profile Section -->
+    <section class="w-4/5 bg-white rounded-lg shadow-lg mx-auto p-8 space-y-8">
+      <article class="flex gap-6 items-center">
+        <img class="w-12" src="../../assets/icon/usuario.svg" alt="User Icon" />
+        <h3 class="font-semibold text-2xl text-gray-800">My Profile</h3>
+      </article>
+      <article class="flex gap-10">
+        <div class="w-28 h-28 flex bg-orange-600 rounded-full items-center justify-center shadow-md">
+          <span class="font-semibold text-5xl text-white">C</span>
+        </div>
+        <div class="flex flex-col gap-4">
+          <h2 class="font-bold text-3xl text-gray-800">Carlos Mendoza</h2>
+          <p class="text-gray-500">carlos.mendoza@email.com</p>
+          <div class="flex gap-6 items-center">
+            <button class="bg-green-500 px-5 py-2 rounded-md text-white hover:bg-green-600 transition">
+              Expert
+            </button>
+            <img class="w-8 h-8" src="../../assets/icon/trofeo.svg" alt="Trophy Icon" />
+            <p class="text-gray-700 text-lg">3.8</p>
+          </div>
         </div>
       </article>
-      <article class="flex gap-5 items-center mr-10">
-        <button
-          class="group flex items-center justify-start w-11 h-11 bg-orange-600 rounded-full cursor-pointer relative overflow-hidden transition-all duration-200 shadow-lg hover:w-32 hover:rounded-lg active:translate-x-1 active:translate-y-1"
-        >
-          <div
-            class="flex items-center justify-center w-full transition-all duration-300 group-hover:justify-start group-hover:px-3"
-          >
-            <svg class="w-4 h-4" viewBox="0 0 512 512" fill="white">
-              <path
-                d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"
-              ></path>
-            </svg>
-          </div>
-          <div
-            class="absolute right-5 transform translate-x-full opacity-0 text-white text-lg font-semibold transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
-          >
-            Logout
-          </div>
-        </button>
-        <img
-          src="../img/dark_mode.png"
-          class="w-11 h-11 hover:opacity-80 cursor-pointer"
-          alt="dark_mode_image.png"
-        />
-      </article>
-    </header>
-    <main>
-      <!-- Here there are the profile and the alerts section  -->
-      <section
-        class="w-[65%] bg-gray-100 rounded-xs mx-auto mt-20 pt-5 pl-5 pb-3 my-10"
-      >
-        <article class="w-50 flex gap-5 items-center ml-10">
-          <img class="w-9" src="../img/usuario.png" alt="people icon" />
-          <h3 class="font-semibold">My profile</h3>
-        </article>
-        <article class="flex gap-7 mt-10">
-          <div
-            class="w-25 h-25 flex bg-orange-600 rounded-[100%] items-center justify-center ml-10"
-          >
-            <!-- Here there is the first letter of the user name -->
-            <span
-              class="font-semibold -translate-y-0.7 -translate-x-0.5 text-6xl text-white"
-              >C</span
-            >
-          </div>
-          <div class="flex flex-col gap-1">
-            <h2 class="font-bold text-3xl">Carlos Mendoza</h2>
-            <p class="text-gray-400">carlos.mendoza@email.com</p>
-            <div class="flex gap-5 items-center">
-              <button
-                class="bg-green-500 px-3 py-1 rounded-xs hover:bg-green-700 hover:text-white hover:cursor-pointer"
-              >
-                Expert
-              </button>
-              <img class="w-5 h-5" src="../img/trofeo.png" alt="img" />
-              <p>3.8</p>
-            </div>
-          </div>
-        </article>
-        <div class="w-[90%] flex justify-around mx-auto my-15">
-          <article
-            class="w-[40%] flex flex-col gap-5 bg-gray-300 p-3 rounded-xs"
-          >
-            <div class="flex gap-2 items-center">
-              <img
-                class="w-4 h-4"
-                src="../img/advertencia.png"
-                alt="danger image"
-              />
-              <h4>Deported alerts</h4>
-            </div>
-            <div>
-              <p>23</p>
-              <p>18 verified</p>
-            </div>
-          </article>
-          <article
-            class="w-[40%] flex flex-col gap-5 bg-gray-300 p-3 rounded-xs"
-          >
-            <div class="flex gap-2 items-center">
-              <img class="w-4 h-4" src="../img/advertencia.png" alt="" />
-              <h4>Deported alerts</h4>
-            </div>
-            <div>
-              <p>23</p>
-              <p>18 verified</p>
-            </div>
-          </article>
-        </div>
-      </section>
-      <!-- Here there is a section to show the routes, historial and other importante information -->
-      <section
-        class="w-[65%] h-[32rem] flex flex-col gap-7 bg-gray-100 rounded-xs mx-auto mt-20 pt-5 pl-5 pb-3 pb my-10"
-      >
-        <article class="w-50 flex gap-5 items-center ml-10">
-          <img class="w-9" src="../img/star.png" alt="people_icon" />
-          <h3 class="font-semibold">Favorite routess</h3>
-        </article>
-        <article
-          class="w-[95%] h-25 flex flex-col gap-3 mx-auto bg-gray-300 rounded-xs p-5"
-        >
-          <div class="flex gap-5">
-            <div class="w-7 h-7 bg-green-500 rounded-[100%]"></div>
-            <div>DownTown ----Airport</div>
-          </div>
-          <div class="flex items-center gap-5 ml-13">
-            <p class="text-xs text-blue-500">Balanced</p>
-            <p class="text-xs">28m</p>
-            <p class="text-xs bg-gray-500 p-0.5 rounded-xs">15x</p>
-          </div>
-        </article>
-        <article
-          class="w-[95%] h-25 flex flex-col gap-3 mx-auto bg-gray-300 rounded-xs p-5"
-        >
-          <div class="flex gap-5">
-            <div class="w-7 h-7 bg-green-500 rounded-[100%]"></div>
-            <div>DownTown ----Airport</div>
-          </div>
-          <div class="flex items-center gap-5 ml-13">
-            <p class="text-xs text-blue-500">Balanced</p>
-            <p class="text-xs">28m</p>
-            <p class="text-xs bg-gray-500 p-0.5 rounded-xs">15x</p>
-          </div>
-        </article>
-        <article
-          class="w-[95%] h-25 flex flex-col gap-3 mx-auto bg-gray-300 rounded-xs p-5"
-        >
-          <div class="flex gap-5">
-            <div class="w-7 h-7 bg-red-500 rounded-[100%]"></div>
-            <div>DownTown ----Airport</div>
-          </div>
-          <div class="flex items-center gap-5 ml-13">
-            <p class="text-xs text-blue-500">Balanced</p>
-            <p class="text-xs">28m</p>
-            <p class="text-xs bg-gray-500 p-0.5 rounded-xs">15x</p>
-          </div>
-        </article>
-      </section>
-      <section
-        class="w-[65%] h-[32rem] flex flex-col gap-7 bg-gray-100 rounded-xs mx-auto mt-20 pt-5 pl-5 pb-3 pb my-10"
-      >
-        <div>
-          <article class="w-70 flex gap-5 items-center ml-10">
-            <img class="w-9" src="../img/star.png" alt="people_icon" />
-            <h3 class="font-semibold">Report incidents</h3>
-          </article>
-          <p class="text-md text-gray-600 ml-25 mt-2">
-            Help the community by reporting trafficking incidents in real time.
-          </p>
-        </div>
-        <button
-          class="w-[90%] h-10 bg-orange-500 text-white font-bold mx-auto rounded-md hover:bg-orange-700 hover:cursor-pointer"
-        >
-          + Create new alert
-        </button>
-        <div class="mt-10">
-          <article class="w-70 flex gap-5 items-center ml-10">
-            <img class="w-9" src="../img/star.png" alt="people_icon" />
-            <h3 class="font-semibold">Recent activity</h3>
-          </article>
-          <ul class="ml-40 flex flex-col gap-5 mt-10">
-            <li class="list-disc text-gray-400">Recommended route</li>
-            <li class="list-disc text-gray-400">Recommended route</li>
-            <li class="list-disc text-gray-400" >Recommended route</li>
-          </ul>
-        </div>
-      </section>
-    </main>
-    <footer class="w-full h-30 bg-orange-500 flex items-center justify-center">
-        <p class="text-white font-bold">@2025 All rights reserved</p>
+    </section>
 
-    </footer>
-  </body>
+    <!-- Alerts Section -->
+    <section class="w-4/5 bg-white rounded-lg shadow-lg mx-auto p-8 space-y-8">
+      <article class="flex gap-6 items-center">
+        <img class="w-12" src="../../assets/icon/advertencia.svg" alt="Warning Icon" />
+        <h3 class="font-semibold text-2xl text-gray-800">Reported Alerts</h3>
+      </article>
+      <div class="grid grid-cols-2 gap-6">
+        <article class="bg-gray-100 p-6 rounded-lg shadow-md">
+          <h4 class="font-semibold text-lg text-gray-800">Total Alerts</h4>
+          <p class="text-2xl font-bold text-orange-600">23</p>
+          <p class="text-sm text-gray-500">18 verified</p>
+        </article>
+        <article class="bg-gray-100 p-6 rounded-lg shadow-md">
+          <h4 class="font-semibold text-lg text-gray-800">Pending Alerts</h4>
+          <p class="text-2xl font-bold text-orange-600">5</p>
+          <p class="text-sm text-gray-500">Under review</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Favorite Routes Section -->
+    <section class="w-4/5 bg-white rounded-lg shadow-lg mx-auto p-8 space-y-8 mb-10">
+      <article class="flex gap-6 items-center">
+        <img class="w-12" src="../../assets/icon/star.svg" alt="Star Icon" />
+        <h3 class="font-semibold text-2xl text-gray-800">Favorite Routes</h3>
+      </article>
+      <div class="space-y-6">
+        <article class="bg-gray-100 p-6 rounded-lg shadow-md">
+          <div class="flex gap-6 items-center">
+            <div class="w-8 h-8 bg-green-500 rounded-full"></div>
+            <p class="text-lg text-gray-800">Downtown ---- Airport</p>
+          </div>
+          <div class="flex gap-6 items-center text-sm text-gray-500 mt-2">
+            <p class="text-blue-500">Balanced</p>
+            <p>28m</p>
+            <p class="bg-gray-300 px-3 py-1 rounded-md">15x</p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full bg-orange-600 py-6 text-center">
+    <p class="text-white font-bold text-lg">&copy; 2025 All rights reserved</p>
+  </footer>
+
+  <script src="./dashboard.js"></script>
+</body>
+
 </html>
