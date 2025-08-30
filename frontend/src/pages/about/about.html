@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect BQ - Acerca de</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        accent: '#06b6d4',
+                        muted: '#6b7280',
+                        'chart-3': '#10b981',
+                        'chart-4': '#f59e0b'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+        .icon-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        .card-hover-effect {
+            transition: all 0.3s ease;
+        }
+        .card-hover-effect:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .gradient-animated {
+            background: linear-gradient(135deg, #FF6B35 0%, #af553a 100%);
+            background-size: 200% 200%;
+            animation: gradient 8s ease infinite;
+        }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .progress-bar {
+            background: linear-gradient(90deg, #FF6B35, #af553a);
+            border-radius: 9999px;
+            height: 8px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, #FF6B35, #af553a);
+            height: 100%;
+            border-radius: 9999px;
+            transition: width 1s ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <header class="border-b border-gray-200 bg-white/50 backdrop-blur-sm sticky top-0 z-50">
+        <section class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <a href="/" class="flex items-center space-x-2">
+                    <article class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                        </svg>
+                    </article>
+                    <span class="text-xl font-bold text-gray-900">Connect BQ</span>
+                </a>
+                <a href="/" class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors">
+                    Volver al Inicio
+                </a>
+            </div>
+        </section>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        <section class="max-w-4xl mx-auto space-y-8">
+            <!-- Hero Section -->
+            <section class="text-center space-y-4">
+                <h1 class="text-4xl font-bold text-gray-900">Acerca de Connect BQ</h1>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    La plataforma de movilidad urbana inteligente que conecta a Barranquilla con el futuro del transporte
+                    sostenible.
+                </p>
+            </section>
+
+            <!-- Mission Card -->
+            <section class="card-hover-effect gradient-animated text-white border-0 overflow-hidden relative rounded-lg p-6">
+                <article class="absolute inset-0 bg-black/20"></article>
+                <div class="relative z-10">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="p-3 bg-white/20 rounded-full backdrop-blur-sm">
+                            <svg class="w-8 h-8 text-white icon-float" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="m8 12 2 2 4-4"/>
+                            </svg>
+                        </div>
+                        <h2 class="text-2xl font-bold text-white">Nuestra Misión</h2>
+                    </div>
+                    <p class="text-white/90 leading-relaxed text-lg">
+                        Connect BQ nace con el propósito de revolucionar la movilidad urbana en Barranquilla, proporcionando a
+                        los ciudadanos herramientas inteligentes para optimizar sus desplazamientos, reducir el impacto
+                        ambiental y construir una ciudad más conectada y sostenible.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Features Grid -->
+            <section class="grid md:grid-cols-2 gap-6">
+                <!-- Route Optimization Card -->
+                <section class="card-hover-effect bg-gradient-to-br  to-cyan-50 border border-whith-200 rounded-lg p-6 group">
+                    <article class="flex items-center space-x-3 mb-4">
+                        <div class="p-2 bg-[#FF6B35] rounded-lg group-hover:bg- [#FF8A65] transition-colors">
+                            <svg class="w-6 h-6 text-[#ffffff]" fill="none" stroke="currentColor " viewBox="0 0 24 24">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-[#FF6B35]">Optimización de Rutas</h3>
+                    </article>
+                    <p class="text-gray-600 mb-4">
+                        Algoritmos inteligentes que calculan las mejores rutas según tus preferencias
+                    </p>
+                    <ul class="space-y-3 text-gray-600 mb-6">
+                        <li class="flex items-center space-x-2">
+                            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12,6 12,12 16,14"/>
+                            </svg>
+                             <p>Rutas más rápidas para ahorrar tiempo</p>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
+                            </svg>
+                            <p>Opciones económicas para cuidar tu bolsillo</p> 
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="m9 12 2 2 4-4"/>
+                                <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9"/>
+                            </svg>
+                            <p>Rutas equilibradas que combinan tiempo y costo</p>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                            <p>Integración con todos los medios de transporte</p>
+                        </li>
+                    </ul>
+                    <section class="pt-2">
+                        <article class="flex justify-between text-sm text-gray-600 mb-2">
+                            <p>Precisión de rutas </p>
+                             <p>95%</p>
+                        </article>
+                        <article class="progress-bar">
+                            <div class="progress-fill" style="width: 95%"></div>
+                        </article>
+                    </section>
+                </section>
+
+                <!-- Community Card -->
+                <section class="card-hover-effect bg-gradient-to-br from-cyan-50 to-blue-50 border border-cyan-200 rounded-lg p-6 group">
+                    <article class="flex items-center space-x-3 mb-4">
+                        <div class="p-2 bg-cyan-200 rounded-lg group-hover:bg-cyan-300 transition-colors">
+                            <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="m22 21-3-3m0 0a5.5 5.5 0 1 0-7.78-7.78 5.5 5.5 0 0 0 7.78 7.78Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-accent">Comunidad Activa</h3>
+                    </article>
+                    <p class="text-gray-600 mb-4">Reportes en tiempo real generados por la comunidad barranquillera</p>
+                    <ul class="space-y-3 text-gray-600 mb-6">
+                        <li class="flex items-center space-x-2">
+                            <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                            </svg>
+                            <p>Alertas de tráfico en tiempo real</p> 
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="m9 12 2 2 4-4"/>
+                                <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9"/>
+                            </svg>
+                            <p>Reportes de accidentes y construcciones</p> 
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="m22 21-3-3"/>
+                            </svg>
+                            <p>Sistema de verificación comunitaria</p> 
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
+                            </svg>
+                            <p>Información colaborativa y confiable</p> 
+                        </li>
+                    </ul>
+                    <section class="pt-2">
+                        <article class="flex justify-between text-sm text-gray-600 mb-2">
+                            <p>Participación comunitaria</p>
+                            <p>87%</p>
+                        </article>
+                        <article class="progress-bar">
+                            <div class="progress-fill" style="width: 87%"></div>
+                        </article>
+                    </section>
+                </section>
+
+                <!-- Vision 2035 Card -->
+                <section class="card-hover-effect bg-gradient-to-br from-emerald-100 to-blue-50 border border-emerald-300 rounded-lg p-6 group">
+                    <article class="flex items-center space-x-3 mb-4">
+                        <div class="p-2 bg-emerald-300 rounded-lg group-hover:bg-emerald-400 transition-colors">
+                            <svg class="w-6 h-6 text-chart-3 icon-float" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+                                <path d="M5 3v4"/>
+                                <path d="M19 17v4"/>
+                                <path d="M3 5h4"/>
+                                <path d="M17 19h4"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-chart-3">Visión 2035</h3>
+                    </article>
+                    <p class="text-gray-600 mb-4">Planificación urbana inteligente para el futuro de Barranquilla</p>
+                    <ul class="space-y-3 text-gray-600 mb-6">
+                        <li class="flex items-center space-x-2">
+                            <svg class="w-4 h-4 text-chart-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                            <p>Proyección de infraestructura futura</p>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <svg class="w-4 h-4 text-chart-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
+                                <path d="M12 18h.01"/>
+                            </svg>
+                            <p>Integración con vehículos autónomos</p>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <svg class="w-4 h-4 text-chart-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M11.767 19.089c4.924.868 6.14-6.025 1.216-6.894m-1.216 6.894L5.86 18.047m5.908 1.042-.347 1.97m1.563-8.864c4.924.869 6.14-6.025 1.216-6.894m-1.216 6.894L5.86 15.047m5.908 1.042-.347 1.97"/>
+                            </svg>
+                            <p>Corredores verdes y sostenibles</p>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <svg class="w-4 h-4 text-chart-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21"/>
+                            </svg>
+                            <p>Smart city y ciudades inteligentes</p>
+                        </li>
+                    </ul>
+                    <section class="pt-2">
+                        <article class="flex justify-between text-sm text-gray-600 mb-2">
+                            <p>Progreso hacia 2035</p>
+                            <p>23%</p>
+                        </article>
+                        <article class="progress-bar">
+                            <div class="progress-fill" style="width: 23%"></div>
+                        </article>
+                    </section>
+                </section>
+
+                <!-- Technology Card -->
+                <section class="card-hover-effect bg-gradient-to-br from-amber-50 to-cyan-50 border border-amber-200 rounded-lg p-6 group">
+                    <article class="flex items-center space-x-3 mb-4">
+                        <div class="p-2 bg-amber-200 rounded-lg group-hover:bg-amber-300 transition-colors">
+                            <svg class="w-6 h-6 text-chart-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
+                                <path d="M12 18h.01"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-chart-4">Tecnología Avanzada</h3>
+                    </article>
+                    <p class="text-gray-600 mb-4">Herramientas modernas para una experiencia de usuario excepcional</p>
+                    <ul class="space-y-3 text-gray-600 mb-6">
+                        <li class="flex items-center space-x-2">
+                            <svg class="w-4 h-4 text-chart-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
+                                <path d="M12 18h.01"/>
+                            </svg>
+                            <p>Interfaz intuitiva y responsive</p>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <svg class="w-4 h-4 text-chart-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                            <p>Geolocalización precisa</p>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <svg class="w-4 h-4 text-chart-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12,6 12,12 16,14"/>
+                            </svg>
+                            <p>Historial y rutas favoritas</p>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <svg class="w-4 h-4 text-chart-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                            <p>Modo oscuro y personalización</p>
+                        </li>
+                    </ul>
+                    <section class="pt-2">
+                        <article class="flex justify-between text-sm text-gray-600 mb-2">
+                            <p>Satisfacción del usuario</p>
+                            <p>92%</p>
+                        </article>
+                        <article class="progress-bar">
+                            <div class="progress-fill" style="width: 92%"></div>
+                        </article>
+                    </section>
+                </section>
+            </section>
+
+            <!-- Vision Card -->
+            <section class="card-hover-effect bg-gradient-to-r from-blue-50 via-cyan-50 to-emerald-50 border border-blue-200 backdrop-blur-sm rounded-lg p-6">
+                <section class="flex items-center space-x-3 mb-6">
+                    <article class="p-3 bg-blue-200 rounded-full backdrop-blur-sm">
+                        <svg class="w-8 h-8 text-primary icon-float" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </article>
+                    <h2 class="text-2xl font-bold text-gray-900">Nuestra Visión</h2>
+                </section>
+                <p class="text-gray-600 leading-relaxed mb-6 text-lg">
+                    Ser la plataforma líder de movilidad urbana en el Caribe colombiano, contribuyendo a la transformación
+                    de Barranquilla en una ciudad inteligente, sostenible y conectada, donde cada ciudadano tenga acceso a
+                    información precisa y herramientas que mejoren su calidad de vida.
+                </p>
+                <section class="bg-gradient-to-r from-gray-100 to-blue-50 p-6 rounded-lg backdrop-blur-sm border border-blue-200">
+                    <h4 class="font-semibold text-gray-900 mb-4 flex items-center space-x-2">
+                        <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
+                        </svg>
+                        <p>Impacto Esperado para 2035:</p>
+                    </h4>
+                    <section class="grid sm:grid-cols-3 gap-6 text-center">
+                        <article class="space-y-2">
+                            <div class="text-3xl font-bold text-primary">50%</div>
+                            <div class="text-sm text-gray-600">Reducción en tiempos de viaje</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 50%"></div>
+                            </div>
+                        </article>
+                        <article class="space-y-2">
+                            <div class="text-3xl font-bold text-accent">30%</div>
+                            <div class="text-sm text-gray-600">Menos emisiones de CO₂</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 30%"></div>
+                            </div>
+                        </article>
+                        <article class="space-y-2">
+                            <div class="text-3xl font-bold text-chart-3">1M+</div>
+                            <div class="text-sm text-gray-600">Usuarios activos</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 75%"></div>
+                            </div>
+                        </article>
+                    </section>
+                </section>
+            </section>
+
+            <!-- Team Section -->
+            <section class="card-hover-effect bg-gray-100 border border-gray-200 rounded-lg p-6">
+                <article class="flex items-center space-x-3 mb-4">
+                    <div class="p-2 bg-blue-200 rounded-lg">
+                        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="m22 21-3-3"/>
+                        </svg>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-900">Desarrollado en Barranquilla</h2>
+                </article>
+                <p class="text-gray-600 leading-relaxed">
+                    Connect BQ es desarrollado por un equipo local de ingenieros, diseñadores y especialistas en movilidad
+                    urbana que conocen de primera mano los desafíos de transporte en nuestra ciudad. Trabajamos de la mano
+                    con la comunidad barranquillera para crear soluciones reales a problemas reales.
+                </p>
+            </section>
+
+            <!-- CTA Section -->
+            <section class="text-center space-y-4 py-8">
+                <h3 class="text-2xl font-bold text-gray-900">¿Listo para optimizar tus viajes?</h3>
+                <p class="text-gray-600">
+                    Únete a miles de barranquilleros que ya están mejorando su movilidad urbana.
+                </p>
+                <a href="/" class="inline-block bg-[#FF6B35] hover:bg-[#FF8A65] text-white font-medium px-6 py-3 rounded-lg card-hover-effect transition-colors">
+                    Comenzar Ahora
+                </a>
+            </section>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-200 bg-gray-100 py-8 container mx-auto px-4 text-center">
+
+        <p class="text-gray-600">© 2024 Connect BQ. Hecho con ❤️ en Barranquilla, Colombia.</p>
+
+    </footer>
+
+    <script>
+        // Animate progress bars on scroll
+        const progressBars = document.querySelectorAll('.progress-fill');
+        
+        const animateProgressBars = () => {
+            progressBars.forEach(bar => {
+                const rect = bar.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 100);
+                }
+            });
+        };
+
+        // Initial animation
+        setTimeout(animateProgressBars, 500);
+
+        // Animation on scroll
+        window.addEventListener('scroll', animateProgressBars);
+    </script>
+</body>
+</html>
