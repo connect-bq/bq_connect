@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     registerForm.addEventListener('submit', async (event) => {
         event.preventDefault();
 
-        // Validaciones
+        // Validations
         if (
             idNumber.value === "" ||
             idFullName.value === "" ||
@@ -29,12 +29,12 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         if (!validateEmail(idEmail.value)) {
-            alert("Por favor, ingrese un correo electrónico válido.");
+            alert("Please enter a valid email address.");
             return;
         }
 
         submitButton.disabled = true;
-        submitButton.textContent = 'Registrando...';
+        submitButton.textContent = 'Registering...';
         submitButton.classList.add('opacity-70');
 
         const formData = {
