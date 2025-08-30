@@ -1,7 +1,16 @@
-// Check if the user is already logged in
+// Verificar si el usuario ya está logueado
 if (localStorage.getItem("user")) {
-  // Redirect to index.html if the user is logged in
-  window.location.href = "../../index.html";
+  // Si el usuario está logueado, redirigir al dashboard
+  if (window.location.pathname.includes("login.html")) {
+    window.location.href = "../dashboard/dashboard.html";
+  }
+} else {
+  // Si el usuario no está logueado
+  if (window.location.pathname.includes("dashboard.html")) {
+    // Redirigir al login si intenta acceder al dashboard
+    window.location.href = "../login/login.html";
+  }
+  // Permitir permanecer en index.html
 }
 
 // Handle login form submission
@@ -33,8 +42,8 @@ document.addEventListener("DOMContentLoaded", () => {
           email: validUser.email
         }));
 
-        // Redirect to index.html
-        window.location.href = "../../../index.html";
+        // Redirect to dashboard.html
+        window.location.href = "../dashboard/dashboard.html";
       } else {
         // Show an error message
         alert("Invalid email or password. Please try again.");

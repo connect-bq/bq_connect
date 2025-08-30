@@ -24,6 +24,7 @@
 
 <body class="bg-[#F5F5F5] text-[#333333]">
 
+
   <!-- Navbar -->
   <header class="bg-[#FFFFFF] border-b border-[#D9D9D9] p-3 flex justify-between items-center relative">
 
@@ -44,11 +45,14 @@
 
     <!-- Navegación desktop -->
     <nav class="hidden lg:flex gap-3">
-      <!-- Modificar el botón Profile para redirigir a dashboard.html -->
+      <!-- Botón Profile -->
       <button id="profile-btn" class="border border-[#D9D9D9] px-3 py-1 rounded-lg">
         Profile
       </button>
-     
+      <!-- Botón Sign In -->
+      <a href="./src/pages/login/login.html" class="border border-[#FF6B35] px-3 py-1 rounded-lg text-[#FF6B35] hover:bg-[#FF6B35] hover:text-white transition">
+        Sign In
+      </a>
     </nav>
   </header>
 
@@ -61,11 +65,12 @@
       <!-- Navegación móvil -->
       <div class="mb-6 flex flex-col gap-2">
         <button class="border border-[#D9D9D9] px-3 py-2 rounded-lg" id="profile-btn">Profile</button>
-
+        <a href="./src/pages/login/login.html" class="border border-[#FF6B35] px-3 py-2 rounded-lg text-[#FF6B35] hover:bg-[#FF6B35] hover:text-white transition">
+          Sign In
+        </a>
       </div>
-
-      <hr class="mb-6">
-
+    </div>
+  </div>
       <!-- Plan your route -->
       <section class="bg-[#F5F5F5] rounded-xl p-4 mb-4">
         <h2 class="font-semibold flex items-center gap-2">

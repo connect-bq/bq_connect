@@ -3,9 +3,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   if (!user || !user.loggedIn) {
-    // Redirigir al login si no está logueado
-    window.location.href = "./src/pages/login/login.html";
-    return; // Detener la ejecución del resto del script
+    // Si el usuario no está logueado y está intentando acceder al dashboard, redirigir al login
+    if (window.location.pathname.includes("dashboard.html")) {
+      window.location.href = "./src/pages/login/login.html";
+      return; // Detener la ejecución del resto del script
+    }
+    // Permitir permanecer en index.html si no está logueado
   }
 
   // Redirigir al dashboard desde el botón Profile
