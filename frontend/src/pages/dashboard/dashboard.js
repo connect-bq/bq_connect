@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!user || !user.loggedIn) {
     // Redirigir al login si no está logueado
-    window.location.href = "../login/login.html";
+    window.location.href = "../../login/login.html";
     return; // Detener la ejecución del resto del script
   }
 
