@@ -22,40 +22,14 @@
     <div class="bg-[var(--blanco)] border border-[var(--gris-claro)] rounded-2xl shadow-lg w-full max-w-md">
 
       <!-- Header with Go Back button and title -->
-      <div class="p-6 space-y-6 pb-8">
+      <div class="p-6 space-y-8 pb-10">
         
         <!-- Go Back Button -->
-        <div class="flex justify-start">
-          <button
-            class="bg-white text-center w-48 rounded-2xl h-14 relative text-black text-xl font-semibold group"
-            type="button"
-          >
-            <div
-              class="bg-orange-400 rounded-xl h-12 w-1/4 flex items-center justify-center absolute left-1 top-[4px] group-hover:w-[184px] z-10 duration-500"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 1024 1024"
-                height="25px"
-                width="25px"
-              >
-                <path
-                  d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"
-                  fill="#000000"
-                ></path>
-                <path
-                  d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"
-                  fill="#000000"
-                ></path>
-              </svg>
-            </div>
-            <p class="translate-x-2">Go Back</p>
-          </button>
-        </div>
+
 
         <!-- Logo img -->
         <div class="flex justify-center">
-          <img src="../../img/Logo.png" alt="Logo" class="w-40">
+          <img src="../../assets/logos/logo-dashboard.png" alt="Logo" class="w-40">
         </div>
 
         <!-- Title of the form -->
@@ -66,7 +40,7 @@
       </div>
 
       <!-- General form -->
-      <div class="px-6 pb-6">
+      <div class="px-6 pb-8">
         <form class="space-y-6">
           <!-- Email section -->
           <div class="space-y-2">
@@ -92,17 +66,6 @@
             />
           </div>
 
-          <!-- Remember Me & Forgot Password -->
-          <div class="flex items-center justify-between">
-            <label class="flex items-center space-x-2 cursor-pointer">
-              <input type="checkbox" class="rounded border-[var(--gris-claro)] text-[var(--naranja)]">
-              <span class="text-sm text-[var(--gris-medio)]">Remember me</span>
-            </label>
-            <a href="#" class="text-sm text-[var(--naranja)] hover:text-[#e85c2f] transition-colors">
-              Forgot your password?
-            </a>
-          </div>
-
           <!-- Submit Button -->
           <button
             type="submit"
@@ -116,7 +79,7 @@
         <div class="mt-6 text-center">
           <p class="text-sm text-[var(--gris-medio)]">
             Don't have an account?
-            <a href="#" class="text-[var(--naranja)] font-medium hover:text-[#e85c2f] transition-colors">
+            <a href="../register/register.html" class="text-[var(--naranja)] font-medium hover:text-[#e85c2f] transition-colors">
               Register here
             </a>
           </p>
@@ -125,5 +88,6 @@
 
     </div>
   </main>
+  <script src="./login.js"></script>
 </body>
 </html>

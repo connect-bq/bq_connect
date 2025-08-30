@@ -24,6 +24,7 @@
 
 <body class="bg-[#F5F5F5] text-[#333333]">
 
+
   <!-- Navbar -->
   <header class="bg-[#FFFFFF] border-b border-[#D9D9D9] p-3 flex justify-between items-center relative">
 
@@ -44,25 +45,14 @@
 
     <!-- Navegación desktop -->
     <nav class="hidden lg:flex gap-3">
-      <button class="bg-[#FF6B35] text-white px-3 py-1 rounded-lg">Current</button>
-      <button class="border border-[#D9D9D9] px-3 py-1 rounded-lg">Visión 2035</button>
-      <button class="border border-[#D9D9D9] px-3 py-1 rounded-lg">profile</button>
-      <button class="border border-[#D9D9D9] px-3 py-1 rounded-lg">about</button>
-      <button
-        class="group flex items-center justify-start w-11 h-11 bg-[#FF6B35] rounded-full cursor-pointer relative overflow-hidden transition-all duration-200 shadow-lg hover:w-32 hover:rounded-lg active:translate-x-1 active:translate-y-1">
-        <div
-          class="flex items-center justify-center w-full transition-all duration-300 group-hover:justify-start group-hover:px-3">
-          <svg class="w-4 h-4" viewBox="0 0 512 512" fill="white">
-            <path
-              d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
-            </path>
-          </svg>
-        </div>
-        <div
-          class="absolute right-5 transform translate-x-full opacity-0 text-white text-lg font-semibold transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
-          Logout
-        </div>
+      <!-- Botón Profile -->
+      <button id="profile-btn" class="border border-[#D9D9D9] px-3 py-1 rounded-lg">
+        Profile
       </button>
+      <!-- Botón Sign In -->
+      <a href="./src/pages/login/login.html" class="border border-[#FF6B35] px-3 py-1 rounded-lg text-[#FF6B35] hover:bg-[#FF6B35] hover:text-white transition">
+        Sign In
+      </a>
     </nav>
   </header>
 
@@ -74,15 +64,13 @@
 
       <!-- Navegación móvil -->
       <div class="mb-6 flex flex-col gap-2">
-        <button class="bg-[#FF6B35] text-white px-3 py-2 rounded-lg">Current</button>
-        <button class="border border-[#D9D9D9] px-3 py-2 rounded-lg">Visión 2035</button>
-        <button class="border border-[#D9D9D9] px-3 py-2 rounded-lg">Profile</button>
-        <button class="border border-[#D9D9D9] px-3 py-2 rounded-lg"> About</button>
-        <button class="bg-[#FF6B35] text-white px-3 py-2 rounded-lg">Logout</button>
+        <button class="border border-[#D9D9D9] px-3 py-2 rounded-lg" id="profile-btn">Profile</button>
+        <a href="./src/pages/login/login.html" class="border border-[#FF6B35] px-3 py-2 rounded-lg text-[#FF6B35] hover:bg-[#FF6B35] hover:text-white transition">
+          Sign In
+        </a>
       </div>
-
-      <hr class="mb-6">
-
+    </div>
+  </div>
       <!-- Plan your route -->
       <section class="bg-[#F5F5F5] rounded-xl p-4 mb-4">
         <h2 class="font-semibold flex items-center gap-2">
@@ -408,74 +396,7 @@
       <div id="map" class="w-full h-[45rem] lg:w-[70rem] rounded-lg"></div>
     </section>
   </main>
-
-  <script>
-    // Menú hamburguesa
-    const hamburgerBtn = document.getElementById('hamburger-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const mobileSidebar = document.getElementById('mobile-sidebar');
-    const line1 = document.getElementById('line1');
-    const line2 = document.getElementById('line2');
-    const line3 = document.getElementById('line3');
-    const mapSection = document.getElementById('map-section');
-
-    let isMenuOpen = false;
-
-    hamburgerBtn.addEventListener('click', () => {
-      isMenuOpen = !isMenuOpen;
-
-      if (isMenuOpen) {
-        // Abrir menú
-        mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
-        mobileMenu.classList.add('opacity-100');
-        mobileSidebar.classList.remove('-translate-x-full');
-        mobileSidebar.classList.add('translate-x-0');
-        mapSection.classList.add('hidden'); // Oculta el mapa
-        // Animación botón hamburguesa a X
-        line1.style.transform = 'rotate(45deg) translate(5px, 5px)';
-        line2.style.opacity = '0';
-        line3.style.transform = 'rotate(-45deg) translate(7px, -6px)';
-      } else {
-        // Cerrar menú
-        mobileMenu.classList.add('opacity-0', 'pointer-events-none');
-        mobileMenu.classList.remove('opacity-100');
-        mobileSidebar.classList.add('-translate-x-full');
-        mobileSidebar.classList.remove('translate-x-0');
-        mapSection.classList.remove('hidden'); // Muestra el mapa
-        // Animación X a hamburguesa
-        line1.style.transform = 'rotate(0) translate(0, 0)';
-        line2.style.opacity = '1';
-        line3.style.transform = 'rotate(0) translate(0, 0)';
-      }
-    });
-
-    // Cerrar menú al hacer clic en el overlay
-    mobileMenu.addEventListener('click', (e) => {
-      if (e.target === mobileMenu) {
-        hamburgerBtn.click();
-      }
-    });
-
-    // Inicializar mapa
-    var map = L.map('map').setView([10.9685, -74.7813], 12);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
-
-    // Marcadores
-    L.marker([10.9685, -74.7813]).addTo(map).bindPopup("Centro de Barranquilla");
-    L.marker([10.945, -74.8]).addTo(map).bindPopup("Suroriente");
-    L.marker([10.99, -74.77]).addTo(map).bindPopup("Norte");
-
-    // Redimensionar mapa cuando se redimensiona la ventana
-    window.addEventListener('resize', () => {
-      setTimeout(() => {
-        map.invalidateSize();
-      }, 100);
-    });
-  </script>
-
+  <script src="./main.js"></script>
 </body>
 
 </html>
