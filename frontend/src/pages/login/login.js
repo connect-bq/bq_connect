@@ -29,41 +29,45 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  form.addEventListener("submit", async (event) => { // Agrega 'async' aquí
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
 
+    if (!email || !password) {
+      alert("Por favor, completa ambos campos.");
+      return;
+    }
+
     try {
-      // 1. Reemplazar la validación local con una llamada a la API
-      const response = await fetch('/api/login', { // Asegúrate de que esta es la ruta de tu API de login
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password })
-      });
+      // Obtener todos los usuarios desde la API
+      const response = await fetch('/users');
+      console.log("Respuesta cruda del servidor:", response);
 
-      // 2. Manejar la respuesta del servidor
-      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(`Error en la respuesta HTTP: ${response.status}`);
+      }
 
-      if (response.ok) {
-        // Si la respuesta es exitosa (código 200-299)
-        // Guardar la información completa del usuario en localStorage
+      const users = await response.json();
+      console.log("Usuarios obtenidos:", users);
+
+      // Buscar el usuario que coincida con el email y contraseña
+      const user = users.find(u => u.email === email && u.password === password);
+
+      if (user) {
+        // Guardar al usuario en localStorage
         localStorage.setItem("user", JSON.stringify({
           loggedIn: true,
-          name: data.username, // Usa el campo 'username' de la respuesta del backend
-          email: data.email,   // Usa el campo 'email' de la respuesta
-          _id: data._id        // Guarda el ID del usuario para futuras peticiones
+          name: user.username,
+          email: user.email,
+          _id: user._id
         }));
 
         // Redirigir al dashboard
         window.location.href = "../dashboard/dashboard.html";
       } else {
-        // Si la respuesta no es OK, significa que hubo un error
-        // Muestra el mensaje de error que viene del backend
-        alert(data.message || "Correo o contraseña inválidos. Intenta de nuevo.");
+        alert("Correo o contraseña inválidos. Intenta de nuevo.");
       }
 
     } catch (error) {
@@ -72,3 +76,64 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+
+
+
+
+
+// document.addEventListener("DOMContentLoaded", () => {
+//   // Usuarios de prueba (simulación en memoria, no API)
+//   const mockUsers = [
+//     {
+//       _id: "64f4c1d2a4b1c2d3e4f5a6b7",
+//       username: "Juan Pérez",
+//       email: "juan@example.com",
+//       password: "123456" 
+//     },
+//     {
+//       _id: "65a7b9d3e8f1c2d4b6a7e8f9",
+//       username: "María Gómez",
+//       email: "maria@example.com",
+//       password: "abcdef"
+//     }
+//   ];
+
+//   // Manejo del formulario
+//   const form = document.querySelector("form");
+
+//   if (!form) {
+//     console.error("⚠️ Form no encontrado en el HTML.");
+//     return;
+//   }
+
+//   form.addEventListener("submit", (event) => {
+//     event.preventDefault();
+
+//     const email = document.getElementById("email").value.trim();
+//     const password = document.getElementById("password").value.trim();
+
+//     // Buscar en usuarios de prueba
+//     const user = mockUsers.find(
+//       (u) => u.email === email && u.password === password
+//     );
+
+//     if (user) {
+//       // Guardar en localStorage como si fuera login real
+//       localStorage.setItem(
+//         "user",
+//         JSON.stringify({
+//           loggedIn: true,
+//           name: user.username,
+//           email: user.email,
+//           _id: user._id
+//         })
+//       );
+
+//       // Redirigir al dashboard
+//       window.location.href = "../dashboard/dashboard.html";
+//     } else {
+//       alert("❌ Usuario o contraseña incorrectos.");
+//     }
+//   });
+// });
