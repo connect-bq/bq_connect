@@ -29,32 +29,46 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", async (event) => { // Agrega 'async' aquí
     event.preventDefault();
 
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
 
-    // Usuarios de prueba
-    const users = [
-      { name: "Admin User", email: "admin@example.com", password: "123" },
-      { name: "Regular User", email: "user@example.com", password: "userpassword" },
-    ];
+    try {
+      // 1. Reemplazar la validación local con una llamada a la API
+      const response = await fetch('/api/login', { // Asegúrate de que esta es la ruta de tu API de login
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      });
 
-    const validUser = users.find(user => user.email === email && user.password === password);
+      // 2. Manejar la respuesta del servidor
+      const data = await response.json();
 
-    if (validUser) {
-      // Guardar en localStorage
-      localStorage.setItem("user", JSON.stringify({
-        loggedIn: true,
-        name: validUser.name,
-        email: validUser.email
-      }));
+      if (response.ok) {
+        // Si la respuesta es exitosa (código 200-299)
+        // Guardar la información completa del usuario en localStorage
+        localStorage.setItem("user", JSON.stringify({
+          loggedIn: true,
+          name: data.username, // Usa el campo 'username' de la respuesta del backend
+          email: data.email,   // Usa el campo 'email' de la respuesta
+          _id: data._id        // Guarda el ID del usuario para futuras peticiones
+        }));
 
-      // Redirigir al dashboard
-      window.location.href = "../dashboard/dashboard.html";
-    } else {
-      alert("Correo o contraseña inválidos. Intenta de nuevo.");
+        // Redirigir al dashboard
+        window.location.href = "../dashboard/dashboard.html";
+      } else {
+        // Si la respuesta no es OK, significa que hubo un error
+        // Muestra el mensaje de error que viene del backend
+        alert(data.message || "Correo o contraseña inválidos. Intenta de nuevo.");
+      }
+
+    } catch (error) {
+      console.error('Error en la petición de login:', error);
+      alert("No se pudo conectar con el servidor. Por favor, intenta de nuevo más tarde.");
     }
   });
 });
