@@ -124,6 +124,69 @@ const deleteRoute = async (req, res) => {
   }
 };
 
+const addPointToRoute = async (req, res) => {
+  try {
+    // Find the route by its ID.
+    const route = await Route.findById(req.params.id);
+    // If the route doesn't exist, return a 404 Not Found.
+    if (!route) {
+      return res.status(404).json({ message: "Route not found" });
+    }
+    // Push the new point data from the request body into the path array.
+    route.path.push(req.body);
+    // Save the updated route document to the database.
+    await route.save();
+    // Respond with a 201 Created status and the updated route.
+    res.status(201).json(route);
+  } catch (error) {
+    // Handle invalid route ID format.
+    if (error.kind === "ObjectId") {
+      return res.status(400).json({ error: "Invalid Route ID" });
+    }
+    // Handle validation errors for the point sub-document.
+    if (error.name === "ValidationError") {
+      return res.status(400).json({ error: error.message });
+    }
+    // Log and handle other server errors.
+    console.error(error.message);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+const removePointFromRoute = async (req, res) => {
+  try {
+    // Find the route by its ID.
+    const route = await Route.findById(req.params.id);
+    // If the route doesn't exist, return a 404 Not Found.
+    if (!route) {
+      return res.status(404).json({ message: "Route not found" });
+    }
+
+    // Find the index of the point to be removed within the route's path array.
+    const pointIndex = route.path.findIndex(
+      (point) => point._id === req.params.pointId
+    );
+    // If the point is not found, return a 404 Not Found.
+    if (pointIndex === -1) {
+      return res.status(404).json({ message: "Point not found in this route" });
+    }
+    // Use splice() to remove the point at the found index.
+    route.path.splice(pointIndex, 1);
+    // Save the updated route document.
+    await route.save();
+    // Respond with a 200 OK status and the updated route.
+    res.status(200).json(route);
+  } catch (error) {
+    // Handle invalid Route ID or Point ID format.
+    if (error.kind === "ObjectId") {
+      return res.status(400).json({ error: "Invalid Route ID or Point ID" });
+    }
+    // Log and handle other server errors.
+    console.error(error.message);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
 // Add an alert to a route
 const addAlertToRoute = async (req, res) => {
   try {
@@ -195,6 +258,8 @@ module.exports = {
   createRoute,
   updateRoute,
   deleteRoute,
+  addPointToRoute,
+  removePointFromRoute,
   addAlertToRoute,
   removeAlertFromRoute,
 };
