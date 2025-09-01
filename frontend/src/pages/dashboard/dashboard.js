@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   if (!user || !user.loggedIn) {
-    window.location.href = "../../login/login.html";
+    window.location.href = "../login/login.html";
     return;
   }
 
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
       localStorage.removeItem("user");
-      window.location.href = "../../login/login.html";
+      window.location.href = "../login/login.html";
     });
   }
 

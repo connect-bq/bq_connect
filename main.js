@@ -64,3 +64,24 @@ window.addEventListener('resize', () => {
         map.invalidateSize();
     }, 100);
 });
+
+
+// ...existing code...
+fetch('http://localhost:3000/api/routes')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+  })
+  .catch(error => console.error('Error:', error));
+
+
+
+
+   const logoutBtn = document.getElementById("id-logout");
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem("user"); // Elimina los datos del usuario
+      window.location.href = "../login/login.html"; // Redirige al login
+    });
+  } 
