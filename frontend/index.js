@@ -54,9 +54,9 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // Marcadores
-L.marker([10.9685, -74.7813]).addTo(map).bindPopup("Centro de Barranquilla");
-L.marker([10.945, -74.8]).addTo(map).bindPopup("Suroriente");
-L.marker([10.99, -74.77]).addTo(map).bindPopup("Norte");
+L.marker([10.9685, -74.7813]).addTo(map).bindPopup("Downtown Barranquilla");
+L.marker([10.945, -74.8]).addTo(map).bindPopup("Southeast");
+L.marker([10.99, -74.77]).addTo(map).bindPopup("North");
 
 // Redimensionar mapa cuando se redimensiona la ventana
 window.addEventListener('resize', () => {
