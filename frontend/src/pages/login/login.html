@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --naranja: #FF6B35;
+      --blanco: #FFFFFF;
+      --gris-claro: #D9D9D9;
+      --gris-medio: #999999;
+      --negro: #333333;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <title>Login</title>
+</head>
+<body>
+  <!-- Main with white background -->
+  <main class="bg-[var(--blanco)] min-h-screen flex items-center justify-center">
+    <!-- Login form container -->
+    <div class="bg-[var(--blanco)] border border-[var(--gris-claro)] rounded-2xl shadow-lg w-full max-w-md">
+
+      <!-- Header with Go Back button and title -->
+      <div class="p-6 space-y-8 pb-10">
+        
+        <!-- Go Back Button -->
+
+
+        <!-- Logo img -->
+        <div class="flex justify-center">
+          <img src="../../assets/logos/logo-dashboard.png" alt="Logo" class="w-40">
+        </div>
+
+        <!-- Title of the form -->
+        <div class="text-center space-y-2">
+          <h1 class="text-2xl font-semibold text-[var(--negro)]">Sign In</h1>
+          <p class="text-sm text-[var(--gris-medio)]">Enter your credentials to access</p>
+        </div>
+      </div>
+
+      <!-- General form -->
+      <div class="px-6 pb-8">
+        <form class="space-y-6">
+          <!-- Email section -->
+          <div class="space-y-2">
+            <label for="email" class="block font-medium text-[var(--negro)]">Email Address</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="you@example.com"
+              class="w-full border border-[var(--gris-claro)] rounded-lg py-2 px-3 outline-none"
+              required
+            />
+          </div>
+
+          <!-- Password section-->
+          <div class="space-y-2">
+            <label for="password" class="block font-medium text-[var(--negro)]">Password</label>
+            <input
+              id="password"
+              type="password"
+              placeholder="••••••••"
+              class="w-full border border-[var(--gris-claro)] rounded-lg py-2 px-3 outline-none"
+              required
+            />
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="w-full bg-[var(--naranja)] text-[var(--blanco)] font-medium py-2.5 rounded-lg hover:bg-orange-400 cursor-pointer"
+          >
+            Sign In
+          </button>
+        </form>
+
+        <!-- Register Link -->
+        <div class="mt-6 text-center">
+          <p class="text-sm text-[var(--gris-medio)]">
+            Don't have an account?
+            <a href="../register/register.html" class="text-[var(--naranja)] font-medium hover:text-[#e85c2f] transition-colors">
+              Register here
+            </a>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+  <script src="./login.js"></script>
+</body>
+</html>
