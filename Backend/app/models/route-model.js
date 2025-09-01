@@ -20,6 +20,7 @@ const routeSchema = new mongoose.Schema(
       type: pointSchema,
       required: true,
     },
+    path: { type: [pointSchema], default: [] },
     distance: {
       type: Number,
       required: true,
@@ -36,11 +37,11 @@ const routeSchema = new mongoose.Schema(
       min: 0,
       max: 999999999,
     },
-    alerts: [alertSchema],
+    alerts: { type: [alertSchema], default: [] },
   },
   { timestamps: true }
 );
 
 const Route = mongoose.model("Route", routeSchema);
 
-module.exports =  Route, routeSchema ;
+module.exports = Route, routeSchema;

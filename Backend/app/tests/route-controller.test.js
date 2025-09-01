@@ -189,7 +189,71 @@ describe("Route Controller Comprehensive Tests", () => {
       const deletedRoute = await Route.findById(routeToDelete._id);
       expect(deletedRoute).toBeNull();
     });
+
+    it("should add a point to an existing route", async () => {
+      const route = await Route.create({
+        name: "Route with Points",
+        initial_point: {
+          name: "K",
+          coordinates: { latitude: 11, longitude: 11 },
+        },
+        end_point: { name: "L", coordinates: { latitude: 12, longitude: 12 } },
+        distance: 6,
+        estimated_time: 6,
+        estimated_cost: 6,
+      });
+      const pointData = { name: "Midpoint", coordinates: { latitude: 11.5, longitude: 11.5 } };
+      const req = mockRequest(pointData, { id: route._id });
+      const res = mockResponse();
+      await routeController.addPointToRoute(req, res);
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          _id: route._id,
+        }));
+      const updatedRoute = await Route.findById(route._id);
+      expect(updatedRoute.path.length).toBe(1);
+      expect(updatedRoute.path[0].name).toBe("Midpoint");
+    });
+
+    it("should delete a point to an existing route", async () => {
+      const route = await Route.create({
+        name: "Route with Points",
+        initial_point: {
+          name: "K",
+          coordinates: { latitude: 11, longitude: 11 },
+        },
+        end_point: { name: "L", coordinates: { latitude: 12, longitude: 12 } },
+        distance: 6,
+        estimated_time: 6,
+        estimated_cost: 6,
+      });
+      const pointData = { name: "Midpoint", coordinates: { latitude: 11.5, longitude: 11.5 } };
+      const req = mockRequest(pointData, { id: route._id });
+      const res = mockResponse();
+      await routeController.addPointToRoute(req, res);
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          _id: route._id,
+        }));
+      const updatedRoute = await Route.findById(route._id);
+      expect(updatedRoute.path.length).toBe(1);
+      expect(updatedRoute.path[0].name).toBe("Midpoint");
+
+      const pointId = updatedRoute.path[0]._id;
+      const deleteReq = mockRequest({}, { id: route._id, pointId: pointId });
+      const deleteRes = mockResponse();
+
+      await routeController.removePointFromRoute(deleteReq, deleteRes);
+      expect(deleteRes.status).toHaveBeenCalledWith(200);
+      expect(deleteRes.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          _id: route._id,
+        }));
+    });
   });
+
 
   // --- Tests for Alerts Management ---
   describe("Alerts Management", () => {
