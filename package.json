@@ -22,5 +22,8 @@
   "homepage": "https://github.com/connect-bq/bq_connect#readme",
   "devDependencies": {
     "vite": "^7.1.3"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
   }
 }
