@@ -64,10 +64,16 @@ async function fetchRoutes() {
   routesData = data;
 }
 
-async function fetchStops() {
+async function fetchStops(name) {
   const req = await fetch("https://deployment-connectbq.onrender.com/routes");
   const data = await req.json();
-  const stops = data[3].path;
+  const route = data.find((route) => route.name === name);
+
+  if (!route) return;
+  const stops = route.path;
+
+  stops.unshift(route.initial_point);
+  stops.push(route.end_point);
 
   stops.forEach((stop) => {
     mainMakers.push(
@@ -79,65 +85,6 @@ async function fetchStops() {
 }
 
 fetchRoutes();
-fetchStops();
-
-// Definir las rutas disponibles con sus coordenadas y paradas
-const busRoutes = {
-  north_hospital: {
-    name: "North Hospital Route",
-    color: "#FF6B35",
-    coordinates: [
-      [10.9685, -74.7813], // Downtown
-      [10.975, -74.775], // Intermediate stop 1
-      [10.982, -74.772], // Intermediate stop 2
-      [10.99, -74.77], // North Hospital
-    ],
-    stops: [
-      { name: "Downtown Terminal", coord: [10.9685, -74.7813] },
-      { name: "Centro Comercial", coord: [10.975, -74.775] },
-      { name: "Universidad del Norte", coord: [10.982, -74.772] },
-      { name: "Hospital del Norte", coord: [10.99, -74.77] },
-    ],
-    duration: "25 min",
-    price: "$2,500",
-  },
-  mall_plaza: {
-    name: "Mall Plaza Route",
-    color: "#2563EB",
-    coordinates: [
-      [10.9685, -74.7813], // Downtown
-      [10.96, -74.79], // Intermediate stop 1
-      [10.955, -74.795], // Intermediate stop 2
-      [10.95, -74.8], // Mall Plaza
-    ],
-    stops: [
-      { name: "Downtown Terminal", coord: [10.9685, -74.7813] },
-      { name: "Barrio El Prado", coord: [10.96, -74.79] },
-      { name: "Centro Histórico", coord: [10.955, -74.795] },
-      { name: "Mall Plaza", coord: [10.95, -74.8] },
-    ],
-    duration: "30 min",
-    price: "$3,000",
-  },
-  malecon: {
-    name: "Malecón Route",
-    color: "#10B981",
-    coordinates: [
-      [10.9685, -74.7813], // Downtown
-      [10.9653, -74.7836], // Buenos Aires Station
-      [10.962, -74.785], // Intermediate stop
-      [10.96, -74.787], // Malecón
-    ],
-    stops: [
-      { name: "Downtown Terminal", coord: [10.9685, -74.7813] },
-      { name: "Buenos Aires Station", coord: [10.9653, -74.7836] },
-      { name: "Paseo Bolívar", coord: [10.962, -74.785] },
-      { name: "Gran Malecón", coord: [10.96, -74.787] },
-    ],
-    duration: "20 min",
-    price: "$2,000",
-  },
-};
 
 // Variables para almacenar elementos del mapa
 let currentRoute = null;
@@ -171,10 +118,21 @@ function showRoute(routeKey) {
   if (!route) return;
 
   const routes = route.path;
+  const isStart = [
+    route.initial_point.coordinates.latitude,
+    route.initial_point.coordinates.longitude,
+  ];
+  const isEnd = [
+    route.end_point.coordinates.latitude,
+    route.end_point.coordinates.longitude,
+  ];
   const coordinatesPath = routes.map((point) => [
     point.coordinates.latitude,
     point.coordinates.longitude,
   ]);
+
+  coordinatesPath.unshift(isStart);
+  coordinatesPath.push(isEnd);
 
   // Crear la línea de la ruta
   currentRoute = L.polyline(coordinatesPath, {
@@ -182,41 +140,41 @@ function showRoute(routeKey) {
     opacity: 0.8,
   }).addTo(map);
 
+  let icon;
+
+  icon = L.divIcon({
+    html: `<div style="background-color: red; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; display: flex; align-items: center; justify-content: center;"><span style="color: white; font-size: 10px; font-weight: bold;">S</span></div>`,
+    className: "custom-div-icon",
+    iconSize: [20, 20],
+    iconAnchor: [10, 10],
+  });
+
+  const initialMarker = L.marker(isStart, { icon: icon }).addTo(map);
+  initialMarker.bindPopup(`<strong>${stop.name}</strong><br>${"Inicio"}`);
+  currentStops.push(initialMarker);
+
+  icon = L.divIcon({
+    html: `<div style="background-color: red; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; display: flex; align-items: center; justify-content: center;"><span style="color: white; font-size: 10px; font-weight: bold;">E</span></div>`,
+    className: "custom-div-icon",
+    iconSize: [20, 20],
+    iconAnchor: [10, 10],
+  });
+
+  const marker = L.marker(isEnd, { icon: icon }).addTo(map);
+  marker.bindPopup(`<strong>${stop.name}</strong><br>${"Destino"}`);
+  currentStops.push(marker);
+
   // Agregar marcadores de paradas
   coordinatesPath.forEach((stop) => {
-    const isStart = route.initial_point;
-    const isEnd = route.end_point;
-
-    let icon;
-    if (isStart) {
-      icon = L.divIcon({
-        html: `<div style="background-color: red; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; display: flex; align-items: center; justify-content: center;"><span style="color: white; font-size: 10px; font-weight: bold;">S</span></div>`,
-        className: "custom-div-icon",
-        iconSize: [20, 20],
-        iconAnchor: [10, 10],
-      });
-    } else if (isEnd) {
-      icon = L.divIcon({
-        html: `<div style="background-color: red; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; display: flex; align-items: center; justify-content: center;"><span style="color: white; font-size: 10px; font-weight: bold;">E</span></div>`,
-        className: "custom-div-icon",
-        iconSize: [20, 20],
-        iconAnchor: [10, 10],
-      });
-    } else {
-      icon = L.divIcon({
-        html: `<div style="background-color: red; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white;"></div>`,
-        className: "custom-div-icon",
-        iconSize: [12, 12],
-        iconAnchor: [6, 6],
-      });
-    }
+    icon = L.divIcon({
+      html: `<div style="background-color: blue; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white;"></div>`,
+      className: "custom-div-icon",
+      iconSize: [12, 12],
+      iconAnchor: [6, 6],
+    });
 
     const marker = L.marker(stop, { icon: icon }).addTo(map);
-    marker.bindPopup(
-      `<strong>${stop.name}</strong><br>${
-        isStart ? "Inicio" : isEnd ? "Destino" : "Parada"
-      }`
-    );
+    marker.bindPopup(`<strong>${stop.name}</strong><br>${"Parada"}`);
     currentStops.push(marker);
   });
 
@@ -225,6 +183,7 @@ function showRoute(routeKey) {
 
   // Mostrar información de la ruta
   showRouteInfo(route);
+  fetchStops(routeKey);
 }
 
 // Función para mostrar información de la ruta
@@ -238,8 +197,8 @@ function showRouteInfo(route) {
             <button id="close-route-info" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
         </div>
         <div class="flex justify-between items-center mb-3">
-            <span class="text-sm text-gray-600">Duración: ${route.estimated_time}H</span>
-            <span class="font-semibold text-lg">${route.estimated_cost}00 Pesos</span>
+            <span class="text-sm text-gray-600">Duración: ${route.estimated_time}Min</span>
+            <span class="font-semibold text-lg">${route.estimated_cost} Pesos</span>
         </div>
         </div>
     `;
@@ -261,8 +220,8 @@ function searchRoute() {
 
     const routeMap = {
       op1: "Transmetro R1",
-      op2: "mall_plaza",
-      op3: "malecon",
+      op2: "Transmetro U30",
+      op3: "Transmetro A7-1",
     };
 
     const routeKey = routeMap[selectedValue];
