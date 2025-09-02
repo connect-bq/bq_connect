@@ -1,4 +1,4 @@
-import Toast from "../../shared/alerts";
+import Toast from "../shared/alerts";
 
 document.addEventListener("DOMContentLoaded", () => {
   const registerForm = document.getElementById("register-form");
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (response.ok) {
         Toast.success("Registration successful! Now, please log in.");
         window.location.href = "";
-        window.location.href = "../login/login.html";
+        window.location.href = "./login.html";
       } else {
         Toast.error(data.message || "Registration error.");
       }
