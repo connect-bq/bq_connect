@@ -8,12 +8,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const user = JSON.parse(localStorage.getItem("user"));
 
-  document.getElementById("nameUser").textContent = user.name || "No Name";
+  document.getElementById("nameUser").textContent = user.username || "No Name";
   document.getElementById("emailUser").textContent = user.email || "No Email";
 
   const letterContainer = document.getElementById("letter");
-  if (letterContainer && user.name.trim().length > 0) {
-    letterContainer.textContent = user.name.trim()[0].toUpperCase();
+  if (letterContainer && user.username.trim().length > 0) {
+    letterContainer.textContent = user.username.trim()[0].toUpperCase();
   }
 
   const logoutBtn = document.getElementById("logout-btn");
@@ -28,10 +28,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     // Fetch all routes
-    const response = await fetch(`/routes`);
-    console.log(response)
+    const response = await fetch(`https://deployment-connectbq.onrender.com/routes`);
     const routes = await response.json();
-     console.log(routes)
 
     // Clear container
     alertsContainer.innerHTML = "";

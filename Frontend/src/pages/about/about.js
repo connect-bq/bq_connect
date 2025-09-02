@@ -1,13 +1,23 @@
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#3b82f6',
-                        accent: '#06b6d4',
-                        muted: '#6b7280',
-                        'chart-3': '#10b981',
-                        'chart-4': '#f59e0b'
-                    }
-                }
+// about.js
+
+document.addEventListener('DOMContentLoaded', () => {
+    // This is the ideal place to add any interactivity
+    // needed for the "About" page.
+    
+    const cards = document.querySelectorAll('.grid > article, .bg-gray-100');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-fade-in');
+                observer.unobserve(entry.target); // Ensure the animation only runs once
             }
-        }
+        });
+    }, {
+        threshold: 0.1 
+    });
+
+    cards.forEach(card => {
+        observer.observe(card);
+    });
+});
