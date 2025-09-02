@@ -1,3 +1,5 @@
+import Toast from "../../shared/alerts.js";
+
 document.addEventListener("DOMContentLoaded", () => {
   // Check if the user is already logged in
   try {
@@ -25,7 +27,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("form");
 
   if (!form) {
-    console.error("Form element not found. Make sure the form exists in the HTML.");
+    console.error(
+      "Form element not found. Make sure the form exists in the HTML."
+    );
     return;
   }
 
@@ -36,43 +40,39 @@ document.addEventListener("DOMContentLoaded", () => {
     const password = document.getElementById("password").value.trim();
 
     if (!email || !password) {
-      alert("Please fill in both fields.");
+      Toast.error("Please fill in both fields.");
       return;
     }
 
     try {
       // Get all users from the API
-      const response = await fetch('/users'); 
-      console.log("Raw server response:", response);
+      const response = await fetch(
+        "https://deployment-connectbq.onrender.com/users"
+      );
 
       if (!response.ok) {
-        throw new Error(`HTTP response error: ${response.status}`);
+        return Toast.error(`In this moment we can't connect, try again later`);
       }
 
       const users = await response.json();
-      console.log("Users retrieved:", users);
 
       // Find the user that matches the email and password
-      const user = users.find(u => u.email === email && u.password === password);
+      const user = users.find(
+        (u) => u.email === email && u.password === password
+      );
 
       if (user) {
         // Save user to localStorage
-        localStorage.setItem("user", JSON.stringify({
-          loggedIn: true,
-          name: user.username,
-          email: user.email,
-          _id: user._id
-        }));
+        localStorage.setItem("user", JSON.stringify(user));
 
         // Redirect to dashboard
         window.location.href = "../dashboard/dashboard.html";
       } else {
-        alert("Invalid email or password. Please try again.");
+        Toast.error("Invalid credentials. Please try again.");
       }
-
     } catch (error) {
-      console.error('Error during login request:', error);
-      alert("Could not connect to the server. Please try again later.");
+      console.error("Error during login request:", error);
+      Toast.error("Could not connect to the server. Please try again later.");
     }
   });
 });

@@ -27,6 +27,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.12",
     "express": "^5.1.0",
+    "sweetalert2": "^11.22.5",
     "tailwindcss": "^4.1.12"
   }
 }
