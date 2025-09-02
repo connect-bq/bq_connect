@@ -272,6 +272,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const profileBtn = document.getElementById("profile-btn");
   const profileBtnCel = document.getElementById("profile-btn-cel");
   const loguoutBtnCel = document.getElementById("logout-btn-cel");
+  const signinbtn = document.getElementById("signin-btn")
   const signinBtnCel = document.getElementById("signin-btn-cel");
   const addAlertSection = document.getElementById("add-alert-section");
   const alertTypeInput = document.getElementById("alert-type-select");
@@ -288,6 +289,7 @@ document.addEventListener("DOMContentLoaded", () => {
     profileBtn.classList.toggle("hidden");
     profileBtnCel.classList.toggle("hidden");
     loguoutBtnCel.classList.toggle("hidden");
+    signinbtn.classList.toggle("hidden");
     signinBtnCel.classList.toggle("hidden");
     addAlertSection.classList.toggle("hidden");
     aboutBtn.classList.toggle("hidden");
