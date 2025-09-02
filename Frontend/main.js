@@ -9,6 +9,7 @@ const line2 = document.getElementById("line2");
 const line3 = document.getElementById("line3");
 const mapSection = document.getElementById("map-section");
 const mobileRouteSelect = document.getElementsByClassName("test");
+const selectElement = document.getElementById("desktop-route-select");
 
 let isMenuOpen = false;
 
@@ -58,10 +59,31 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 let mainMakers = [];
 let routesData = [];
 
+function populateSelect(data) {
+
+  selectElement.innerHTML = '';
+
+  const defaultOption = document.createElement('option');
+  defaultOption.value = '';
+  defaultOption.textContent = 'Select one Route';
+  selectElement.appendChild(defaultOption);
+
+  data.forEach(route => {
+
+    const option = document.createElement('option');
+    option.value = route._id;
+    option.textContent = route.name;
+    selectElement.appendChild(option);
+
+  });
+}
+
 async function fetchRoutes() {
   const req = await fetch("https://deployment-connectbq.onrender.com/routes");
   const data = await req.json();
   routesData = data;
+  populateSelect(routesData);
+
 }
 
 async function fetchStops(name) {
@@ -85,7 +107,7 @@ async function fetchStops(name) {
 }
 
 fetchRoutes();
-
+console.error()
 // Variables para almacenar elementos del mapa
 let currentRoute = null;
 let currentStops = [];
