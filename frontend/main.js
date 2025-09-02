@@ -165,48 +165,51 @@ function showRoute(routeKey) {
   // Limpiar ruta anterior
   clearCurrentRoute();
 
-  const route = routesData[routeKey];
-  console.log("Mostrando ruta:", routeKey);
-  console.log(route);
+  const route = routesData.find((route) => route.name == routeKey);
   if (!route) return;
 
+  const routes = route.path;
+  const coordinatesPath = routes.map((point) => [
+    point.coordinates.latitude,
+    point.coordinates.longitude,
+  ]);
+
   // Crear la línea de la ruta
-  currentRoute = L.polyline(route.path.coordinates, {
-    color: route.color,
+  currentRoute = L.polyline(coordinatesPath, {
     weight: 4,
     opacity: 0.8,
   }).addTo(map);
 
   // Agregar marcadores de paradas
-  route.stops.forEach((stop, index) => {
-    const isStart = index === 0;
-    const isEnd = index === route.stops.length - 1;
+  coordinatesPath.forEach((stop) => {
+    const isStart = route.initial_point;
+    const isEnd = route.end_point;
 
     let icon;
     if (isStart) {
       icon = L.divIcon({
-        html: `<div style="background-color: ${route.color}; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; display: flex; align-items: center; justify-content: center;"><span style="color: white; font-size: 10px; font-weight: bold;">S</span></div>`,
+        html: `<div style="background-color: red; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; display: flex; align-items: center; justify-content: center;"><span style="color: white; font-size: 10px; font-weight: bold;">S</span></div>`,
         className: "custom-div-icon",
         iconSize: [20, 20],
         iconAnchor: [10, 10],
       });
     } else if (isEnd) {
       icon = L.divIcon({
-        html: `<div style="background-color: ${route.color}; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; display: flex; align-items: center; justify-content: center;"><span style="color: white; font-size: 10px; font-weight: bold;">E</span></div>`,
+        html: `<div style="background-color: red; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; display: flex; align-items: center; justify-content: center;"><span style="color: white; font-size: 10px; font-weight: bold;">E</span></div>`,
         className: "custom-div-icon",
         iconSize: [20, 20],
         iconAnchor: [10, 10],
       });
     } else {
       icon = L.divIcon({
-        html: `<div style="background-color: ${route.color}; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white;"></div>`,
+        html: `<div style="background-color: red; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white;"></div>`,
         className: "custom-div-icon",
         iconSize: [12, 12],
         iconAnchor: [6, 6],
       });
     }
 
-    const marker = L.marker(stop.coord, { icon: icon }).addTo(map);
+    const marker = L.marker(stop, { icon: icon }).addTo(map);
     marker.bindPopup(
       `<strong>${stop.name}</strong><br>${
         isStart ? "Inicio" : isEnd ? "Destino" : "Parada"
@@ -234,35 +237,10 @@ function showRouteInfo(route) {
         </div>
         <div class="flex justify-between items-center mb-3">
             <span class="text-sm text-gray-600">Duración: ${
-              route.duration
-            }</span>
-            <span class="font-semibold text-lg" style="color: ${
-              route.color
-            };">${route.price}</span>
+              route.estimated_time
+            }H</span>
+            <span class="font-semibold text-lg">${route.estimated_cost}00 Pesos</span>
         </div>
-        <div class="space-y-2">
-            <h4 class="font-medium text-gray-700">Paradas:</h4>
-            ${route.stops
-              .map(
-                (stop, index) =>
-                  `<div class="flex items-center text-sm text-gray-600">
-                    <div class="w-2 h-2 rounded-full mr-2" style="background-color: ${
-                      route.color
-                    };"></div>
-                    ${stop.name}
-                    ${
-                      index === 0
-                        ? ' <span class="text-green-600">(Inicio)</span>'
-                        : ""
-                    }
-                    ${
-                      index === route.stops.length - 1
-                        ? ' <span class="text-red-600">(Destino)</span>'
-                        : ""
-                    }
-                </div>`
-              )
-              .join("")}
         </div>
     `;
 
@@ -282,7 +260,7 @@ function searchRoute() {
     const selectedValue = select.value;
 
     const routeMap = {
-      Transmetro_R1: "Transmetro R1",
+      op1: "Transmetro R1",
       op2: "mall_plaza",
       op3: "malecon",
     };
@@ -304,8 +282,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchButtons = document.querySelectorAll("button");
 
   var select2 = document.getElementsByClassName("test");
-
-  console.log(select2[0].value);
 
   searchButtons.forEach((button) => {
     if (button.textContent.includes("Search Routes")) {

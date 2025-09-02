@@ -1,228 +1,313 @@
-
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="interactive system that will allow the user to search for public bus routes"
+    />
+    <meta name="keywords" content="integrative project" />
+    <meta
+      name="sitedomain"
+      content="https://github.com/connect-bq/bq_connect.git"
+    />
+    <meta name="authors" content="StarDev" />
+    <meta name="desingner" content="StarDev" />
+    <meta name="copyright" content="© StarDev. All rights reserved" />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="revisit-after" content="10days" />
+    <title>Connect BQ</title>
+    <link rel="stylesheet" href="./src/css/styles.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="interactive system that will allow the user to search for public bus routes">
-  <meta name="keywords" content="integrative project">
-  <meta name="sitedomain" content="https://github.com/connect-bq/bq_connect.git">
-  <meta name="authors" content="StarDev">
-  <meta name="desingner" content="StarDev">
-  <meta name="copyright" content="© StarDev. All rights reserved">
-  <meta name="robots" content="index, follow">
-  <meta name="googlebot" content="index, follow">
-  <meta name="revisit-after" content="10days">
-  <title>Connect BQ</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-</head>
-
-<body class="bg-[#F5F5F5] text-[#333333]">
-
-  <!-- Navbar -->
-  <header class="bg-[#FFFFFF] border-b border-[#D9D9D9] p-3 flex justify-between items-center relative">
-
-    <section class="flex flex-row justify-center text-center items-center">
-      <img src="./src/assets/logos/logo-dashboard.png" alt="logo-dashboard" class="w-20 h-20">
-      <article class="flex flex-col">
-        <h1 class="font-bold text-lg text-[#333333]">Connect BQ</h1>
-        <p class="text-sm text-[#999999]">Smart Urban Mobility</p>
-      </article>
-    </section>
-
-    <!-- Botón hamburguesa (visible en tablet/móvil) -->
-    <button id="hamburger-btn" class="lg:hidden flex flex-col gap-1 p-2 z-50">
-      <p class="w-6 h-0.5 bg-[#333333] transition-all duration-300" id="line1"></p>
-      <p class="w-6 h-0.5 bg-[#333333] transition-all duration-300" id="line2"></p>
-      <p class="w-6 h-0.5 bg-[#333333] transition-all duration-300" id="line3"></p>
-    </button>
-
-    <!-- Navegación desktop -->
-    <nav class="hidden lg:flex gap-3">
-      <a href="./src/pages/dashboard/dashboard.html" class="border border-[#D9D9D9] px-3 py-1 rounded-lg">Profile</a>
-      <a  href="./src/pages/about/about.html" class="border border-[#D9D9D9] px-3 py-1 rounded-lg">About</a>
-      <a href="./src/pages/login/login.html" id="logout-btn" class="group flex items-center justify-start w-11 h-11 bg-[#FF6B35] rounded-full cursor-pointer relative overflow-hidden transition-all duration-200 shadow-lg hover:w-32 hover:rounded-lg active:translate-x-1 active:translate-y-1">
-        <div class="flex items-center justify-center w-full transition-all duration-300 group-hover:justify-start group-hover:px-3">
-          <svg class="w-4 h-4" viewBox="0 0 512 512" fill="white">
-            <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path>
-          </svg>
-        </div>
-        <div class="absolute right-5 transform translate-x-full opacity-0 text-white text-lg font-semibold transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
-          sign in
-        </div>
-      </a>
-    </nav>
-  </header>
-  <main>
-    <!--Hamburger menu overlay (tablet/mobile) -->
-    <section id="mobile-menu"
-      class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40 opacity-0 pointer-events-none transition-all duration-300">
-      <article
-        class="bg-white w-80 h-full overflow-y-auto p-4 transform -translate-x-full transition-transform duration-300"
-        id="mobile-sidebar">
-
-        <!-- Mobile navigation -->
-        <section class="mb-6 flex flex-col gap-2">
-          <button class="bg-[#FF6B35] text-white px-3 py-2 rounded-lg">Current</button>
-          <button class="border border-[#D9D9D9] px-3 py-2 rounded-lg">Profile</button>
-          <button class="border border-[#D9D9D9] px-3 py-2 rounded-lg">About</button>
-          <button class="bg-[#FF6B35] text-white px-3 py-2 rounded-lg">Logout</button>
-        </section>
-
-        <hr class="mb-6">
-
-        <!-- Plan your route -->
-        <section class="bg-[#F5F5F5] rounded-xl p-4 mb-4">
-          <h2 class="font-semibold flex items-center gap-2">
-            <p>📍</p> Plan your route
-          </h2>
-          <article class="mt-3 space-y-3">
-            <label for="mobile-route-select">choose a route: </label>
-            <select id="mobile-route-select" class="w-full border border-[#D9D9D9] rounded-lg p-2 text-sm">
-              <option value="">Select a destination</option>
-              <option class="test" value="[10.9685, -74.7813]">North Hospital</option>
-              <option value="op2">Mall Plaza</option>
-              <option value="op3">Malecón</option>
-            </select>
-
-            <button id="mobile-search-btn" class="bg-[#FF6B35] text-white w-full py-2 rounded-lg hover:bg-[#e85d2a]">
-              Search Routes
-            </button>
-          </article>
-        </section>
-
-        <!-- Search History -->
-        <section class="bg-[#F5F5F5] rounded-xl p-4">
-          <h2 class="font-semibold flex items-center gap-2">⏱️ Search History</h2>
-
-          <input type="text" placeholder="Search History..."
-            class="mt-3 w-full border border-[#D9D9D9] rounded-lg p-2 text-sm">
-
-          <section class="mt-3">
-            <p class="text-sm font-semibold text-[#999999]">⭐ Favorite Routes</p>
-            <article class="flex justify-between items-center text-sm py-2">
-              <p>Home → office</p>
-              <p class="text-xs text-[#999999]">18 min · 42x</p>
-            </article>
-            <article class="flex justify-between items-center text-sm py-2">
-              <p>Mall → Home</p>
-              <p class="text-xs text-[#999999]">25 min · 8x</p>
-            </article>
-          </section>
-
-          <hr class="my-3">
-
-          <section class="space-y-3">
-            <article class="border border-[#D9D9D9] rounded-lg p-3 bg-white">
-              <p class="text-sm font-semibold">Home → Oficina
-              <p class="text-blue-600 text-xs">Balanced</p>
-              </p>
-              <p class="text-xs text-[#999999]">1 hours · 18 min ago</p>
-              <p class="text-xs font-semibold">$3,200</p>
-            </article>
-            <article class="border border-[#D9D9D9] rounded-lg p-3 bg-white">
-              <p class="text-sm font-semibold">Mall → Home
-              <p class="text-green-600 text-xs">Balanced</p>
-              </p>
-              <p class="text-xs text-[#999999]">4 hours · 25 min ago</p>
-              <p class="text-xs font-semibold">$4,100</p>
-            </article>
-            <article class="border border-[#D9D9D9] rounded-lg p-3 bg-white">
-              <p class="text-sm font-semibold">Center → Airport
-              <p class="text-blue-600 text-xs">Balanced</p>
-              </p>
-              <p class="text-xs text-[#999999]">1 hours · 50 min ago</p>
-              <p class="text-xs font-semibold">$7,200</p>
-            </article>
-          </section>
-
-          <button class="mt-3 w-full text-[#FF6B35] text-sm font-semibold">See Full History</button>
-        </section>
-      </article>
-    </section>
-
-    <!-- Main container -->
-    <section class="flex p-10 gap-2">
-
-      <!-- Sidebar desktop -->
-      <section class="hidden lg:block w-[400rem] flex flex-col gap-[10rem]">
-
-        <!-- Plan your route -->
-        <section class="bg-[#FFFFFF] shadow rounded-2xl p-6  w-[350px] h-[350px] ml-[200px]">
-          <h2 class="font-semibold text-lg flex items-center gap-2">
-            <p>📍</p> Plan your route
-          </h2>
-          <article class="mt-5 space-y-4">
-            <select id="desktop-route-select" class="w-full border border-[#D9D9D9] rounded-lg p-2 text-sm">
-              <option value="">Select a destination</option>
-              <option class="TransmetroR1" value="Transmetro_R1">Transmetro R1</option>
-              <option value="op2">Mall Plaza</option>
-              <option value="op3">Malecón</option>
-
-            </select>        
-            <button id="desktop-search-btn"
-              class="bg-[#FF6B35] text-white w-full py-3 rounded-xl text-base font-semibold hover:bg-[#e85d2a] transition">
-              Search Routes
-            </button>
-          </article>
-        </section>
-
-        <!-- Search History -->
-        <section class="bg-[#FFFFFF] shadow rounded-2xl p-6 w-[350px] ml-[200px]">
-          <h2 class="font-semibold text-lg flex items-center gap-2">⏱️ Search History</h2>
-
-          <input type="text" placeholder="Buscar en historial..."
-            class="mt-4 w-full border border-[#D9D9D9] rounded-lg p-3 text-base focus:ring-2 focus:ring-[#FF6B35] outline-none">
-
-          <section class="mt-4">
-            <p class="text-base font-semibold text-[#999999]">⭐ Favorite Routes</p>
-            <article class="flex justify-between items-center text-sm py-3">
-              <p>Home → Office</p>
-              <p class="text-xs text-[#999999]">18 min · 42x</p>
-            </article>
-            <article class="flex justify-between items-center text-sm py-3">
-              <p>Mall → Home</p>
-              <p class="text-xs text-[#999999]">25 min · 8x</p>
-            </article>
-          </section>
-
-          <hr class="my-4">
-
-          <section class="space-y-4">
-            <article class="border border-[#D9D9D9] rounded-lg p-4 bg-white">
-              <p class="text-base font-semibold">Home → Office <span class="text-blue-600 text-sm">Balanced</span></p>
-              <p class="text-xs text-[#999999]">1 hour · 18 min ago</p>
-              <p class="text-sm font-semibold">$3,200</p>
-            </article>
-            <article class="border border-[#D9D9D9] rounded-lg p-4 bg-white">
-              <p class="text-base font-semibold">Mall → Home <span class="text-green-600 text-sm">Balanced</span></p>
-              <p class="text-xs text-[#999999]">4 hours · 25 min ago</p>
-              <p class="text-sm font-semibold">$4,100</p>
-            </article>
-            <article class="border border-[#D9D9D9] rounded-lg p-4 bg-white">
-              <p class="text-base font-semibold">Center → Airport <span class="text-blue-600 text-sm">Balanced</span>
-              </p>
-              <p class="text-xs text-[#999999]">6 hours · 35 min ago</p>
-              <p class="text-sm font-semibold">$7,200</p>
-            </article>
-          </section>
-
-          <button class="mt-4 w-full text-[#FF6B35] text-base font-semibold hover:underline">See Full History</button>
-        </section>
-
+  <body class="bg-[#F5F5F5] text-[#333333]">
+    <!-- Navbar -->
+    <header
+      class="bg-[#FFFFFF] border-b border-[#D9D9D9] p-3 flex justify-between items-center relative"
+    >
+      <section class="flex flex-row justify-center text-center items-center">
+        <img
+          src="./src/assets/logos/logo-dashboard.png"
+          alt="logo-dashboard"
+          class="w-20 h-20"
+        />
+        <article class="flex flex-col">
+          <h1 class="font-bold text-lg text-[#333333]">Connect BQ</h1>
+          <p class="text-sm text-[#999999]">Smart Urban Mobility</p>
+        </article>
       </section>
 
-      <!-- Map -->
-      <section id="map-section" class="flex-1 bg-[#FFFFFF] shadow rounded-xl p-2 lg:ml-50">
-        <div id="map" class="w-full h-[45rem] lg:w-[70rem] rounded-lg"></div>
+      <!-- Botón hamburguesa (visible en tablet/móvil) -->
+      <button id="hamburger-btn" class="lg:hidden flex flex-col gap-1 p-2 z-50">
+        <p
+          class="w-6 h-0.5 bg-[#333333] transition-all duration-300"
+          id="line1"
+        ></p>
+        <p
+          class="w-6 h-0.5 bg-[#333333] transition-all duration-300"
+          id="line2"
+        ></p>
+        <p
+          class="w-6 h-0.5 bg-[#333333] transition-all duration-300"
+          id="line3"
+        ></p>
+      </button>
+
+      <!-- Navegación desktop -->
+      <nav class="hidden lg:flex gap-3">
+        <a
+          href="./src/pages/dashboard/dashboard.html"
+          class="border border-[#D9D9D9] px-3 py-1 rounded-lg"
+          >Profile</a
+        >
+        <a
+          href="./src/pages/about/about.html"
+          class="border border-[#D9D9D9] px-3 py-1 rounded-lg"
+          >About</a
+        >
+        <a
+          href="./src/pages/login/login.html"
+          id="logout-btn"
+          class="group flex items-center justify-start w-11 h-11 bg-[#FF6B35] rounded-full cursor-pointer relative overflow-hidden transition-all duration-200 shadow-lg hover:w-32 hover:rounded-lg active:translate-x-1 active:translate-y-1"
+        >
+          <div
+            class="flex items-center justify-center w-full transition-all duration-300 group-hover:justify-start group-hover:px-3"
+          >
+            <svg class="w-4 h-4" viewBox="0 0 512 512" fill="white">
+              <path
+                d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"
+              ></path>
+            </svg>
+          </div>
+          <div
+            class="absolute right-5 transform translate-x-full opacity-0 text-white text-lg font-semibold transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+          >
+            sign in
+          </div>
+        </a>
+      </nav>
+    </header>
+
+    <main>
+      <!--Hamburger menu overlay (tablet/mobile) -->
+      <section
+        id="mobile-menu"
+        class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40 opacity-0 pointer-events-none transition-all duration-300"
+      >
+        <article
+          class="bg-white w-80 h-full overflow-y-auto p-4 transform -translate-x-full transition-transform duration-300"
+          id="mobile-sidebar"
+        >
+          <!-- Mobile navigation -->
+          <section class="mb-6 flex flex-col gap-2">
+            <button class="bg-[#FF6B35] text-white px-3 py-2 rounded-lg">
+              Current
+            </button>
+            <button class="border border-[#D9D9D9] px-3 py-2 rounded-lg">
+              Profile
+            </button>
+            <button class="border border-[#D9D9D9] px-3 py-2 rounded-lg">
+              About
+            </button>
+            <button class="bg-[#FF6B35] text-white px-3 py-2 rounded-lg">
+              Logout
+            </button>
+          </section>
+
+          <hr class="mb-6" />
+
+          <!-- Plan your route -->
+          <section class="bg-[#F5F5F5] rounded-xl p-4 mb-4">
+            <h2 class="font-semibold flex items-center gap-2">
+              <p>📍</p>
+              Plan your route
+            </h2>
+            <article class="mt-3 space-y-3">
+              <label for="mobile-route-select">choose a route: </label>
+              <select
+                id="mobile-route-select"
+                class="w-full border border-[#D9D9D9] rounded-lg p-2 text-sm"
+              >
+                <option value="">Select a destination</option>
+                <option class="test" value="[10.9685, -74.7813]">
+                  North Hospital
+                </option>
+                <option value="op2">Mall Plaza</option>
+                <option value="op3">Malecón</option>
+              </select>
+
+              <button
+                id="mobile-search-btn"
+                class="bg-[#FF6B35] text-white w-full py-2 rounded-lg hover:bg-[#e85d2a]"
+              >
+                Search Routes
+              </button>
+            </article>
+          </section>
+
+          <!-- Search History -->
+          <section class="bg-[#F5F5F5] rounded-xl p-4">
+            <h2 class="font-semibold flex items-center gap-2">
+              ⏱️ Search History
+            </h2>
+
+            <input
+              type="text"
+              placeholder="Search History..."
+              class="mt-3 w-full border border-[#D9D9D9] rounded-lg p-2 text-sm"
+            />
+
+            <section class="mt-3">
+              <p class="text-sm font-semibold text-[#999999]">
+                ⭐ Favorite Routes
+              </p>
+              <article class="flex justify-between items-center text-sm py-2">
+                <p>Home → office</p>
+                <p class="text-xs text-[#999999]">18 min · 42x</p>
+              </article>
+              <article class="flex justify-between items-center text-sm py-2">
+                <p>Mall → Home</p>
+                <p class="text-xs text-[#999999]">25 min · 8x</p>
+              </article>
+            </section>
+
+            <hr class="my-3" />
+
+            <section class="space-y-3">
+              <article class="border border-[#D9D9D9] rounded-lg p-3 bg-white">
+                <p class="text-sm font-semibold">Home → Oficina</p>
+                <p class="text-blue-600 text-xs">Balanced</p>
+
+                <p class="text-xs text-[#999999]">1 hours · 18 min ago</p>
+                <p class="text-xs font-semibold">$3,200</p>
+              </article>
+              <article class="border border-[#D9D9D9] rounded-lg p-3 bg-white">
+                <p class="text-sm font-semibold">Mall → Home</p>
+                <p class="text-green-600 text-xs">Balanced</p>
+
+                <p class="text-xs text-[#999999]">4 hours · 25 min ago</p>
+                <p class="text-xs font-semibold">$4,100</p>
+              </article>
+              <article class="border border-[#D9D9D9] rounded-lg p-3 bg-white">
+                <p class="text-sm font-semibold">Center → Airport</p>
+                <p class="text-blue-600 text-xs">Balanced</p>
+
+                <p class="text-xs text-[#999999]">1 hours · 50 min ago</p>
+                <p class="text-xs font-semibold">$7,200</p>
+              </article>
+            </section>
+
+            <button class="mt-3 w-full text-[#FF6B35] text-sm font-semibold">
+              See Full History
+            </button>
+          </section>
+        </article>
       </section>
-    </section>
-  </main>
-  <script src="./main.js"></script>
 
-</body>
+      <!-- Main container -->
+      <section class="flex flex-row p-4 gap-2">
+        <!-- Sidebar desktop -->
+        <section class="hidden lg:flex flex-col items-center space-y-6">
+          <!-- Plan your route -->
+          <section class="bg-[#FFFFFF] shadow rounded-2xl p-6 w-[350px] h-fit">
+            <h2 class="font-semibold text-lg flex items-center gap-2">
+              <p>📍</p>
+              Plan your route
+            </h2>
+            <article class="mt-5 space-y-4">
+              <select
+                id="desktop-route-select"
+                class="w-full border border-[#D9D9D9] rounded-lg p-2 text-sm"
+              >
+                <option value="">Select a destination</option>
+                <option value="op1">Transmetro R1</option>
+                <option value="op2">Mall Plaza</option>
+                <option value="op3">Malecón</option>
+              </select>
+              <button
+                id="desktop-search-btn"
+                class="bg-[#FF6B35] text-white w-full py-3 rounded-xl text-base font-semibold hover:bg-[#e85d2a] transition"
+              >
+                Search Routes
+              </button>
+            </article>
+          </section>
 
+          <!-- Search History -->
+          <section class="bg-[#FFFFFF] shadow rounded-2xl p-6 w-[350px]">
+            <h2 class="font-semibold text-lg flex items-center gap-2">
+              ⏱️ Search History
+            </h2>
+
+            <input
+              type="text"
+              placeholder="Buscar en historial..."
+              class="mt-4 w-full border border-[#D9D9D9] rounded-lg p-3 text-base focus:ring-2 focus:ring-[#FF6B35] outline-none"
+            />
+
+            <section class="mt-4">
+              <p class="text-base font-semibold text-[#999999]">
+                ⭐ Favorite Routes
+              </p>
+              <article class="flex justify-between items-center text-sm py-3">
+                <p>Home → Office</p>
+                <p class="text-xs text-[#999999]">18 min · 42x</p>
+              </article>
+              <article class="flex justify-between items-center text-sm py-3">
+                <p>Mall → Home</p>
+                <p class="text-xs text-[#999999]">25 min · 8x</p>
+              </article>
+            </section>
+
+            <hr class="my-4" />
+
+            <section class="space-y-4">
+              <article class="border border-[#D9D9D9] rounded-lg p-4 bg-white">
+                <p class="text-base font-semibold">
+                  Home → Office
+                  <span class="text-blue-600 text-sm">Balanced</span>
+                </p>
+                <p class="text-xs text-[#999999]">1 hour · 18 min ago</p>
+                <p class="text-sm font-semibold">$3,200</p>
+              </article>
+              <article class="border border-[#D9D9D9] rounded-lg p-4 bg-white">
+                <p class="text-base font-semibold">
+                  Mall → Home
+                  <span class="text-green-600 text-sm">Balanced</span>
+                </p>
+                <p class="text-xs text-[#999999]">4 hours · 25 min ago</p>
+                <p class="text-sm font-semibold">$4,100</p>
+              </article>
+              <article class="border border-[#D9D9D9] rounded-lg p-4 bg-white">
+                <p class="text-base font-semibold">
+                  Center → Airport
+                  <span class="text-blue-600 text-sm">Balanced</span>
+                </p>
+                <p class="text-xs text-[#999999]">6 hours · 35 min ago</p>
+                <p class="text-sm font-semibold">$7,200</p>
+              </article>
+            </section>
+
+            <button
+              class="mt-4 w-full text-[#FF6B35] text-base font-semibold hover:underline"
+            >
+              See Full History
+            </button>
+          </section>
+        </section>
+        <!-- Map -->
+        <section
+          id="map-section"
+          class="bg-[#FFFFFF] shadow rounded-xl p-2 flex-1"
+        >
+          <div id="map" class="w-full h-full rounded-lg"></div>
+        </section>
+      </section>
+    </main>
+    <script src="./main.js"></script>
+  </body>
 </html>
