@@ -93,15 +93,20 @@ let routeInfoPanel = null;
 
 // Función para limpiar ruta actual
 function clearCurrentRoute() {
-  if (currentRoute) {
+  if (currentRoute && map.hasLayer(currentRoute)) {
     map.removeLayer(currentRoute);
-    currentRoute = null;
   }
+  currentRoute = null;
 
-  currentStops.forEach((stop) => {
-    map.removeLayer(stop);
+  currentStops.forEach((stopMarker) => {
+    if (map.hasLayer(stopMarker)) map.removeLayer(stopMarker);
   });
   currentStops = [];
+
+  mainMakers.forEach((m) => {
+    if (map.hasLayer(m)) map.removeLayer(m);
+  });
+  mainMakers = [];
 
   if (routeInfoPanel) {
     routeInfoPanel.remove();
