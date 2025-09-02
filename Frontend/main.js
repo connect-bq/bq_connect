@@ -277,6 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const alertTypeInput = document.getElementById("alert-type-select");
   const alertSeverityInput = document.getElementById("alert-severity-select");
   const addAlertBtn = document.getElementById('add-alert-btn');
+  const aboutBtn = document.getElementById('about-page')
 
   loguoutBtnCel.addEventListener("click", () => {
     localStorage.removeItem("user");
@@ -289,6 +290,7 @@ document.addEventListener("DOMContentLoaded", () => {
     loguoutBtnCel.classList.toggle("hidden");
     signinBtnCel.classList.toggle("hidden");
     addAlertSection.classList.toggle("hidden");
+    aboutBtn.classList.toggle("hidden");
   }
 
   var select2 = document.getElementsByClassName("test");
