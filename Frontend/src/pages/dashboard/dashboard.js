@@ -1,10 +1,12 @@
-document.addEventListener("DOMContentLoaded", async () => {
-  const user = JSON.parse(localStorage.getItem("user"));
+import { isAuth } from "../../guards/auth-guard";
 
-  if (!user || !user.loggedIn) {
+document.addEventListener("DOMContentLoaded", async () => {
+  if (!isAuth) {
     window.location.href = "../login/login.html";
     return;
   }
+
+  const user = JSON.parse(localStorage.getItem("user"));
 
   document.getElementById("nameUser").textContent = user.name || "No Name";
   document.getElementById("emailUser").textContent = user.email || "No Email";
@@ -27,17 +29,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     // Fetch all routes
     const response = await fetch(`/routes`);
-    console.log(response)
+    console.log(response);
     const routes = await response.json();
-     console.log(routes)
+    console.log(routes);
 
     // Clear container
     alertsContainer.innerHTML = "";
 
     // Iterate through all routes and their alerts
-    routes.forEach(route => {
+    routes.forEach((route) => {
       if (route.alerts && route.alerts.length > 0) {
-        route.alerts.forEach(alert => {
+        route.alerts.forEach((alert) => {
           const article = document.createElement("article");
           article.className = "bg-gray-100 p-6 rounded-lg shadow-md";
 
@@ -53,7 +55,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
       }
     });
-
   } catch (error) {
     console.error("Error fetching alerts:", error);
     alertsContainer.textContent = "Could not load alerts.";

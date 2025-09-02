@@ -1,3 +1,5 @@
+import { isAuth } from "./src/guards/auth-guard";
+
 // Menú hamburguesa
 const hamburgerBtn = document.getElementById("hamburger-btn");
 const mobileMenu = document.getElementById("mobile-menu");
@@ -229,16 +231,14 @@ function showRoute(routeKey) {
 function showRouteInfo(route) {
   routeInfoPanel = document.createElement("div");
   routeInfoPanel.className =
-    "fixed bottom-4 left-4 right-4 lg:left-auto lg:right-4 lg:w-80 bg-white rounded-lg shadow-lg p-4 z-50";
+    "fixed bottom-4 left-4 right-4 lg:left-auto lg:right-4 lg:w-80 bg-white rounded-lg shadow-lg p-4 z-100000";
   routeInfoPanel.innerHTML = `
         <div class="flex justify-between items-start mb-3">
             <h3 class="font-semibold text-lg text-gray-800">${route.name}</h3>
             <button id="close-route-info" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
         </div>
         <div class="flex justify-between items-center mb-3">
-            <span class="text-sm text-gray-600">Duración: ${
-              route.estimated_time
-            }H</span>
+            <span class="text-sm text-gray-600">Duración: ${route.estimated_time}H</span>
             <span class="font-semibold text-lg">${route.estimated_cost}00 Pesos</span>
         </div>
         </div>
@@ -280,6 +280,17 @@ function searchRoute() {
 // Agregar event listeners a los botones de búsqueda
 document.addEventListener("DOMContentLoaded", () => {
   const searchButtons = document.querySelectorAll("button");
+  const profileBtn = document.getElementById("profile-btn");
+  const profileBtnCel = document.getElementById("profile-btn-cel");
+  const loguoutBtnCel = document.getElementById("logout-btn-cel");
+  const signinBtnCel = document.getElementById("signin-btn-cel");
+
+  if (isAuth()) {
+    profileBtn.classList.toggle("hidden");
+    profileBtnCel.classList.toggle("hidden");
+    loguoutBtnCel.classList.toggle("hidden");
+    signinBtnCel.classList.toggle("hidden");
+  }
 
   var select2 = document.getElementsByClassName("test");
 
