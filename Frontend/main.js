@@ -241,6 +241,31 @@ function searchRoute() {
   });
 }
 
+// Función para manejar el reporte de alertas
+function handleAlerts() {
+  const selectElements = document.querySelectorAll("select");
+
+  selectElements.forEach((select) => {
+    const selectedValue = select.value;
+
+    const alertMap = {
+      ot1: "Block",
+      ot2: "Traffic",
+      ot3: "Event",
+    };
+
+    const routeKey = routeMap[selectedValue];
+    if (routeKey) {
+      showRoute(routeKey);
+
+      // Si está en mobile, cerrar el menú después de buscar
+      if (isMenuOpen) {
+        hamburgerBtn.click();
+      }
+    }
+  });
+}
+
 // Agregar event listeners a los botones de búsqueda
 document.addEventListener("DOMContentLoaded", () => {
   const searchButtons = document.querySelectorAll("button");
@@ -248,6 +273,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const profileBtnCel = document.getElementById("profile-btn-cel");
   const loguoutBtnCel = document.getElementById("logout-btn-cel");
   const signinBtnCel = document.getElementById("signin-btn-cel");
+  const addAlertSection = document.getElementById("add-alert-section");
+  const alertTypeInput = document.getElementById("alert-type-select");
+  const alertSeverityInput = document.getElementById("alert-severity-select");
+  const addAlertBtn = document.getElementById('add-alert-btn');
 
   loguoutBtnCel.addEventListener("click", () => {
     localStorage.removeItem("user");
@@ -259,6 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
     profileBtnCel.classList.toggle("hidden");
     loguoutBtnCel.classList.toggle("hidden");
     signinBtnCel.classList.toggle("hidden");
+    addAlertSection.classList.toggle("hidden");
   }
 
   var select2 = document.getElementsByClassName("test");
