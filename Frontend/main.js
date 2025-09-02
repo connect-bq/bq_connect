@@ -220,8 +220,8 @@ function searchRoute() {
 
     const routeMap = {
       op1: "Transmetro R1",
-      op2: "mall_plaza",
-      op3: "malecon",
+      op2: "Transmetro U30",
+      op3: "Transmetro A7-1",
     };
 
     const routeKey = routeMap[selectedValue];
