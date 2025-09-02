@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Urban mobility platform for Barranquilla with smart routes and real-time community alerts.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite",
@@ -24,6 +25,8 @@
     "vite": "^7.1.3"
   },
   "dependencies": {
-    "express": "^5.1.0"
+    "@tailwindcss/vite": "^4.1.12",
+    "express": "^5.1.0",
+    "tailwindcss": "^4.1.12"
   }
 }

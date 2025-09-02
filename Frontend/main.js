@@ -1,0 +1,298 @@
+// Menú hamburguesa
+const hamburgerBtn = document.getElementById("hamburger-btn");
+const mobileMenu = document.getElementById("mobile-menu");
+const mobileSidebar = document.getElementById("mobile-sidebar");
+const line1 = document.getElementById("line1");
+const line2 = document.getElementById("line2");
+const line3 = document.getElementById("line3");
+const mapSection = document.getElementById("map-section");
+const mobileRouteSelect = document.getElementsByClassName("test");
+
+let isMenuOpen = false;
+
+hamburgerBtn.addEventListener("click", () => {
+  isMenuOpen = !isMenuOpen;
+
+  if (isMenuOpen) {
+    // Abrir menú
+    mobileMenu.classList.remove("opacity-0", "pointer-events-none");
+    mobileMenu.classList.add("opacity-100");
+    mobileSidebar.classList.remove("-translate-x-full");
+    mobileSidebar.classList.add("translate-x-0");
+    mapSection.classList.add("hidden"); // Oculta el mapa
+    // Animación botón hamburguesa a X
+    line1.style.transform = "rotate(45deg) translate(5px, 5px)";
+    line2.style.opacity = "0";
+    line3.style.transform = "rotate(-45deg) translate(7px, -6px)";
+  } else {
+    // Cerrar menú
+    mobileMenu.classList.add("opacity-0", "pointer-events-none");
+    mobileMenu.classList.remove("opacity-100");
+    mobileSidebar.classList.add("-translate-x-full");
+    mobileSidebar.classList.remove("translate-x-0");
+    mapSection.classList.remove("hidden"); // Muestra el mapa
+    // Animación X a hamburguesa
+    line1.style.transform = "rotate(0) translate(0, 0)";
+    line2.style.opacity = "1";
+    line3.style.transform = "rotate(0) translate(0, 0)";
+  }
+});
+
+// Close menu when clicking on the overlay
+mobileMenu.addEventListener("click", (e) => {
+  if (e.target === mobileMenu) {
+    hamburgerBtn.click();
+  }
+});
+
+// Inicializa el mapa
+const map = L.map("map").setView([10.9685, -74.7813], 12);
+
+// Agrega el tile de OpenStreetMap
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution: "© OpenStreetMap contributors",
+}).addTo(map);
+
+let mainMakers = [];
+let routesData = [];
+
+async function fetchRoutes() {
+  const req = await fetch("https://deployment-connectbq.onrender.com/routes");
+  const data = await req.json();
+  routesData = data;
+}
+
+async function fetchStops() {
+  const req = await fetch("https://deployment-connectbq.onrender.com/routes");
+  const data = await req.json();
+  const stops = data[3].path;
+
+  stops.forEach((stop) => {
+    mainMakers.push(
+      L.marker([stop.coordinates.latitude, stop.coordinates.longitude])
+        .addTo(map)
+        .bindPopup(stop.name)
+    );
+  });
+}
+
+fetchRoutes();
+fetchStops();
+
+// Definir las rutas disponibles con sus coordenadas y paradas
+const busRoutes = {
+  north_hospital: {
+    name: "North Hospital Route",
+    color: "#FF6B35",
+    coordinates: [
+      [10.9685, -74.7813], // Downtown
+      [10.975, -74.775], // Intermediate stop 1
+      [10.982, -74.772], // Intermediate stop 2
+      [10.99, -74.77], // North Hospital
+    ],
+    stops: [
+      { name: "Downtown Terminal", coord: [10.9685, -74.7813] },
+      { name: "Centro Comercial", coord: [10.975, -74.775] },
+      { name: "Universidad del Norte", coord: [10.982, -74.772] },
+      { name: "Hospital del Norte", coord: [10.99, -74.77] },
+    ],
+    duration: "25 min",
+    price: "$2,500",
+  },
+  mall_plaza: {
+    name: "Mall Plaza Route",
+    color: "#2563EB",
+    coordinates: [
+      [10.9685, -74.7813], // Downtown
+      [10.96, -74.79], // Intermediate stop 1
+      [10.955, -74.795], // Intermediate stop 2
+      [10.95, -74.8], // Mall Plaza
+    ],
+    stops: [
+      { name: "Downtown Terminal", coord: [10.9685, -74.7813] },
+      { name: "Barrio El Prado", coord: [10.96, -74.79] },
+      { name: "Centro Histórico", coord: [10.955, -74.795] },
+      { name: "Mall Plaza", coord: [10.95, -74.8] },
+    ],
+    duration: "30 min",
+    price: "$3,000",
+  },
+  malecon: {
+    name: "Malecón Route",
+    color: "#10B981",
+    coordinates: [
+      [10.9685, -74.7813], // Downtown
+      [10.9653, -74.7836], // Buenos Aires Station
+      [10.962, -74.785], // Intermediate stop
+      [10.96, -74.787], // Malecón
+    ],
+    stops: [
+      { name: "Downtown Terminal", coord: [10.9685, -74.7813] },
+      { name: "Buenos Aires Station", coord: [10.9653, -74.7836] },
+      { name: "Paseo Bolívar", coord: [10.962, -74.785] },
+      { name: "Gran Malecón", coord: [10.96, -74.787] },
+    ],
+    duration: "20 min",
+    price: "$2,000",
+  },
+};
+
+// Variables para almacenar elementos del mapa
+let currentRoute = null;
+let currentStops = [];
+let routeInfoPanel = null;
+
+// Función para limpiar ruta actual
+function clearCurrentRoute() {
+  if (currentRoute) {
+    map.removeLayer(currentRoute);
+    currentRoute = null;
+  }
+
+  currentStops.forEach((stop) => {
+    map.removeLayer(stop);
+  });
+  currentStops = [];
+
+  if (routeInfoPanel) {
+    routeInfoPanel.remove();
+    routeInfoPanel = null;
+  }
+}
+
+// Función para mostrar ruta en el mapa
+function showRoute(routeKey) {
+  // Limpiar ruta anterior
+  clearCurrentRoute();
+
+  const route = routesData.find((route) => route.name == routeKey);
+  if (!route) return;
+
+  const routes = route.path;
+  const coordinatesPath = routes.map((point) => [
+    point.coordinates.latitude,
+    point.coordinates.longitude,
+  ]);
+
+  // Crear la línea de la ruta
+  currentRoute = L.polyline(coordinatesPath, {
+    weight: 4,
+    opacity: 0.8,
+  }).addTo(map);
+
+  // Agregar marcadores de paradas
+  coordinatesPath.forEach((stop) => {
+    const isStart = route.initial_point;
+    const isEnd = route.end_point;
+
+    let icon;
+    if (isStart) {
+      icon = L.divIcon({
+        html: `<div style="background-color: red; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; display: flex; align-items: center; justify-content: center;"><span style="color: white; font-size: 10px; font-weight: bold;">S</span></div>`,
+        className: "custom-div-icon",
+        iconSize: [20, 20],
+        iconAnchor: [10, 10],
+      });
+    } else if (isEnd) {
+      icon = L.divIcon({
+        html: `<div style="background-color: red; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; display: flex; align-items: center; justify-content: center;"><span style="color: white; font-size: 10px; font-weight: bold;">E</span></div>`,
+        className: "custom-div-icon",
+        iconSize: [20, 20],
+        iconAnchor: [10, 10],
+      });
+    } else {
+      icon = L.divIcon({
+        html: `<div style="background-color: red; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white;"></div>`,
+        className: "custom-div-icon",
+        iconSize: [12, 12],
+        iconAnchor: [6, 6],
+      });
+    }
+
+    const marker = L.marker(stop, { icon: icon }).addTo(map);
+    marker.bindPopup(
+      `<strong>${stop.name}</strong><br>${
+        isStart ? "Inicio" : isEnd ? "Destino" : "Parada"
+      }`
+    );
+    currentStops.push(marker);
+  });
+
+  // Ajustar vista del mapa a la ruta
+  map.fitBounds(currentRoute.getBounds(), { padding: [20, 20] });
+
+  // Mostrar información de la ruta
+  showRouteInfo(route);
+}
+
+// Función para mostrar información de la ruta
+function showRouteInfo(route) {
+  routeInfoPanel = document.createElement("div");
+  routeInfoPanel.className =
+    "fixed bottom-4 left-4 right-4 lg:left-auto lg:right-4 lg:w-80 bg-white rounded-lg shadow-lg p-4 z-50";
+  routeInfoPanel.innerHTML = `
+        <div class="flex justify-between items-start mb-3">
+            <h3 class="font-semibold text-lg text-gray-800">${route.name}</h3>
+            <button id="close-route-info" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+        </div>
+        <div class="flex justify-between items-center mb-3">
+            <span class="text-sm text-gray-600">Duración: ${
+              route.estimated_time
+            }H</span>
+            <span class="font-semibold text-lg">${route.estimated_cost}00 Pesos</span>
+        </div>
+        </div>
+    `;
+
+  document.body.appendChild(routeInfoPanel);
+
+  // Agregar evento para cerrar el panel
+  document.getElementById("close-route-info").addEventListener("click", () => {
+    clearCurrentRoute();
+  });
+}
+
+// Función para manejar la búsqueda de rutas
+function searchRoute() {
+  const selectElements = document.querySelectorAll("select");
+
+  selectElements.forEach((select) => {
+    const selectedValue = select.value;
+
+    const routeMap = {
+      op1: "Transmetro R1",
+      op2: "mall_plaza",
+      op3: "malecon",
+    };
+
+    const routeKey = routeMap[selectedValue];
+    if (routeKey) {
+      showRoute(routeKey);
+
+      // Si está en mobile, cerrar el menú después de buscar
+      if (isMenuOpen) {
+        hamburgerBtn.click();
+      }
+    }
+  });
+}
+
+// Agregar event listeners a los botones de búsqueda
+document.addEventListener("DOMContentLoaded", () => {
+  const searchButtons = document.querySelectorAll("button");
+
+  var select2 = document.getElementsByClassName("test");
+
+  searchButtons.forEach((button) => {
+    if (button.textContent.includes("Search Routes")) {
+      button.addEventListener("click", searchRoute);
+    }
+  });
+});
+
+// Redimensionar mapa cuando se redimensiona la ventana
+window.addEventListener("resize", () => {
+  setTimeout(() => {
+    map.invalidateSize();
+  }, 100);
+});

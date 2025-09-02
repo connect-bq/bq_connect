@@ -1,402 +1,194 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="interactive system that will allow the user to search for public bus routes"
+    />
+    <meta name="keywords" content="integrative project" />
+    <meta
+      name="sitedomain"
+      content="https://github.com/connect-bq/bq_connect.git"
+    />
+    <meta name="authors" content="StarDev" />
+    <meta name="desingner" content="StarDev" />
+    <meta name="copyright" content="© StarDev. All rights reserved" />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="revisit-after" content="10days" />
+    <title>Connect BQ</title>
+    <link rel="stylesheet" href="./src/css/styles.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="interactive system that will allow the user to search for public bus routes">
-  <meta name="keywords" content="integrative project">
-  <meta name="sitedomain" content="https://github.com/connect-bq/bq_connect.git">
-  <meta name="authors" content="StarDev">
-  <meta name="desingner" content="StarDev">
-  <meta name="copyright" content="© StarDev. All rights reserved">
-  <meta name="robots" content="index, follow">
-  <meta name="googlebot" content="index, follow">
-  <meta name="revisit-after" content="10days">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Connect BQ</title>
-  <link rel="stylesheet" href="./src/css/styles.css">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-</head>
+  <body class="bg-[#F5F5F5] text-[#333333] min-w-72 flex flex-col">
+    <!-- Navbar -->
+    <header
+      class="bg-[#FFFFFF] border-b border-[#D9D9D9] p-3 flex justify-between items-center relative"
+    >
+      <section class="flex flex-row justify-center text-center items-center">
+        <img
+          src="./src/assets/logos/logo-dashboard.png"
+          alt="logo-dashboard"
+          class="w-20 h-20"
+        />
+        <article class="flex flex-col">
+          <h1 class="font-bold text-lg text-[#333333]">Connect BQ</h1>
+          <p class="text-sm text-[#999999]">Smart Urban Mobility</p>
+        </article>
+      </section>
 
-<body class="bg-[#F5F5F5] text-[#333333]">
+      <!-- Botón hamburguesa (visible en tablet/móvil) -->
+      <button id="hamburger-btn" class="lg:hidden flex flex-col gap-1 p-2 z-50">
+        <p
+          class="w-6 h-0.5 bg-[#333333] transition-all duration-300"
+          id="line1"
+        ></p>
+        <p
+          class="w-6 h-0.5 bg-[#333333] transition-all duration-300"
+          id="line2"
+        ></p>
+        <p
+          class="w-6 h-0.5 bg-[#333333] transition-all duration-300"
+          id="line3"
+        ></p>
+      </button>
 
-
-  <!-- Navbar -->
-  <header class="bg-[#FFFFFF] border-b border-[#D9D9D9] p-3 flex justify-between items-center relative">
-
-    <div class="flex flex-row justify-center text-center items-center">
-      <img src="../../imgs/logo-dashboard.png" alt="logo-dashboard" class="w-20 h-20">
-      <div class="flex flex-col">
-        <h1 class="font-bold text-lg text-[#333333]">Connect BQ</h1>
-        <p class="text-sm text-[#999999]">Smart Urban Mobility</p>
-      </div>
-    </div>
-
-    <!-- Botón hamburguesa (visible en tablet/móvil) -->
-    <button id="hamburger-btn" class="lg:hidden flex flex-col gap-1 p-2 z-50">
-      <span class="w-6 h-0.5 bg-[#333333] transition-all duration-300" id="line1"></span>
-      <span class="w-6 h-0.5 bg-[#333333] transition-all duration-300" id="line2"></span>
-      <span class="w-6 h-0.5 bg-[#333333] transition-all duration-300" id="line3"></span>
-    </button>
-
-    <!-- Navegación desktop -->
-    <nav class="hidden lg:flex gap-3">
-      <!-- Botón Profile -->
-      <a id="profile-btn" class="border border-[#D9D9D9] px-3 py-1 rounded-lg">
-        Profile
-      </a>
-      <!-- Botón Sign In -->
-      <a href="./src/pages/login/login.html" class="border border-[#FF6B35] px-3 py-1 rounded-lg text-[#FF6B35] hover:bg-[#FF6B35] hover:text-white transition">
-        Sign In
-      </a>
-    </nav>
-  </header>
-
-  <!-- Menú hamburguesa overlay (tablet/móvil) -->
-  <div id="mobile-menu"
-    class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40 opacity-0 pointer-events-none transition-all duration-300">
-    <div class="bg-white w-80 h-full overflow-y-auto p-4 transform -translate-x-full transition-transform duration-300"
-      id="mobile-sidebar">
-
-      <!-- Navegación móvil -->
-      <div class="mb-6 flex flex-col gap-2">
-        <button class="border border-[#D9D9D9] px-3 py-2 rounded-lg" id="profile-btn">Profile</button>
-        <a href="./src/pages/login/login.html" class="border border-[#FF6B35] px-3 py-2 rounded-lg text-[#FF6B35] hover:bg-[#FF6B35] hover:text-white transition">
-          Sign In
+      <!-- Navegación desktop -->
+      <nav class="hidden lg:flex gap-3">
+        <a
+          href="./src/pages/dashboard/dashboard.html"
+          class="border border-[#D9D9D9] px-5 py-2 h-fit rounded-lg"
+          >Profile</a
+        >
+        <a
+          href="./src/pages/about/about.html"
+          class="border border-[#D9D9D9] px-5 py-2 h-fit rounded-lg"
+          >About</a
+        >
+        <a
+          href="./src/pages/login/login.html"
+          id="logout-btn"
+          class="group flex items-center justify-start w-11 h-11 bg-[#FF6B35] rounded-full cursor-pointer relative overflow-hidden transition-all duration-200 shadow-lg hover:w-32 hover:rounded-lg active:translate-x-1 active:translate-y-1"
+        >
+          <div
+            class="flex items-center justify-center w-full transition-all duration-300 group-hover:justify-start group-hover:px-3"
+          >
+            <svg class="w-4 h-4" viewBox="0 0 512 512" fill="white">
+              <path
+                d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"
+              ></path>
+            </svg>
+          </div>
+          <div
+            class="absolute right-5 transform translate-x-full opacity-0 text-white text-lg font-semibold transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+          >
+            sign in
+          </div>
         </a>
-      </div>
-    </div>
-  </div>
-      <!-- Plan your route -->
-      <section class="bg-[#F5F5F5] rounded-xl p-4 mb-4">
-        <h2 class="font-semibold flex items-center gap-2">
-          <span>📍</span> Plan your route
-        </h2>
-        <div class="mt-3 space-y-3">
-          <input type="text" placeholder="Desde..." class="w-full border border-[#D9D9D9] rounded-lg p-2 text-sm">
-          <input type="text" placeholder="Hasta..." class="w-full border border-[#D9D9D9] rounded-lg p-2 text-sm">
-          <button class="bg-[#FF6B35] text-white w-full py-2 rounded-lg hover:bg-[#e85d2a]">
-            Buscar Rutas
-          </button>
-        </div>
+      </nav>
+    </header>
+
+    <main>
+      <!--Hamburger menu overlay (tablet/mobile) -->
+      <section
+        id="mobile-menu"
+        class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40 opacity-0 pointer-events-none transition-all duration-300"
+      >
+        <article
+          class="bg-white w-80 h-full overflow-y-auto p-4 transform -translate-x-full transition-transform duration-300"
+          id="mobile-sidebar"
+        >
+          <!-- Mobile navigation -->
+          <section class="mb-6 flex flex-col gap-2">
+            <button class="bg-[#FF6B35] text-white px-3 py-2 rounded-lg">
+              Current
+            </button>
+            <button class="border border-[#D9D9D9] px-3 py-2 rounded-lg">
+              Profile
+            </button>
+            <button class="border border-[#D9D9D9] px-3 py-2 rounded-lg">
+              About
+            </button>
+            <button class="bg-[#FF6B35] text-white px-3 py-2 rounded-lg">
+              Logout
+            </button>
+          </section>
+
+          <hr class="mb-6" />
+
+          <!-- Plan your route -->
+          <section class="bg-[#F5F5F5] rounded-xl p-4 mb-4">
+            <h2 class="font-semibold flex items-center gap-2">
+              <p>📍</p>
+              Plan your route
+            </h2>
+            <article class="mt-3 space-y-3">
+              <label for="mobile-route-select">choose a route: </label>
+              <select
+                id="mobile-route-select"
+                class="w-full border border-[#D9D9D9] rounded-lg p-2 text-sm"
+              >
+                <option value="">Select a destination</option>
+                <option class="test" value="[10.9685, -74.7813]">
+                  North Hospital
+                </option>
+                <option value="op2">Mall Plaza</option>
+                <option value="op3">Malecón</option>
+              </select>
+
+              <button
+                id="mobile-search-btn"
+                class="bg-[#FF6B35] text-white w-full py-2 rounded-lg hover:bg-[#e85d2a]"
+              >
+                Search Routes
+              </button>
+            </article>
+          </section>
+        </article>
       </section>
 
-      <!-- Opciones de Ruta -->
-      <section class="bg-[#F5F5F5] rounded-xl p-4 mb-4">
-        <h2 class="font-semibold flex items-center gap-2">🛣️ Opciones de Ruta</h2>
-        <button class="mt-2 mb-3 border border-[#D9D9D9] px-3 py-1 rounded-lg text-sm">Usar mi ubicación</button>
-
-        <div class="space-y-3">
-          <!-- Opción rápida -->
-          <div class="p-3 border border-[#D9D9D9] rounded-lg flex justify-between items-center bg-gray-50">
-            <div>
-              <p class="font-semibold text-[#333333]">⚡ Faster</p>
-              <p class="text-sm text-[#999999]">Taxi + TransMetro</p>
-            </div>
-            <div class="text-right">
-              <p class="font-bold">25 min</p>
-              <p class="text-sm text-[#999999]">$8,500</p>
-            </div>
-          </div>
-          <!-- Opción económica -->
-          <div class="p-3 border border-[#D9D9D9] rounded-lg flex justify-between items-center">
-            <div>
-              <p class="font-semibold text-green-600">💲more economical</p>
-              <p class="text-sm text-[#999999]">Bus + Hike</p>
-            </div>
-            <div class="text-right">
-              <p class="font-bold">45 min</p>
-              <p class="text-sm text-[#999999]">$2,800</p>
-            </div>
-          </div>
-          <!-- Opción Balanced -->
-          <div class="p-3 border border-[#FF6B35] rounded-lg flex justify-between items-center bg-orange-50">
-            <div>
-              <p class="font-semibold text-blue-600">⚖️ Balanced</p>
-              <p class="text-sm text-[#999999]">TransMetro + Bus</p>
-              <p class="text-xs text-green-600">1.2 kg CO₂ · 90% reliable</p>
-            </div>
-            <div class="text-right">
-              <p class="font-bold">32 min</p>
-              <p class="text-sm text-[#999999]">$4,200</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="mt-4 flex gap-3">
-          <button class="flex-1 bg-[#FF6B35] text-white py-2 rounded-lg">start navigation</button>
-          <button class="flex-1 border border-[#D9D9D9] py-2 rounded-lg">save route</button>
-        </div>
+      <!-- Main container -->
+      <section class="flex flex-row p-4 gap-2 flex-1">
+        <!-- Sidebar desktop -->
+        <section class="hidden lg:flex flex-col items-center space-y-6">
+          <!-- Plan your route -->
+          <section class="bg-[#FFFFFF] shadow rounded-2xl p-6 w-[350px] h-fit">
+            <h2 class="font-semibold text-lg flex items-center gap-2">
+              <p>📍</p>
+              Plan your route
+            </h2>
+            <article class="mt-5 space-y-4">
+              <select
+                id="desktop-route-select"
+                class="w-full border border-[#D9D9D9] rounded-lg p-2 text-sm"
+              >
+                <option value="">Select a destination</option>
+                <option value="op1">Transmetro R1</option>
+                <option value="op2">Mall Plaza</option>
+                <option value="op3">Malecón</option>
+              </select>
+              <button
+                id="desktop-search-btn"
+                class="bg-[#FF6B35] text-white w-full py-3 rounded-xl text-base font-semibold hover:bg-[#e85d2a] transition"
+              >
+                Search Routes
+              </button>
+            </article>
+          </section>
+        </section>
+        <!-- Map -->
+        <section
+          id="map-section"
+          class="bg-[#FFFFFF] shadow rounded-xl p-2 flex-1"
+        >
+          <div id="map" class="w-full h-120 rounded-lg"></div>
+        </section>
       </section>
-
-      <!-- Alertas de tráfico -->
-      <section class="bg-[#F5F5F5] rounded-xl p-4 mb-4">
-        <h2 class="font-semibold flex items-center gap-2">⚠️ Traffic alerts</h2>
-
-        <div class="flex justify-between text-center my-3">
-          <div class="flex-1">
-            <p class="font-bold text-red-600">2</p>
-            <p class="text-sm">Criticisms</p>
-          </div>
-          <div class="flex-1">
-            <p class="font-bold text-yellow-500">2</p>
-            <p class="text-sm">Moderate</p>
-          </div>
-          <div class="flex-1">
-            <p class="font-bold text-green-600">3</p>
-            <p class="text-sm">Checker</p>
-          </div>
-        </div>
-
-        <!-- Alerta crítica -->
-        <div class="border border-[#D9D9D9] rounded-lg p-3 mb-3 flex flex-col gap-1 bg-white">
-          <div class="flex items-center gap-2">
-            <span class="w-3 h-3 bg-red-600 rounded-full"></span>
-            <p class="font-semibold text-red-600">via 50 with 72nd Street</p>
-            <span class="ml-auto text-xs bg-gray-100 px-2 rounded">verified</span>
-          </div>
-          <p class="text-sm text-[#999999]">Heavy traffic congestion due to accident</p>
-          <p class="text-xs text-[#999999]">Does 5 min · Duration: 30-45 min</p>
-          <div class="flex justify-between text-xs mt-1">
-            <span class="text-red-600 font-semibold">High Impact</span>
-            <span>👍 8 | 👎 1</span>
-          </div>
-        </div>
-
-        <!-- Alerta moderada -->
-        <div class="border border-[#D9D9D9] rounded-lg p-3 flex flex-col gap-1 bg-white">
-          <div class="flex items-center gap-2">
-            <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
-            <p class="font-semibold text-yellow-600">via 49 with 50nd Street</p>
-            <span class="ml-auto text-xs bg-gray-100 px-2 rounded">Verified</span>
-          </div>
-          <p class="text-sm text-[#999999]">Obras de mantenimiento vial · un carril cerrado</p>
-          <p class="text-xs text-[#999999]">Road maintenance works · one lane closed</p>
-          <div class="flex justify-between text-xs mt-1">
-            <span class="text-yellow-600 font-semibold">Medium Impact</span>
-            <span>👍 6 | 👎 0</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- Historial de búsquedas -->
-      <section class="bg-[#F5F5F5] rounded-xl p-4">
-        <h2 class="font-semibold flex items-center gap-2">⏱️ Historial de Búsquedas</h2>
-
-        <input type="text" placeholder="Buscar en historial..."
-          class="mt-3 w-full border border-[#D9D9D9] rounded-lg p-2 text-sm">
-
-        <div class="mt-3">
-          <p class="text-sm font-semibold text-[#999999]">⭐ Favorite Routes</p>
-          <div class="flex justify-between items-center text-sm py-2">
-            <p>Home → office</p>
-            <span class="text-xs text-[#999999]">18 min · 42x</span>
-          </div>
-          <div class="flex justify-between items-center text-sm py-2">
-            <p>Mall → Home</p>
-            <span class="text-xs text-[#999999]">25 min · 8x</span>
-          </div>
-        </div>
-
-        <hr class="my-3">
-
-        <div class="space-y-3">
-          <div class="border border-[#D9D9D9] rounded-lg p-3 bg-white">
-            <p class="text-sm font-semibold">Home → Oficina <span class="text-blue-600 text-xs">Balanced</span></p>
-            <p class="text-xs text-[#999999]">Hace 1 hora · 18 min</p>
-            <p class="text-xs font-semibold">$3,200</p>
-          </div>
-          <div class="border border-[#D9D9D9] rounded-lg p-3 bg-white">
-            <p class="text-sm font-semibold">Mall → Home <span class="text-green-600 text-xs">Balanced</span></p>
-            <p class="text-xs text-[#999999]">Hace 4 horas · 25 min</p>
-            <p class="text-xs font-semibold">$4,100</p>
-          </div>
-          <div class="border border-[#D9D9D9] rounded-lg p-3 bg-white">
-            <p class="text-sm font-semibold">Centro → Aeropuerto <span class="text-blue-600 text-xs">Balanced</span>
-            </p>
-            <p class="text-xs text-[#999999]">Hace 6 horas · 35 min</p>
-            <p class="text-xs font-semibold">$7,200</p>
-          </div>
-        </div>
-
-        <button class="mt-3 w-full text-[#FF6B35] text-sm font-semibold">Ver Historial Completo</button>
-      </section>
-    </div>
-  </div>
-
-  <!-- Contenedor principal -->
-  <main class="flex p-2 gap-2">
-
-    <!-- Sidebar desktop -->
-    <aside class="hidden lg:block w-[400px] flex flex-col gap-16">
-
-      <!-- Plan your route -->
-      <section class="bg-[#FFFFFF] shadow rounded-xl p-4 ml-[5rem]">
-        <h2 class="font-semibold flex items-center gap-2">
-          <span>📍</span> Plan your route
-        </h2>
-        <div class="mt-3 space-y-3">
-          <input type="text" placeholder="Desde..." class="w-full border border-[#D9D9D9] rounded-lg p-2 text-sm">
-          <input type="text" placeholder="Hasta..." class="w-full border border-[#D9D9D9] rounded-lg p-2 text-sm">
-          <button class="bg-[#FF6B35] text-white w-full py-2 rounded-lg hover:bg-[#e85d2a]">
-            Buscar Rutas
-          </button>
-        </div>
-      </section>
-
-      <!-- Opciones de Ruta -->
-      <section class="bg-[#FFFFFF] shadow rounded-xl p-4 ml-[5rem]">
-        <h2 class="font-semibold flex items-center gap-2">🛣️ Opciones de Ruta</h2>
-        <button class="mt-2 mb-3 border border-[#D9D9D9] px-3 py-1 rounded-lg text-sm">Usar mi ubicación</button>
-
-        <div class="space-y-3">
-          <!-- Opción rápida -->
-          <div class="p-3 border border-[#D9D9D9] rounded-lg flex justify-between items-center bg-gray-50">
-            <div>
-              <p class="font-semibold text-[#333333]">⚡ Más Rápida</p>
-              <p class="text-sm text-[#999999]">Taxi + TransMetro</p>
-            </div>
-            <div class="text-right">
-              <p class="font-bold">25 min</p>
-              <p class="text-sm text-[#999999]">$8,500</p>
-            </div>
-          </div>
-          <!-- Opción económica -->
-          <div class="p-3 border border-[#D9D9D9] rounded-lg flex justify-between items-center">
-            <div>
-              <p class="font-semibold text-green-600">💲more economical</p>
-              <p class="text-sm text-[#999999]">Bus + Caminata</p>
-            </div>
-            <div class="text-right">
-              <p class="font-bold">45 min</p>
-              <p class="text-sm text-[#999999]">$2,800</p>
-            </div>
-          </div>
-          <!-- Opción Balanced -->
-          <div class="p-3 border border-[#FF6B35] rounded-lg flex justify-between items-center bg-orange-50">
-            <div>
-              <p class="font-semibold text-blue-600">⚖️ Balanced</p>
-              <p class="text-sm text-[#999999]">TransMetro + Bus</p>
-              <p class="text-xs text-green-600">1.2 kg CO₂ · 90% reliable</p>
-            </div>
-            <div class="text-right">
-              <p class="font-bold">32 min</p>
-              <p class="text-sm text-[#999999]">$4,200</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="mt-4 flex gap-3">
-          <button class="flex-1 bg-[#FF6B35] text-white py-2 rounded-lg">Iniciar Navegación</button>
-          <button class="flex-1 border border-[#D9D9D9] py-2 rounded-lg">save route</button>
-        </div>
-      </section>
-
-      <!-- Alertas de tráfico -->
-      <section class="bg-[#FFFFFF] shadow rounded-xl p-4 ml-[5rem]">
-        <h2 class="font-semibold flex items-center gap-2">⚠️ Alertas de Tráfico</h2>
-
-        <div class="flex justify-between text-center my-3">
-          <div class="flex-1">
-            <p class="font-bold text-red-600">2</p>
-            <p class="text-sm">Críticas</p>
-          </div>
-          <div class="flex-1">
-            <p class="font-bold text-yellow-500">2</p>
-            <p class="text-sm">Moderadas</p>
-          </div>
-          <div class="flex-1">
-            <p class="font-bold text-green-600">3</p>
-            <p class="text-sm">Verificadas</p>
-          </div>
-        </div>
-
-        <!-- Alerta crítica -->
-        <div class="border border-[#D9D9D9] rounded-lg p-3 mb-3 flex flex-col gap-1">
-          <div class="flex items-center gap-2">
-            <span class="w-3 h-3 bg-red-600 rounded-full"></span>
-            <p class="font-semibold text-red-600">Vía 40 con Calle 72</p>
-            <span class="ml-auto text-xs bg-gray-100 px-2 rounded">Verificada</span>
-          </div>
-          <p class="text-sm text-[#999999]">Congestión vehicular intensa debido a accidente</p>
-          <p class="text-xs text-[#999999]">Hace 5 min · Duración: 30-45 min</p>
-          <div class="flex justify-between text-xs mt-1">
-            <span class="text-red-600 font-semibold">Impacto Alto</span>
-            <span>👍 8 | 👎 1</span>
-          </div>
-        </div>
-
-        <!-- Alerta moderada -->
-        <div class="border border-[#D9D9D9] rounded-lg p-3 flex flex-col gap-1">
-          <div class="flex items-center gap-2">
-            <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
-            <p class="font-semibold text-yellow-600">Carrera 46 con Calle 84</p>
-            <span class="ml-auto text-xs bg-gray-100 px-2 rounded">Verificada</span>
-          </div>
-          <p class="text-sm text-[#999999]">Obras de mantenimiento vial · un carril cerrado</p>
-          <p class="text-xs text-[#999999]">Hace 15 min · Duración: 2-3 horas</p>
-          <div class="flex justify-between text-xs mt-1">
-            <span class="text-yellow-600 font-semibold">Impacto Medio</span>
-            <span>👍 6 | 👎 0</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- Historial de búsquedas -->
-      <section class="bg-[#FFFFFF] shadow rounded-xl p-4 ml-[5rem]">
-        <h2 class="font-semibold flex items-center gap-2">⏱️ Historial de Búsquedas</h2>
-
-        <input type="text" placeholder="Buscar en historial..."
-          class="mt-3 w-full border border-[#D9D9D9] rounded-lg p-2 text-sm">
-
-        <div class="mt-3">
-          <p class="text-sm font-semibold text-[#999999]">⭐ favorite routes</p>
-          <div class="flex justify-between items-center text-sm py-2">
-            <p>Casa → Oficina</p>
-            <span class="text-xs text-[#999999]">18 min · 42x</span>
-          </div>
-          <div class="flex justify-between items-center text-sm py-2">
-            <p>Centro Comercial → Casa</p>
-            <span class="text-xs text-[#999999]">25 min · 8x</span>
-          </div>
-        </div>
-
-        <hr class="my-3">
-
-        <div class="space-y-3">
-          <div class="border border-[#D9D9D9] rounded-lg p-3">
-            <p class="text-sm font-semibold">Casa → Oficina <span class="text-blue-600 text-xs">Balanced</span></p>
-            <p class="text-xs text-[#999999]">Hace 1 hora · 18 min</p>
-            <p class="text-xs font-semibold">$3,200</p>
-          </div>
-          <div class="border border-[#D9D9D9] rounded-lg p-3">
-            <p class="text-sm font-semibold">Centro Comercial → Casa <span
-                class="text-green-600 text-xs">Balanced</span></p>
-            <p class="text-xs text-[#999999]">Hace 4 horas · 25 min</p>
-            <p class="text-xs font-semibold">$4,100</p>
-          </div>
-          <div class="border border-[#D9D9D9] rounded-lg p-3">
-            <p class="text-sm font-semibold">Centro → Aeropuerto <span class="text-blue-600 text-xs">Balanced</span>
-            </p>
-            <p class="text-xs text-[#999999]">Hace 6 horas · 35 min</p>
-            <p class="text-xs font-semibold">$7,200</p>
-          </div>
-        </div>
-
-        <button class="mt-3 w-full text-[#FF6B35] text-sm font-semibold">Ver Historial Completo</button>
-      </section>
-    </aside>
-
-    <!-- Mapa -->
-    <section id="map-section" class="flex-1 bg-[#FFFFFF] shadow rounded-xl p-2 lg:ml-60">
-      <div id="map" class="w-full h-[45rem] lg:w-[70rem] rounded-lg"></div>
-    </section>
-  </main>
-  <script src="./main.js"></script>
-</body>
-
+    </main>
+    <script src="./main.js"></script>
+  </body>
 </html>
