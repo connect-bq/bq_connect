@@ -244,6 +244,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const loguoutBtnCel = document.getElementById("logout-btn-cel");
   const signinBtnCel = document.getElementById("signin-btn-cel");
 
+  loguoutBtnCel.addEventListener("click", () => {
+    localStorage.removeItem("user");
+    window.location.href = "./index.html";
+  });
+
   if (isAuth()) {
     profileBtn.classList.toggle("hidden");
     profileBtnCel.classList.toggle("hidden");
