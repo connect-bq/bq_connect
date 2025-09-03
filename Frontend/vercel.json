@@ -9,10 +9,22 @@
       }
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "/Frontend/dist/$1"
+      "source": "/login",
+      "destination": "/public/login.html"
+    },
+    {
+      "source": "/register",
+      "destination": "/public/register.html"
+    },
+    {
+      "source": "/dashboard",
+      "destination": "/public/dashboard.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/public/about.html"
     }
   ]
 }
