@@ -12,7 +12,7 @@
   "rewrites": [
     {
       "source": "/login",
-      "destination": "/public/login.html"
+      "destination": "./public/login.html"
     },
     {
       "source": "/register",
