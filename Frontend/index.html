@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="interactive system that will allow the user to search for public bus routes" />
-  <meta name="keywords" content="integrative project" />
+  <meta name="description" content="Interactive system that allows users to search for public transportation routes" />
+  <meta name="keywords" content="public transportation, routes, barranquilla, transmetro" />
   <meta name="sitedomain" content="https://github.com/connect-bq/bq_connect.git" />
   <meta name="authors" content="StarDev" />
   <meta name="desingner" content="StarDev" />
@@ -13,7 +13,7 @@
   <meta name="robots" content="index, follow" />
   <meta name="googlebot" content="index, follow" />
   <meta name="revisit-after" content="10days" />
-  <title>Connect BQ</title>
+  <title>Connect BQ - Transmetro Routes</title>
   <link rel="stylesheet" href="./src/css/styles.css" />
   <link rel="shortcut icon" href="./src/assets/logos/logo-dashboard.png" type="image/x-icon" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -31,14 +31,14 @@
       </article>
     </section>
 
-    <!-- Botón hamburguesa (visible en tablet/móvil) -->
+    <!-- Hamburger button (visible on tablet/mobile) -->
     <button id="hamburger-btn" class="lg:hidden flex flex-col gap-1 p-2 z-50">
       <p class="w-6 h-0.5 bg-[#333333] transition-all duration-300" id="line1"></p>
       <p class="w-6 h-0.5 bg-[#333333] transition-all duration-300" id="line2"></p>
       <p class="w-6 h-0.5 bg-[#333333] transition-all duration-300" id="line3"></p>
     </button>
 
-    <!-- Navegación desktop -->
+    <!-- Desktop navigation -->
     <nav class="hidden lg:flex gap-3">
       <a href="/dashboard.html" class="border border-[#D9D9D9] px-5 py-2 h-fit rounded-lg hidden"
         id="profile-btn">Profile</a>
@@ -95,16 +95,13 @@
             Plan your route
           </h2>
           <article class="mt-3 space-y-3">
-            <label for="mobile-route-select">Choose a route: </label>
-            <select id="mobile-route-select" class="w-full border border-[#D9D9D9] rounded-lg p-2 text-sm">
-              <option value="">Select a destination</option>
-              <option value="op1">Transmetro R1</option>
-              <option value="op2">Transmetro U30</option>
-              <option value="op3">Transmetro A7-1</option>
+            <label for="mobile-route-select" class="text-sm font-medium text-gray-700">Choose a route:</label>
+            <select id="mobile-route-select" class="w-full border border-[#D9D9D9] rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#FF6B35] focus:border-[#FF6B35]">
+              <option value="">Select a route</option>
             </select>
 
-            <button id="mobile-search-btn" class="bg-[#FF6B35] text-white w-full py-2 rounded-lg hover:bg-[#e85d2a]">
-              Search Routes
+            <button id="mobile-search-btn" class="bg-[#FF6B35] text-white w-full py-2 rounded-lg hover:bg-[#e85d2a] transition-colors duration-200 font-medium">
+              Search Route
             </button>
           </article>
         </section>
@@ -112,59 +109,84 @@
     </section>
 
     <!-- Main container -->
-    <section class="flex flex-row p-4 gap-2 flex-1">
+    <section class="flex flex-row p-4 gap-4 flex-1">
       <!-- Sidebar desktop -->
       <section class="hidden lg:flex flex-col items-center space-y-6">
         <!-- Plan your route -->
-        <section class="bg-[#FFFFFF] shadow rounded-2xl p-6 w-[350px] h-fit">
-          <h2 class="font-semibold text-lg flex items-center gap-2">
-            <p>📍</p>
+        <section class="bg-[#FFFFFF] shadow-lg rounded-2xl p-6 w-[380px] h-fit">
+          <h2 class="font-semibold text-lg flex items-center gap-2 mb-4">
+            <p class="text-2xl">📍</p>
             Plan your route
           </h2>
-          <article class="mt-5 space-y-4">
-            <select id="desktop-route-select" class="w-full border border-[#D9D9D9] rounded-lg p-2 text-sm">
-              <option value="">Select a destination</option>
-            </select>
+          <article class="space-y-4">
+            <div>
+              <label for="desktop-route-select" class="block text-sm font-medium text-gray-700 mb-2">Select a route:</label>
+              <select id="desktop-route-select" class="w-full border border-[#D9D9D9] rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#FF6B35] focus:border-[#FF6B35] transition-all duration-200">
+                <option value="">Select a route</option>
+              </select>
+            </div>
             <button id="desktop-search-btn"
-              class="bg-[#FF6B35] text-white w-full py-3 rounded-xl text-base font-semibold hover:bg-[#e85d2a] transition">
-              Search Routes
+              class="bg-[#FF6B35] text-white w-full py-3 rounded-xl text-base font-semibold hover:bg-[#e85d2a] transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+              Search Route
             </button>
           </article>
         </section>
 
-        <!--Add Alerts-->
-        <section class="bg-[#FFFFFF] shadow rounded-2xl p-6 w-[350px] h-fit hidden" id="add-alert-section">
-          <h2 class="font-semibold text-lg flex items-center gap-2">
-            <p>❗</p>
-            Add alerts
+        <!-- Route Information Display -->
+        <section class="bg-[#8B5CF6] shadow-lg rounded-2xl p-6 w-[380px] h-fit" id="route-info-section">
+          <h2 class="font-semibold text-lg flex items-center gap-2 mb-4 text-white">
+            <p class="text-2xl">ℹ️</p>
+            Route Information
           </h2>
-          <article class="mt-5 space-y-4">
-            <select id="alert-type-select" class="w-full border border-[#D9D9D9] rounded-lg p-2 text-sm">
-              <option value="">Type</option>
-              <option value="ot1">Block</option>
-              <option value="ot2">Traffic</option>
-              <option value="ot3">Event</option>
-            </select>
+          <article class="text-white" id="route-info-content">
+            <div class="text-center py-8">
+              <p class="text-lg opacity-80">Select a route to see information</p>
+            </div>
+          </article>
+        </section>
 
-            <select id="alert-severity-select" class="w-full border border-[#D9D9D9] rounded-lg p-2 text-sm">
-              <option value="">Severity</option>
-              <option value="od1">Low</option>
-              <option value="od2">Medium</option>
-              <option value="od3">High</option>
-            </select>
+        <!--Add Alerts-->
+        <section class="bg-[#FFFFFF] shadow-lg rounded-2xl p-6 w-[380px] h-fit hidden" id="add-alert-section">
+          <h2 class="font-semibold text-lg flex items-center gap-2 mb-4">
+            <p class="text-2xl">❗</p>
+            Report Alert
+          </h2>
+          <article class="space-y-4">
+            <div>
+              <label for="alert-type-select" class="block text-sm font-medium text-gray-700 mb-2">Alert type:</label>
+              <select id="alert-type-select" class="w-full border border-[#D9D9D9] rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#FF6B35] focus:border-[#FF6B35] transition-all duration-200">
+                <option value="">Select type</option>
+                <option value="traffic">Traffic</option>
+                <option value="block">Block</option>
+                <option value="event">Event</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="alert-severity-select" class="block text-sm font-medium text-gray-700 mb-2">Severity:</label>
+              <select id="alert-severity-select" class="w-full border border-[#D9D9D9] rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#FF6B35] focus:border-[#FF6B35] transition-all duration-200">
+                <option value="">Select severity</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+            
             <button id="add-alert-btn"
-              class="bg-[#FF6B35] text-white w-full py-3 rounded-xl text-base font-semibold hover:bg-[#e85d2a] transition">
+              class="bg-[#FF6B35] text-white w-full py-3 rounded-xl text-base font-semibold hover:bg-[#e85d2a] transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
               Report Alert
             </button>
           </article>
         </section>
       </section>
+      
       <!-- Map -->
-      <section id="map-section" class="bg-[#FFFFFF] shadow rounded-xl p-2 flex-1">
-        <div id="map" class="w-full h-120 rounded-lg"></div>
+      <section id="map-section" class="bg-[#FFFFFF] shadow-lg rounded-xl p-2 flex-1">
+        <div id="map" class="w-full h-[calc(100vh-200px)] rounded-lg"></div>
       </section>
     </section>
   </main>
+  
   <script type="module" src="./main.js"></script>
 </body>
 

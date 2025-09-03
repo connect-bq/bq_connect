@@ -14,8 +14,14 @@
     "type": "git",
     "url": "git+https://github.com/connect-bq/bq_connect.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "transmetro",
+    "barranquilla",
+    "transportation",
+    "routes",
+    "mobility"
+  ],
+  "author": "StarDev",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/connect-bq/bq_connect/issues"

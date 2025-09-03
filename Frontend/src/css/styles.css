@@ -9,3 +9,177 @@
     --gris-medio: #999999;
     --negro: #333333;
 }
+
+/* Estilos personalizados para el mapa */
+#map {
+    min-height: 600px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Estilos para los marcadores personalizados */
+.custom-div-icon {
+    background: transparent;
+    border: none;
+}
+
+.custom-div-icon div {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease-in-out;
+}
+
+.custom-div-icon div:hover {
+    transform: scale(1.1);
+}
+
+/* Estilos para los paneles de información */
+.route-info-panel, .alerts-panel {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 107, 53, 0.2);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Animaciones para los paneles */
+@keyframes slideInUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.route-info-panel, .alerts-panel {
+    animation: slideInUp 0.3s ease-out;
+}
+
+/* Estilos para los botones de cerrar */
+#close-route-info, #close-alerts {
+    transition: all 0.2s ease-in-out;
+}
+
+#close-route-info:hover, #close-alerts:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    padding: 2px;
+}
+
+/* Estilos para los selectores */
+select:focus {
+    outline: none;
+    border-color: var(--naranja);
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+/* Estilos para los botones */
+button {
+    transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Estilos para el menú móvil */
+#mobile-menu {
+    backdrop-filter: blur(5px);
+}
+
+#mobile-sidebar {
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para las alertas */
+.alert-item {
+    transition: all 0.2s ease-in-out;
+}
+
+.alert-item:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para el mapa en dispositivos móviles */
+@media (max-width: 1024px) {
+    #map {
+        min-height: 400px;
+    }
+    
+    .route-info-panel, .alerts-panel {
+        left: 1rem;
+        right: 1rem;
+        width: auto;
+    }
+}
+
+/* Estilos para el scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--naranja);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #e85d2a;
+}
+
+/* Estilos para los popups del mapa */
+.leaflet-popup-content-wrapper {
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.leaflet-popup-content {
+    margin: 12px 16px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.leaflet-popup-tip {
+    background: white;
+}
+
+/* Estilos para el loader */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 107, 53, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--naranja);
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Estilos para las transiciones suaves */
+* {
+    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Estilos para el estado de hover en los elementos interactivos */
+.interactive:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+/* Estilos para el estado activo */
+.interactive:active {
+    transform: scale(0.98);
+}
