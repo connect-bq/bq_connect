@@ -1,245 +1,246 @@
-# 🌐 Connect BQ
+# Connect BQ - Plataforma de Movilidad Urbana Inteligente
 
-**Connect BQ** is a smart urban mobility platform designed to modernize public transport in Barranquilla. It offers citizens a centralized tool to plan routes, receive real-time alerts, and access personalized features.
+## 🚌 Descripción
 
------
-### 📜 Table of Contents
+Connect BQ es una plataforma web interactiva que permite a los usuarios explorar y planificar rutas de transporte público en Barranquilla, específicamente las rutas del sistema Transmetro. La aplicación incluye un mapa interactivo, búsqueda de rutas en tiempo real y un sistema de alertas comunitarias.
 
-1.  [The Project Team](#the-project-team-)
-2.  [Project Status & License](#project-status--license-)
-3.  [Frontend Documentation](#frontend-documentation)
-    * [Key Features 🚀](#-key-features)
-    * [System Architecture 🏗️](#-system-architecture)
-    * [Tech Stack 🛠️](#-tech-stack)
-    * [Installation and Setup ⚙️](#-installation-and-setup)
-    * [Implemented Views 🌍](#-implemented-views)
-    * [Upcoming Improvements 🔔](#-upcoming-improvements)
-4.  [Backend Documentation](#backend-documentation)
-    * [System Architecture 🏛️](#-system-architecture-1)
-    * [Technology Stack 🛠️](#-technology-stack)
-    * [Initial Setup 🚀](#-initial-setup)
-        * [Prerequisites](#prerequisites)
-        * [Installation](#installation)
-    * [Environment Variables 🔑](#-environment-variables)
-    * [Available Scripts 📜](#-available-scripts)
-    * [API Documentation 📖](#-api-documentation)
-    * [Database Schema (Models) 🗄️](#-database-schema-models)
-    * [Deployment ☁️](#-deployment)
-5.  [Complete Technical Document](#complete-technical-document)
+## ✨ Características Principales
 
------
+### 🗺️ Mapa Interactivo
+- **Visualización de rutas**: Muestra las rutas de Transmetro con trazado preciso siguiendo las calles
+- **Marcadores inteligentes**: 
+  - 🟢 **Verde (I)**: Punto de inicio de la ruta
+  - 🔴 **Rojo (F)**: Punto final de la ruta
+  - 🔵 **Azul**: Paradas intermedias
+- **Navegación fluida**: Zoom automático y centrado en la ruta seleccionada
 
-### The Project Team
+### 🔍 Búsqueda de Rutas
+- **Selector interactivo**: Lista dinámica de todas las rutas disponibles
+- **Información detallada**: 
+  - Distancia total
+  - Tiempo estimado de viaje
+  - Costo del pasaje
+  - Puntos de inicio y destino
+- **Búsqueda en tiempo real**: Resultados instantáneos al seleccionar una ruta
 
-This project was developed by the following team:
+### ⚠️ Sistema de Alertas
+- **Alertas en tiempo real**: Notificaciones sobre tráfico, bloqueos y eventos
+- **Clasificación por severidad**: Baja, Media, Alta
+- **Información detallada**: Usuario que reportó, fecha y hora
+- **Panel dedicado**: Sección especial para visualizar alertas activas
 
-  * **Sebastian Linero** - *Product Owner & Scrum Master*
-  * **Willman Giraldo** - *QA & Backend Developer*
-  * **Samuel Arenas** - *Backend Developer*
-  * **Santiago Comas** - *Frontend Developer*
-  * **Felipe Palmar** - *Frontend Developer*
+### 📱 Diseño Responsivo
+- **Interfaz adaptativa**: Funciona perfectamente en desktop, tablet y móvil
+- **Menú hamburguesa**: Navegación optimizada para dispositivos móviles
+- **Paneles flotantes**: Información contextual sin obstruir el mapa
 
------
+## 🛠️ Tecnologías Utilizadas
 
-### Project Status & License
+### Frontend
+- **HTML5**: Estructura semántica y accesible
+- **CSS3**: Estilos modernos con Tailwind CSS y animaciones personalizadas
+- **JavaScript ES6+**: Lógica de la aplicación y manejo de eventos
+- **Leaflet.js**: Biblioteca de mapas interactivos
+- **OpenStreetMap**: Mapas de código abierto
 
-  * **Status:** The project is currently in **beta phase** and represents the **MVP (Minimum Viable Product)**.
-  * **License:** This project is licensed under the **GNU General Public License v3.0**.
+### Backend
+- **Node.js**: Runtime de JavaScript
+- **Express.js**: Framework web
+- **MongoDB**: Base de datos NoSQL
+- **REST API**: Arquitectura de servicios web
 
------
+## 🚀 Instalación y Uso
 
-### Frontend Documentation
+### Prerrequisitos
+- Node.js (versión 16 o superior)
+- npm o yarn
+- Git
 
-This repository contains the web interface for **Connect BQ**, a platform designed to modernize urban mobility in Barranquilla. The frontend offers an intuitive and responsive experience, developed with **HTML5, CSS (Tailwind)**, and **JavaScript (ES6+)**, with **Vite** support for fast development.
+### Instalación
 
-The main purpose is to provide citizens with a **centralized digital tool to efficiently plan public transport routes**, with the ability to receive **real-time alerts about route changes**, check mobility information, and access personalized sections through an **interactive dashboard**.
-
-#### 🚀 Key Features
-
-  * 📌 **Multiple views**: login, register, about, dashboard, errors (401, 404, 500).
-  * 🎨 **Responsive UI** built with TailwindCSS.
-  * 🗺️ **Leaflet.js** for map and route visualization.
-  * 📡 API consumption using `fetch`.
-  * ⚡ Optimized deployment on **Vercel** with **Vite** bundling.
-
-#### 🏗️ System Architecture
-
-The application is organized as a **MPA (Multi-Page Application)** where each view has its own HTML and associated JS.
-
-```
-src/
-├── assets/ # Images and icons
-├── css/ # Global styles and Tailwind
-├── pages/ # Main views
-│ ├── about/ # About view
-│ ├── dashboard/ # User dashboard view
-│ ├── login/ # Login + logic
-│ ├── register/ # Register + logic
-│ └── errors/ # Error pages (401, 404, 500)
-├── index.html # Initial page
-├── main.js # Global initialization
-└── package.json # Dependencies configuration
-```
-
-#### 🛠️ Tech Stack
-
-  * **Frontend**: HTML5, TailwindCSS, JavaScript (ES6+).
-  * **Libraries**: Leaflet.js for maps and routes.
-  * **Dev tools**: Vite, Node.js, npm.
-  * **Deployment**: Vercel.
-
-#### ⚙️ Installation and Setup
-
-1.  Clone the repository:
-    ```bash
-    git clone https://github.com/tu-org/connect-bq-frontend.git
-    cd connect-bq-frontend
-    ```
-2.  Install dependencies:
-    ```bash
-    npm install
-    ```
-3.  Start the development environment with Vite:
-    ```bash
-    npm run dev
-    ```
-4.  Open in browser:
-    ```bash
-    http://localhost:5173
-    ```
-
-#### 🌍 Implemented Views
-
-  * **Register**: user registration form.
-  * **Login**: authentication with validation.
-  * **About**: project description.
-  * **Dashboard**: main panel with map integration.
-  * **Errors (401, 404, 500)**: custom status screens.
-
-#### 🔔 Upcoming Improvements
-
-  * Direct connection to the backend (authentication and routes API).
-  * **Real-time data integration**: Displaying real-time GPS location of buses on the map.
-  * **Progressive Web App (PWA)**: Allowing users to "install" the application on their mobile devices and access it offline.
-  * Better modularization of reusable components.
-
------
-
-### Backend Documentation
-
-The central API for the **"Connect BQ"** smart urban mobility platform. This service manages user authentication, route planning, and citizen alerts using **Node.js**, **Express**, and **MongoDB**.
-
-#### 🏛️ System Architecture
-
-The Connect BQ backend is built as a **RESTful API** using the **Express** framework on **Node.js**.
-
-The flow is as follows:
-
-  * The client (Frontend) makes an HTTP request to an endpoint (e.g., `POST /api/users`).
-  * The Express server receives the request and directs it to the appropriate **router**.
-  * A **controller** handles the business logic, validating input data.
-  * The controller interacts with **Mongoose models** to perform **CRUD** (Create, Read, Update, Delete) operations on the **MongoDB** database.
-  * The API returns a **JSON response** to the client.
-
-#### 🛠️ Technology Stack
-
-  * **Runtime Environment**: Node.js (v18.x or newer)
-  * **Framework**: Express.js
-  * **Database**: MongoDB (with MongoDB Compass as a management tool)
-  * **Object Data Modeling (ODM)**: Mongoose
-  * **Environment Variable Management**: `dotenv`
-  * **Testing**: Jest and MongoDB Memory Server
-
-#### 🚀 Initial Setup
-
-Follow these steps to set up the project in your local development environment.
-
-1.  **Prerequisites**
-
-      * Node.js (v18.x or newer)
-      * NPM (comes with Node.js)
-      * Git
-
-2.  **Installation**
-
-      * **Clone the repository:**
-        ```bash
-        git clone https://github.com/connect-bq/bq_connect.git
-        cd connect-bq-frontend
-        ```
-      * **Install project dependencies:**
-        ```bash
-        npm install
-        ```
-
-#### 🔑 Environment Variables
-
-This project requires environment variables to function. Create a file named `.env` in the root of the project and add the following variable:
-
+1. **Clonar el repositorio**
 ```bash
-# .env
-
-# Port where the server will run
-PORT=3001
-
-# Connection URI to your local MongoDB database
-# The database is named 'connect_bq'
-MONGO_URI="mongodb://localhost:27017/connect_bq"
+git clone https://github.com/connect-bq/bq_connect.git
+cd bq_connect
 ```
 
-#### 📜 Available Scripts
+2. **Instalar dependencias del Frontend**
+```bash
+cd Frontend
+npm install
+```
 
-In the `package.json` file, you will find the following scripts:
+3. **Instalar dependencias del Backend**
+```bash
+cd ../Backend
+npm install
+```
 
-  * `npm start`: Starts the application in production mode.
-  * `npm run dev`: Starts the application in development mode using **nodemon**, which automatically restarts the server on file changes.
-  * `npm test`: Runs all project tests.
+4. **Configurar variables de entorno**
+```bash
+# En Backend/
+cp .env.example .env
+# Editar .env con tus configuraciones
+```
 
-#### 📖 API Documentation
+### Ejecución
 
-The main API endpoints are detailed below.
+1. **Iniciar el Backend**
+```bash
+cd Backend
+npm start
+```
 
-**User Management**
+2. **Iniciar el Frontend**
+```bash
+cd Frontend
+npm run dev
+```
 
-  * `POST /users`: Creates a new user.
-  * `GET /users`: Gets a list of all users.
-  * `GET /users/:id`: Gets a user by their ID.
-  * `PUT /users/:id`: Updates a user by their ID.
-  * `DELETE /users/:id`: Deletes a user by their ID.
+3. **Abrir en el navegador**
+```
+http://localhost:5173
+```
 
-**Route History**
+## 📊 Estructura de Datos
 
-  * `PUT /users/:id/addRoute`: Adds a route to a user's history.
-  * `PUT /users/:id/removeRoute`: Removes a route from a user's history.
+### Ruta de Transmetro
+```json
+{
+  "_id": "identificador_unico",
+  "name": "Nombre de la ruta",
+  "initial_point": {
+    "coordinates": {
+      "latitude": 10.9073079900703,
+      "longitude": -74.8003802439823
+    },
+    "name": "Nombre del punto inicial"
+  },
+  "end_point": {
+    "coordinates": {
+      "latitude": 10.9951673572843,
+      "longitude": -74.807519818494
+    },
+    "name": "Nombre del punto final"
+  },
+  "path": [
+    {
+      "coordinates": {
+        "latitude": 10.9150750113431,
+        "longitude": -74.7991624050026
+      },
+      "name": "Nombre de la parada"
+    }
+  ],
+  "distance": 19.2,
+  "estimated_time": 57,
+  "estimated_cost": 3300,
+  "alerts": []
+}
+```
 
-**Favorite Routes**
+### Alerta
+```json
+{
+  "type": "traffic|block|event",
+  "severity": "low|medium|high",
+  "username": "usuario_que_reporto",
+  "createdAt": "2025-09-03T04:46:56.536Z",
+  "updatedAt": "2025-09-03T04:46:56.536Z"
+}
+```
 
-  * `PUT /users/:id/addFavorite`: Adds a route to a user's favorites list.
-  * `PUT /users/:id/removeFavorite`: Removes a route from a user's favorites list.
+## 🎯 Funcionalidades de Usuario
 
-**Alerts Management**
+### Para Usuarios Regulares
+1. **Explorar rutas**: Seleccionar y visualizar rutas en el mapa
+2. **Información de viaje**: Ver distancia, tiempo y costo
+3. **Navegación**: Usar el mapa para orientarse
+4. **Alertas**: Consultar alertas activas en las rutas
 
-  * `POST /alerts`: Creates a new alert in the system.
-  * `GET /alerts`: Retrieves all active alerts in the system.
+### Para Usuarios Autenticados
+1. **Reportar alertas**: Crear nuevas alertas para la comunidad
+2. **Gestión de perfil**: Acceder a funcionalidades avanzadas
+3. **Historial**: Ver alertas reportadas anteriormente
 
-#### 🗄️ Database Schema (Models)
+## 🔧 API Endpoints
 
-We use Mongoose to define the schema for our data.
+### Rutas
+- `GET /routes` - Obtener todas las rutas
+- `GET /routes/:id` - Obtener ruta específica
+- `POST /routes` - Crear nueva ruta
+- `PUT /routes/:id` - Actualizar ruta
+- `DELETE /routes/:id` - Eliminar ruta
 
-  * **Model**: `User` (`models/user-model.js`)
-  * **Model**: `Alert` (`models/alert-model.js`)
+### Alertas
+- `POST /routes/:id/alerts` - Agregar alerta a una ruta
+- `DELETE /routes/:id/alerts/:alertId` - Eliminar alerta
 
-#### ☁️ Deployment
+### Usuarios
+- `POST /users/register` - Registro de usuario
+- `POST /users/login` - Inicio de sesión
+- `GET /users/profile` - Obtener perfil del usuario
 
-This project is configured for a straightforward deployment on platforms like Vercel or Railway.
+## 🎨 Personalización
 
-1.  Connect your GitHub repository to your Vercel account.
-2.  Import the project. Vercel will detect that it is a Node.js project.
-3.  Add the environment variables (`MONGO_URI`) in the project settings.
-4.  Deploy. Vercel will handle the rest.
+### Colores del Tema
+- **Primario**: `#FF6B35` (Naranja)
+- **Secundario**: `#28a745` (Verde)
+- **Peligro**: `#dc3545` (Rojo)
+- **Información**: `#007bff` (Azul)
 
------
+### Estilos CSS
+Los estilos personalizados se encuentran en `Frontend/src/css/styles.css` e incluyen:
+- Animaciones suaves
+- Efectos hover
+- Diseño responsivo
+- Personalización de marcadores del mapa
 
-### Complete Technical Document
+## 📱 Compatibilidad
 
-For a detailed description of the project's architecture, methodology, challenges, and future improvements, please refer to the complete technical document.
+- **Navegadores**: Chrome, Firefox, Safari, Edge (versiones modernas)
+- **Dispositivos**: Desktop, Tablet, Móvil
+- **Resoluciones**: 320px - 1920px+
+
+## 🤝 Contribución
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia ISC. Ver el archivo `LICENSE` para más detalles.
+
+## 👥 Equipo
+
+- **StarDev** - Diseño y desarrollo
+- **Connect BQ** - Concepto y dirección del proyecto
+
+## 📞 Contacto
+
+- **GitHub**: [@connect-bq](https://github.com/connect-bq)
+- **Issues**: [Reportar problemas](https://github.com/connect-bq/bq_connect/issues)
+
+## 🚀 Roadmap
+
+### Versión 1.1
+- [ ] Búsqueda por ubicación
+- [ ] Filtros avanzados de rutas
+- [ ] Notificaciones push
+
+### Versión 1.2
+- [ ] Integración con GPS en tiempo real
+- [ ] Historial de rutas favoritas
+- [ ] Modo offline
+
+### Versión 2.0
+- [ ] IA para predicción de tiempos
+- [ ] Integración con otros sistemas de transporte
+- [ ] API pública para desarrolladores
+
+---
+
+**Connect BQ** - Haciendo la movilidad urbana más inteligente y accesible para todos. 🚌✨

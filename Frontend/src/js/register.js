@@ -9,6 +9,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const idAge = document.getElementById("age");
   const idPassword = document.getElementById("password");
   const submitButton = document.getElementById("bt-register");
+  const btnRegisterBack = document.getElementById("btn-register-back");
+
+
+//add funncionality button go back
+
+btnRegisterBack.addEventListener('click', (event) => {
+    event.preventDefault
+    window.location.href = "/index.html"
+
+
+});
+
 
   //
   registerForm.addEventListener("submit", async (event) => {
