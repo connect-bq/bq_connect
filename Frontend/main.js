@@ -124,46 +124,46 @@ function clearCurrentRoute() {
   }
 }
 
-// Function to show route information in the purple box
+// Function to show route information in the white box
 function showRouteInfo(route) {
   const routeInfoContent = document.getElementById("route-info-content");
   
   routeInfoContent.innerHTML = `
     <div class="space-y-4">
-      <div class="text-center pb-4 border-b border-purple-300">
+      <div class="text-center pb-4 border-b border-white-300">
         <h3 class="text-xl font-bold mb-2">${route.name}</h3>
-        <p class="text-purple-200 text-sm">Route Details</p>
+        <p class="text-white text-sm">Route Details</p>
       </div>
       
       <div class="space-y-3">
         <div class="flex justify-between items-center">
-          <span class="text-purple-200">Distance:</span>
+          <span class="text-white">Distance:</span>
           <span class="font-semibold">${route.distance} km</span>
         </div>
         <div class="flex justify-between items-center">
-          <span class="text-purple-200">Estimated time:</span>
+          <span class="text-white">Estimated time:</span>
           <span class="font-semibold">${route.estimated_time} min</span>
         </div>
         <div class="flex justify-between items-center">
-          <span class="text-purple-200">Cost:</span>
+          <span class="text-white">Cost:</span>
           <span class="font-semibold text-yellow-300">$${route.estimated_cost.toLocaleString()}</span>
         </div>
       </div>
       
-      <div class="pt-3 border-t border-purple-300 space-y-2">
+      <div class="pt-3 border-t border-white-300 space-y-2">
         <div class="text-sm">
-          <span class="font-medium text-purple-200">Start:</span> 
+          <span class="font-medium text-white-200">Start:</span> 
           <span class="text-white">${route.initial_point.name}</span>
         </div>
         <div class="text-sm">
-          <span class="font-medium text-purple-200">Destination:</span> 
+          <span class="font-medium text-white-200">Destination:</span> 
           <span class="text-white">${route.end_point.name}</span>
         </div>
       </div>
       
       ${route.alerts && route.alerts.length > 0 ? `
-        <div class="pt-3 border-t border-purple-300">
-          <h4 class="font-semibold text-purple-200 mb-2 flex items-center gap-2">
+        <div class="pt-3 border-t border-white-300">
+          <h4 class="font-semibold text-white-200 mb-2 flex items-center gap-2">
             <span class="text-red-300">⚠️</span>
             Active Alerts
           </h4>
@@ -195,10 +195,10 @@ function showRouteInfo(route) {
                       ${severityText[alert.severity] || alert.severity}
                     </span>
                   </div>
-                  <div class="text-xs text-purple-200">
+                  <div class="text-xs text-white-200">
                     Reported by: ${alert.username || 'User'}
                   </div>
-                  <div class="text-xs text-purple-300 mt-1">
+                  <div class="text-xs text-white-300 mt-1">
                     ${new Date(alert.createdAt).toLocaleString('en-US')}
                   </div>
                 </div>
@@ -304,7 +304,7 @@ function showRoute(routeId) {
   // Adjust map view to the route
   map.fitBounds(currentPolyline.getBounds(), { padding: [20, 20] });
   
-  // Show route information in the purple box
+  // Show route information in the white box
   showRouteInfo(route);
 }
 
