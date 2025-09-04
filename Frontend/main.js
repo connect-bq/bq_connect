@@ -400,6 +400,10 @@ async function handleAlertReport() {
     Toast.error("We cannot add your alert, please try again later");
   }
 
+  if (isMenuOpen) {
+    hamburgerBtn.click();
+  }
+
   // Clear selections
   document.getElementById("alert-type-select").value = "";
   document.getElementById("alert-severity-select").value = "";
@@ -434,6 +438,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   const addAlertBtn = document.getElementById("add-alert-btn");
   if (addAlertBtn) {
     addAlertBtn.addEventListener("click", handleAlertReport);
+  }
+
+  const addAlertBtnMobil = document.getElementById("add-alert-btn-mobile");
+  if (addAlertBtnMobil) {
+    addAlertBtnMobil.addEventListener("click", handleAlertReport);
   }
 });
 
