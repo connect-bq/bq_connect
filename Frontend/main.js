@@ -359,6 +359,8 @@ async function handleAlertReport() {
   const username = localStorage.getItem("user").username;
   const route = routesData.find((route) => route.name === currentRoute);
 
+  console.log(username, route);
+
   if (!username || !route) return;
 
   const newRoute = {
