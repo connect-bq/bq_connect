@@ -1,5 +1,6 @@
 import { isAuth } from "./src/guards/auth-guard";
-import './src/css/styles.css';
+import "./src/css/styles.css";
+import Toast from "./src/shared/alerts";
 
 // Hamburger menu
 const hamburgerBtn = document.getElementById("hamburger-btn");
@@ -65,24 +66,24 @@ let currentPolyline = null;
 function populateRouteSelects() {
   const desktopSelect = document.getElementById("desktop-route-select");
   const mobileSelect = document.getElementById("mobile-route-select");
-  
+
   // Clear existing options
-  desktopSelect.innerHTML = '';
-  mobileSelect.innerHTML = '';
-  
+  desktopSelect.innerHTML = "";
+  mobileSelect.innerHTML = "";
+
   // Add default option
-  const defaultOption = document.createElement('option');
-  defaultOption.value = '';
-  defaultOption.textContent = 'Select a route';
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "";
+  defaultOption.textContent = "Select a route";
   desktopSelect.appendChild(defaultOption.cloneNode(true));
   mobileSelect.appendChild(defaultOption);
-  
+
   // Add route options
-  routesData.forEach(route => {
-    const option = document.createElement('option');
+  routesData.forEach((route) => {
+    const option = document.createElement("option");
     option.value = route._id;
     option.textContent = route.name;
-    
+
     desktopSelect.appendChild(option.cloneNode(true));
     mobileSelect.appendChild(option);
   });
@@ -91,7 +92,9 @@ function populateRouteSelects() {
 // Function to get routes from API
 async function fetchRoutes() {
   try {
-    const response = await fetch("https://deployment-connectbq.onrender.com/routes");
+    const response = await fetch(
+      "https://deployment-connectbq.onrender.com/routes"
+    );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -102,7 +105,9 @@ async function fetchRoutes() {
   } catch (error) {
     console.error("Error loading routes from API:", error);
     // Show error message instead of using example data
-    alert("Error loading routes. Please check your connection and try again.");
+    Toast.error(
+      "Error loading routes. Please check your connection and try again."
+    );
     routesData = [];
     populateRouteSelects();
   }
@@ -111,13 +116,13 @@ async function fetchRoutes() {
 // Function to clear current route from map
 function clearCurrentRoute() {
   // Clear markers
-  currentMarkers.forEach(marker => {
+  currentMarkers.forEach((marker) => {
     if (map.hasLayer(marker)) {
       map.removeLayer(marker);
     }
   });
   currentMarkers = [];
-  
+
   // Clear route line
   if (currentPolyline && map.hasLayer(currentPolyline)) {
     map.removeLayer(currentPolyline);
@@ -128,7 +133,7 @@ function clearCurrentRoute() {
 // Function to show route information in the white box
 function showRouteInfo(route) {
   const routeInfoContent = document.getElementById("route-info-content");
-  
+
   routeInfoContent.innerHTML = `
     <div class="space-y-4">
       <div class="text-center pb-4 border-b border-white-300">
@@ -162,52 +167,67 @@ function showRouteInfo(route) {
         </div>
       </div>
       
-      ${route.alerts && route.alerts.length > 0 ? `
+      ${
+        route.alerts && route.alerts.length > 0
+          ? `
         <div class="pt-3 border-t border-white-300">
           <h4 class="font-semibold text-white-200 mb-2 flex items-center gap-2">
             <span class="text-red-300">⚠️</span>
             Active Alerts
           </h4>
           <div class="space-y-2">
-            ${route.alerts.map(alert => {
-              const severityColor = {
-                'low': 'bg-yellow-500/20 text-yellow-200 border-yellow-400/30',
-                'medium': 'bg-orange-500/20 text-orange-200 border-orange-400/30',
-                'high': 'bg-red-500/20 text-red-200 border-red-400/30'
-              };
-              
-              const severityText = {
-                'low': 'Low',
-                'medium': 'Medium',
-                'high': 'High'
-              };
-              
-              const typeText = {
-                'traffic': 'Traffic',
-                'block': 'Block',
-                'event': 'Event'
-              };
-              
-              return `
-                <div class="p-2 rounded-lg border ${severityColor[alert.severity] || 'bg-gray-500/20 text-gray-200 border-gray-400/30'}">
+            ${route.alerts
+              .map((alert) => {
+                const severityColor = {
+                  low: "bg-yellow-500/20 text-yellow-200 border-yellow-400/30",
+                  medium:
+                    "bg-orange-500/20 text-orange-200 border-orange-400/30",
+                  high: "bg-red-500/20 text-red-200 border-red-400/30",
+                };
+
+                const severityText = {
+                  low: "Low",
+                  medium: "Medium",
+                  high: "High",
+                };
+
+                const typeText = {
+                  traffic: "Traffic",
+                  block: "Block",
+                  event: "Event",
+                };
+
+                return `
+                <div class="p-2 rounded-lg border ${
+                  severityColor[alert.severity] ||
+                  "bg-gray-500/20 text-gray-200 border-gray-400/30"
+                }">
                   <div class="flex justify-between items-start mb-1">
-                    <span class="font-medium text-xs">${typeText[alert.type] || alert.type}</span>
-                    <span class="text-xs px-2 py-1 rounded-full ${severityColor[alert.severity] || 'bg-gray-500/30 text-gray-200'}">
+                    <span class="font-medium text-xs">${
+                      typeText[alert.type] || alert.type
+                    }</span>
+                    <span class="text-xs px-2 py-1 rounded-full ${
+                      severityColor[alert.severity] ||
+                      "bg-gray-500/30 text-gray-200"
+                    }">
                       ${severityText[alert.severity] || alert.severity}
                     </span>
                   </div>
                   <div class="text-xs text-white-200">
-                    Reported by: ${alert.username || 'User'}
+                    Reported by: ${alert.username || "User"}
                   </div>
                   <div class="text-xs text-white-300 mt-1">
-                    ${new Date(alert.createdAt).toLocaleString('en-US')}
+                    ${new Date(alert.createdAt).toLocaleString("en-US")}
                   </div>
                 </div>
               `;
-            }).join('')}
+              })
+              .join("")}
           </div>
         </div>
-      ` : ''}
+      `
+          : ""
+      }
     </div>
   `;
 }
@@ -215,51 +235,48 @@ function showRouteInfo(route) {
 // Function to show a route on the map
 function showRoute(routeId) {
   clearCurrentRoute();
-  
-  const route = routesData.find(r => r._id === routeId);
+
+  const route = routesData.find((r) => r._id === routeId);
   if (!route) {
     console.error("Route not found:", routeId);
     return;
   }
-  
+
   console.log("Showing route:", route.name);
-  
+
   // Create coordinates array for the route
   const coordinates = [];
-  
+
   // Add initial point
   coordinates.push([
     route.initial_point.coordinates.latitude,
-    route.initial_point.coordinates.longitude
+    route.initial_point.coordinates.longitude,
   ]);
-  
+
   // Add path points
-  route.path.forEach(point => {
-    coordinates.push([
-      point.coordinates.latitude,
-      point.coordinates.longitude
-    ]);
+  route.path.forEach((point) => {
+    coordinates.push([point.coordinates.latitude, point.coordinates.longitude]);
   });
-  
+
   // Add final point
   coordinates.push([
     route.end_point.coordinates.latitude,
-    route.end_point.coordinates.longitude
+    route.end_point.coordinates.longitude,
   ]);
-  
+
   // Create route line
   currentPolyline = L.polyline(coordinates, {
-    color: '#FF6B35',
+    color: "#FF6B35",
     weight: 6,
     opacity: 0.8,
-    smoothFactor: 1
+    smoothFactor: 1,
   }).addTo(map);
-  
+
   // Create markers for each point
   coordinates.forEach((coord, index) => {
     let marker;
     let popupContent;
-    
+
     if (index === 0) {
       // Initial point
       const icon = L.divIcon({
@@ -268,10 +285,9 @@ function showRoute(routeId) {
         iconSize: [24, 24],
         iconAnchor: [12, 12],
       });
-      
+
       marker = L.marker(coord, { icon: icon });
       popupContent = `<strong>${route.initial_point.name}</strong><br><span style="color: #28a745;">Starting Point</span>`;
-      
     } else if (index === coordinates.length - 1) {
       // Final point
       const icon = L.divIcon({
@@ -280,10 +296,9 @@ function showRoute(routeId) {
         iconSize: [24, 24],
         iconAnchor: [12, 12],
       });
-      
+
       marker = L.marker(coord, { icon: icon });
       popupContent = `<strong>${route.end_point.name}</strong><br><span style="color: #dc3545;">End Point</span>`;
-      
     } else {
       // Intermediate stops
       const icon = L.divIcon({
@@ -292,19 +307,21 @@ function showRoute(routeId) {
         iconSize: [16, 16],
         iconAnchor: [8, 8],
       });
-      
+
       marker = L.marker(coord, { icon: icon });
-      popupContent = `<strong>${route.path[index - 1].name}</strong><br><span style="color: #007bff;">Intermediate Stop</span>`;
+      popupContent = `<strong>${
+        route.path[index - 1].name
+      }</strong><br><span style="color: #007bff;">Intermediate Stop</span>`;
     }
-    
+
     marker.bindPopup(popupContent);
     marker.addTo(map);
     currentMarkers.push(marker);
   });
-  
+
   // Adjust map view to the route
   map.fitBounds(currentPolyline.getBounds(), { padding: [20, 20] });
-  
+
   // Show route information in the white box
   showRouteInfo(route);
 }
@@ -313,35 +330,49 @@ function showRoute(routeId) {
 function handleRouteSearch() {
   const desktopSelect = document.getElementById("desktop-route-select");
   const mobileSelect = document.getElementById("mobile-route-select");
-  
+
   const selectedRouteId = desktopSelect.value || mobileSelect.value;
-  
+
   if (selectedRouteId) {
     showRoute(selectedRouteId);
-    
+
     // If on mobile, close menu after search
     if (isMenuOpen) {
       hamburgerBtn.click();
     }
   } else {
-    alert("Please select a route");
+    Toast.warning("Please select a route");
   }
 }
 
 // Function to handle alert reporting
-function handleAlertReport() {
+async function handleAlertReport() {
   const alertType = document.getElementById("alert-type-select").value;
   const alertSeverity = document.getElementById("alert-severity-select").value;
-  
+
   if (!alertType || !alertSeverity) {
-    alert("Please select alert type and severity");
+    Toast.warning("Please select alert type and severity");
     return;
   }
-  
-  // Here you can implement the logic to send the alert to the API
-  console.log("Alert reported:", { type: alertType, severity: alertSeverity });
-  alert("Alert reported successfully");
-  
+
+  const username = localStorage.getItem("user").username;
+
+  if (!username) return;
+
+  const newRoute = {
+    type: alertType,
+    severity: alertSeverity,
+    username: username,
+  };
+
+  if (true) {
+    console.log(currentRoute);
+    return;
+  }
+
+  const req = await fetch("https://deployment-connectbq.onrender.com/routes");
+  Toast.success("Alert reported successfully");
+
   // Clear selections
   document.getElementById("alert-type-select").value = "";
   document.getElementById("alert-severity-select").value = "";
@@ -361,22 +392,26 @@ function clearRouteInfo() {
 document.addEventListener("DOMContentLoaded", async () => {
   // Load routes
   await fetchRoutes();
-  
+
   // Configure search buttons
-  const searchButtons = document.querySelectorAll("#desktop-search-btn, #mobile-search-btn");
-  searchButtons.forEach(button => {
+  const searchButtons = document.querySelectorAll(
+    "#desktop-search-btn, #mobile-search-btn"
+  );
+  searchButtons.forEach((button) => {
     button.addEventListener("click", handleRouteSearch);
   });
-  
+
   // Configure alert button
   const addAlertBtn = document.getElementById("add-alert-btn");
   if (addAlertBtn) {
     addAlertBtn.addEventListener("click", handleAlertReport);
   }
-  
+
   // Configure autocomplete in selectors
-  const routeSelects = document.querySelectorAll("#desktop-route-select, #mobile-route-select");
-  routeSelects.forEach(select => {
+  const routeSelects = document.querySelectorAll(
+    "#desktop-route-select, #mobile-route-select"
+  );
+  routeSelects.forEach((select) => {
     select.addEventListener("change", (e) => {
       if (e.target.value) {
         showRoute(e.target.value);
@@ -386,7 +421,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     });
   });
-  
+
   // Configure authentication
   const profileBtn = document.getElementById("profile-btn");
   const profileBtnCel = document.getElementById("profile-btn-cel");
