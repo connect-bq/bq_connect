@@ -1,7 +1,15 @@
 import Toast from "../shared/alerts";
-import '../css/styles.css';
+import "../css/styles.css";
 
 document.addEventListener("DOMContentLoaded", () => {
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+
+  if (storedUser) {
+    // If not logged in and trying to access dashboard, redirect to login
+    window.location.href = "/src/pages/dashboard.html";
+    return;
+  }
+
   const registerForm = document.getElementById("register-form");
   const idNumber = document.getElementById("ident_number");
   const idFullName = document.getElementById("user_full");

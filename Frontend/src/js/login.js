@@ -1,23 +1,15 @@
 import Toast from "../shared/alerts.js";
-import '../css/styles.css';
+import "../css/styles.css";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Check if the user is already logged in
   try {
     const storedUser = JSON.parse(localStorage.getItem("user"));
 
-    if (storedUser?.loggedIn) {
-      // Redirect to dashboard if already logged in and on login.html
-      if (window.location.pathname.includes("login")) {
-        window.location.href = "/src/pages/dashboard.html";
-        return;
-      }
-    } else {
+    if (storedUser) {
       // If not logged in and trying to access dashboard, redirect to login
-      if (window.location.pathname.includes("dashboard")) {
-        window.location.href = "/src/pages/login.html";
-        return;
-      }
+      window.location.href = "/src/pages/dashboard.html";
+      return;
     }
   } catch (e) {
     console.warn("Error reading user from localStorage:", e);
