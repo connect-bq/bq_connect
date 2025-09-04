@@ -138,7 +138,7 @@ function showRouteInfo(route) {
   routeInfoSection.classList.add("h-64");
   routeInfoSection.classList.add("overflow-y-auto");
 
-  routeInfoContent.innerHTML = '';
+  routeInfoContent.innerHTML = "";
 
   routeInfoContent.innerHTML = `
     <div class="space-y-4">
@@ -239,8 +239,11 @@ function showRouteInfo(route) {
 }
 
 // Function to show a route on the map
-function showRoute(routeId) {
-  clearCurrentRoute();
+function showRoute(routeId, clear = false) {
+  if (!clear) {
+    clearCurrentRoute();
+  }
+
   addAlertSection?.classList.toggle("hidden");
 
   const route = routesData.find((r) => r._id === routeId);
@@ -387,8 +390,8 @@ async function handleAlertReport() {
 
   if (req.ok) {
     await fetchRoutes();
-      const route = routesData.find((r) => r.name === currentRoute);
-    showRoute(route._id);
+    const route = routesData.find((r) => r.name === currentRoute);
+    showRoute(route._id, true);
     Toast.success("Alert reported successfully");
   } else {
     Toast.error("We cannot add your alert, please try again later");
