@@ -355,6 +355,9 @@ async function handleAlertReport() {
     return;
   }
 
+  const route = routesData.find((route) => route.name === currentRoute);
+  console.log(route);
+
   const username = localStorage.getItem("user").username;
 
   if (!username) return;
@@ -366,8 +369,6 @@ async function handleAlertReport() {
   };
 
   if (true) {
-    const route = routesData.find((route) => route.name === currentRoute)
-    console.log(route);
     return;
   }
 
