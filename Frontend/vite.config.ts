@@ -15,8 +15,8 @@ export default defineConfig({
 
 
         404: "src/errors/404/404.html",
-        500: "src/errors/404/500.html",
-        401: "src/errors/404/404.html",
+        500: "src/errors/500/500.html",
+        401: "src/errors/401/401.html",
       },
     },
     outDir: "dist",
