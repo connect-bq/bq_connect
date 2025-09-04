@@ -2,6 +2,45 @@ import { isAuth } from "../guards/auth-guard";
 import Toast from "../shared/alerts";
 import "../css/styles.css";
 
+async function getAlerts() {
+  const alertsContainer = document.getElementById("alerts-container");
+
+  try {
+    // Fetch all routes
+    const response = await fetch(
+      `https://deployment-connectbq.onrender.com/routes`
+    );
+    const routes = await response.json();
+
+    // Clear container
+    alertsContainer.innerHTML = "";
+
+    // Iterate through all routes and their alerts
+    routes.forEach((route) => {
+      if (route.alerts && route.alerts.length > 0) {
+        route.alerts.forEach((alert) => {
+          const article = document.createElement("article");
+          article.className = "bg-gray-100 p-6 rounded-lg shadow-md relative";
+
+          // Only show type, severity, and username
+          article.innerHTML = `
+            <button class="font-bold text-orange-600 hover:size-1 absolute left-0 top-0" onclick="deleteAlert('${route._id}', '${alert._id}')">X</button>
+            <h4 class="font-semibold text-lg text-gray-800">${alert.type}</h4>
+            <p class="text-sm text-gray-500">Route: ${route.name}</p>
+            <p class="text-md font-bold text-orange-600">Severity: ${alert.severity}</p>
+            <p class="text-sm text-gray-500">User: ${alert.username}</p>
+          `;
+
+          alertsContainer.appendChild(article);
+        });
+      }
+    });
+  } catch (error) {
+    console.error("Error fetching alerts:", error);
+    alertsContainer.textContent = "Could not load alerts.";
+  }
+}
+
 async function deleteAlert(routeId, alertId) {
   if (!routeId || !alertId) return false;
 
@@ -17,6 +56,7 @@ async function deleteAlert(routeId, alertId) {
     }
 
     Toast.success("Alert deleted successfully");
+    getAlerts();
     return true;
   } catch (err) {
     Toast.error("We cannot delete your alert, try again later");
@@ -48,42 +88,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  const alertsContainer = document.getElementById("alerts-container");
-
-  try {
-    // Fetch all routes
-    const response = await fetch(
-      `https://deployment-connectbq.onrender.com/routes`
-    );
-    const routes = await response.json();
-
-    // Clear container
-    alertsContainer.innerHTML = "";
-
-    // Iterate through all routes and their alerts
-    routes.forEach((route) => {
-      if (route.alerts && route.alerts.length > 0) {
-        route.alerts.forEach((alert) => {
-          const article = document.createElement("article");
-          article.className = "bg-gray-100 p-6 rounded-lg shadow-md";
-
-          // Only show type, severity, and username
-          article.innerHTML = `
-            <button class="font-bold text-red hover:size-1" onclick="deleteAlert('${route._id}', '${alert._id}')">X</button>
-            <h4 class="font-semibold text-lg text-gray-800">${alert.type}</h4>
-            <p class="text-sm text-gray-500">Route: ${route.name}</p>
-            <p class="text-md font-bold text-orange-600">Severity: ${alert.severity}</p>
-            <p class="text-sm text-gray-500">User: ${alert.username}</p>
-          `;
-
-          alertsContainer.appendChild(article);
-        });
-      }
-    });
-  } catch (error) {
-    console.error("Error fetching alerts:", error);
-    alertsContainer.textContent = "Could not load alerts.";
-  }
+  getAlerts();
 });
 
 window.deleteAlert = deleteAlert;
