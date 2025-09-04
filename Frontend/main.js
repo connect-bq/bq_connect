@@ -133,6 +133,10 @@ function clearCurrentRoute() {
 // Function to show route information in the white box
 function showRouteInfo(route) {
   const routeInfoContent = document.getElementById("route-info-content");
+  const routeInfoSection = document.getElementById("route-info-section");
+  routeInfoSection.classList.remove("h-48");
+  routeInfoSection.classList.add("h-64");
+  routeInfoSection.classList.add("overflow-y-auto");
 
   routeInfoContent.innerHTML = `
     <div class="space-y-4">
@@ -420,32 +424,34 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (addAlertBtn) {
     addAlertBtn.addEventListener("click", handleAlertReport);
   }
-  });
+});
 
-  // Configure authentication
-  const profileBtn = document.getElementById("profile-btn");
-  const profileBtnCel = document.getElementById("profile-btn-cel");
-  const logoutBtnCel = document.getElementById("logout-btn-cel");
-  const signinBtn = document.getElementById("signin-btn");
-  const signinBtnCel = document.getElementById("signin-btn-cel");
-  const addAlertSection = document.getElementById("add-alert-section");
-  const aboutBtn = document.getElementById("about-page");
+// Configure authentication
+const profileBtn = document.getElementById("profile-btn");
+const profileBtnCel = document.getElementById("profile-btn-cel");
+const logoutBtnCel = document.getElementById("logout-btn-cel");
+const signinBtn = document.getElementById("signin-btn");
+const signinBtnCel = document.getElementById("signin-btn-cel");
+const addAlertSection = document.getElementById("add-alert-section");
+const aboutBtn = document.getElementById("about-page");
+const loginAdvise = document.getElementById("add-route-advise");
 
-  if (isAuth()) {
-    profileBtn?.classList.remove("hidden");
-    profileBtnCel?.classList.remove("hidden");
-    logoutBtnCel?.classList.remove("hidden");
-    signinBtn?.classList.add("hidden");
-    signinBtnCel?.classList.add("hidden");
-    addAlertSection?.classList.remove("hidden");
-    aboutBtn?.classList.remove("hidden");
-  }
+if (isAuth()) {
+  profileBtn?.classList.toggle("hidden");
+  profileBtnCel?.classList.toggle("hidden");
+  logoutBtnCel?.classList.toggle("hidden");
+  signinBtn?.classList.toggle("hidden");
+  signinBtnCel?.classList.toggle("hidden");
+  addAlertSection?.classList.toggle("hidden");
+  aboutBtn?.classList.toggle("hidden");
+  loginAdvise.classList.toggle("hidden");
+}
 
-  // Configure logout
-  logoutBtnCel?.addEventListener("click", () => {
-    localStorage.removeItem("user");
-    window.location.href = "/";
-  });
+// Configure logout
+logoutBtnCel?.addEventListener("click", () => {
+  localStorage.removeItem("user");
+  window.location.href = "/";
+});
 
 // Resize map when window is resized
 window.addEventListener("resize", () => {
