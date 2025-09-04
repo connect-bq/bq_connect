@@ -356,7 +356,7 @@ async function handleAlertReport() {
     return;
   }
 
-  const username = localStorage.getItem("user").username;
+  const username = JSON.parse(localStorage.getItem("user")).username;
   const route = routesData.find((route) => route.name === currentRoute);
 
   console.log(username, route);
@@ -369,9 +369,23 @@ async function handleAlertReport() {
     username: username,
   };
 
-  const req = await fetch("https://deployment-connectbq.onrender.com/routes");
-  fetchRoutes();
-  Toast.success("Alert reported successfully");
+  const req = await fetch(
+    `https://deployment-connectbq.onrender.com/routes/${route._id}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newRoute),
+    }
+  );
+
+  if (req.ok) {
+    fetchRoutes();
+    Toast.success("Alert reported successfully");
+  } else {
+    Toast.error("We cannot add your alert, please try again later");
+  }
 
   // Clear selections
   document.getElementById("alert-type-select").value = "";
