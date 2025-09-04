@@ -384,7 +384,7 @@ async function handleAlertReport() {
   );
 
   if (req.ok) {
-    fetchRoutes();
+    await fetchRoutes();
     showRoute(currentRoute);
     Toast.success("Alert reported successfully");
   } else {
