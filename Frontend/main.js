@@ -370,7 +370,7 @@ async function handleAlertReport() {
   };
 
   const req = await fetch(
-    `https://deployment-connectbq.onrender.com/routes/${route._id}`,
+    `https://deployment-connectbq.onrender.com/routes/${route._id}/alerts`,
     {
       method: "POST",
       headers: {
