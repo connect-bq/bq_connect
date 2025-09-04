@@ -364,8 +364,6 @@ async function handleAlertReport() {
   const username = JSON.parse(localStorage.getItem("user")).username;
   const route = routesData.find((route) => route.name === currentRoute);
 
-  console.log(username, route);
-
   if (!username || !route) return;
 
   const newRoute = {
@@ -387,8 +385,7 @@ async function handleAlertReport() {
 
   if (req.ok) {
     fetchRoutes();
-    showRoute();
-    showRouteInfo();
+    showRoute(currentRoute);
     Toast.success("Alert reported successfully");
   } else {
     Toast.error("We cannot add your alert, please try again later");
