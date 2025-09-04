@@ -243,7 +243,7 @@ function showRouteInfo(route) {
 function showRoute(routeId) {
   clearCurrentRoute();
 
-  addAlertSection?.classList.toggle("hidden");
+  addAlertSection?.classList.remove("hidden");
 
   const route = routesData.find((r) => r._id === routeId);
   if (!route) {
