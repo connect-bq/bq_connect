@@ -26,7 +26,7 @@ async function getAlerts() {
           // Only show type, severity, and username
           article.innerHTML = `
             <button class="font-bold text-orange-600 cursor-pointer absolute right-0 top-0" onclick="deleteAlert('${route._id}', '${alert._id}')">X</button>
-            <h4 class="font-semibold text-lg text-gray-800">${alert.type}</h4>
+            <h4 class="font-semibold text-lg text-gray-800 uppercase">${alert.type}</h4>
             <p class="text-sm text-gray-500 capitalize">Route: ${route.name}</p>
             <p class="text-md font-bold text-orange-600">Severity: ${alert.severity}</p>
             <p class="text-sm text-gray-500">User: ${alert.username}</p>
