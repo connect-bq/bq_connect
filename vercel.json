@@ -12,19 +12,19 @@
   "rewrites": [
     {
       "source": "/login",
-      "destination": "./public/login.html"
+      "destination": "/src/pages/login.html"
     },
     {
       "source": "/register",
-      "destination": "/public/register.html"
+      "destination": "/src/pages/register.html"
     },
     {
       "source": "/dashboard",
-      "destination": "/public/dashboard.html"
+      "destination": "/src/pages/dashboard.html"
     },
     {
       "source": "/about",
-      "destination": "/public/about.html"
+      "destination": "/src/pages/about.html"
     }
   ]
 }

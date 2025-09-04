@@ -1,6 +1,5 @@
-// about.js
-import '../css/styles.css'
-import '../css/about.css'
+import '../css/about.css';
+import '../css/styles.css';
 
 document.addEventListener('DOMContentLoaded', () => {
     // This is the ideal place to add any interactivity

@@ -1,4 +1,5 @@
 import { isAuth } from "./src/guards/auth-guard";
+import './src/css/styles.css';
 
 // Hamburger menu
 const hamburgerBtn = document.getElementById("hamburger-btn");

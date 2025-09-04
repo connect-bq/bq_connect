@@ -1,4 +1,5 @@
 import Toast from "../shared/alerts";
+import '../css/styles.css';
 
 document.addEventListener("DOMContentLoaded", () => {
   const registerForm = document.getElementById("register-form");
@@ -11,16 +12,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const submitButton = document.getElementById("bt-register");
   const btnRegisterBack = document.getElementById("btn-register-back");
 
+  //add funncionality button go back
 
-//add funncionality button go back
-
-btnRegisterBack.addEventListener('click', (event) => {
-    event.preventDefault
-    window.location.href = "/index.html"
-
-
-});
-
+  btnRegisterBack.addEventListener("click", (event) => {
+    event.preventDefault;
+    window.location.href = "/";
+  });
 
   //
   registerForm.addEventListener("submit", async (event) => {

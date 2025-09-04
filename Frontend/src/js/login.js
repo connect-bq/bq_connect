@@ -1,4 +1,5 @@
 import Toast from "../shared/alerts.js";
+import '../css/styles.css';
 
 document.addEventListener("DOMContentLoaded", () => {
   // Check if the user is already logged in
@@ -7,14 +8,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (storedUser?.loggedIn) {
       // Redirect to dashboard if already logged in and on login.html
-      if (window.location.pathname.includes("login.html")) {
-        window.location.href = "../dashboard/dashboard.html";
+      if (window.location.pathname.includes("login")) {
+        window.location.href = "/dashboard";
         return;
       }
     } else {
       // If not logged in and trying to access dashboard, redirect to login
-      if (window.location.pathname.includes("dashboard.html")) {
-        window.location.href = "./login.html";
+      if (window.location.pathname.includes("dashboardl")) {
+        window.location.href = "/login";
         return;
       }
     }
@@ -66,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("user", JSON.stringify(user));
 
         // Redirect to dashboard
-        window.location.href = "./dashboard.html";
+        window.location.href = "/dashboard";
       } else {
         Toast.error("Invalid credentials. Please try again.");
       }

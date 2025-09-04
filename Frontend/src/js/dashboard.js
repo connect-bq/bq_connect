@@ -1,8 +1,9 @@
 import { isAuth } from "../guards/auth-guard";
+import '../css/styles.css';
 
 document.addEventListener("DOMContentLoaded", async () => {
   if (!isAuth) {
-    window.location.href = "./login.html";
+    window.location.href = "/login";
     return;
   }
 
@@ -20,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
       localStorage.removeItem("user");
-      window.location.href = "./login.html";
+      window.location.href = "/login";
     });
   }
 
