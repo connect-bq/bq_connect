@@ -138,6 +138,8 @@ function showRouteInfo(route) {
   routeInfoSection.classList.add("h-64");
   routeInfoSection.classList.add("overflow-y-auto");
 
+  routeInfoContent.innerHTML = '';
+
   routeInfoContent.innerHTML = `
     <div class="space-y-4">
       <div class="text-center pb-4 border-b border-white-300">
