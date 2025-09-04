@@ -21,7 +21,7 @@ async function getAlerts() {
       if (route.alerts && route.alerts.length > 0) {
         route.alerts.filter((alert) => alert.username === username).forEach((alert) => {
           const article = document.createElement("article");
-          article.className = "bg-gray-100 p-2 rounded-lg shadow-md relative";
+          article.className = "bg-gray-100 p-2 rounded-lg shadow-md relative w-full";
 
           // Only show type, severity, and username
           article.innerHTML = `

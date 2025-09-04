@@ -357,8 +357,12 @@ function handleRouteSearch() {
 
 // Function to handle alert reporting
 async function handleAlertReport() {
-  const alertType = document.getElementById("alert-type-select").value;
-  const alertSeverity = document.getElementById("alert-severity-select").value;
+  const alertType =
+    document.getElementById("alert-type-select").value ||
+    document.getElementById("alert-type-select-mobile").value;
+  const alertSeverity =
+    document.getElementById("alert-severity-select").value ||
+    document.getElementById("alert-severity-select-mobile").value;
 
   if (!alertType || !alertSeverity) {
     Toast.warning("Please select alert type and severity");
@@ -399,6 +403,8 @@ async function handleAlertReport() {
   // Clear selections
   document.getElementById("alert-type-select").value = "";
   document.getElementById("alert-severity-select").value = "";
+  document.getElementById("alert-type-select-mobile").value = "";
+  document.getElementById("alert-severity-select-mobile").value = "";
 }
 
 // Function to clear route information
@@ -440,6 +446,7 @@ const signinBtnCel = document.getElementById("signin-btn-cel");
 const addAlertSection = document.getElementById("add-alert-section");
 const aboutBtn = document.getElementById("about-page");
 const loginAdvise = document.getElementById("add-route-advise");
+const loginAdviseMobil = document.getElementById("add-route-advise-mobil");
 
 if (isAuth()) {
   profileBtn?.classList.toggle("hidden");
@@ -449,6 +456,7 @@ if (isAuth()) {
   signinBtnCel?.classList.toggle("hidden");
   aboutBtn?.classList.toggle("hidden");
   loginAdvise.classList.toggle("hidden");
+  loginAdviseMobil.classList.toggle("hidden");
 }
 
 // Configure logout
