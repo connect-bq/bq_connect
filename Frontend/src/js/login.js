@@ -9,13 +9,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (storedUser?.loggedIn) {
       // Redirect to dashboard if already logged in and on login.html
       if (window.location.pathname.includes("login")) {
-        window.location.href = "/dashboard";
+        window.location.href = "/src/pages/dashboard.html";
         return;
       }
     } else {
       // If not logged in and trying to access dashboard, redirect to login
       if (window.location.pathname.includes("dashboardl")) {
-        window.location.href = "/login";
+        window.location.href = "/src/pages/login.html";
         return;
       }
     }
@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("user", JSON.stringify(user));
 
         // Redirect to dashboard
-        window.location.href = "/dashboard";
+        window.location.href = "/src/pages/dashboard.html";
       } else {
         Toast.error("Invalid credentials. Please try again.");
       }

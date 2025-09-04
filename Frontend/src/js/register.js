@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (response.ok) {
         Toast.success("Registration successful! Now, please log in.");
         window.location.href = "";
-        window.location.href = "./login.html";
+        window.location.href = "/src/pages/login.html";
       } else {
         Toast.error(data.message || "Registration error.");
       }

@@ -3,7 +3,7 @@ import '../css/styles.css';
 
 document.addEventListener("DOMContentLoaded", async () => {
   if (!isAuth) {
-    window.location.href = "/login";
+    window.location.href = "/src/pages/login.html";
     return;
   }
 
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
       localStorage.removeItem("user");
-      window.location.href = "/login";
+      window.location.href = "/src/pages/login.html";
     });
   }
 
