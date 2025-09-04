@@ -14,11 +14,12 @@ async function getAlerts() {
 
     // Clear container
     alertsContainer.innerHTML = "";
+    const username = JSON.parse(localStorage.getItem('user')).username;
 
     // Iterate through all routes and their alerts
     routes.forEach((route) => {
       if (route.alerts && route.alerts.length > 0) {
-        route.alerts.forEach((alert) => {
+        route.alerts.filter((alert) => alert.username === username).forEach((alert) => {
           const article = document.createElement("article");
           article.className = "bg-gray-100 p-2 rounded-lg shadow-md relative";
 
