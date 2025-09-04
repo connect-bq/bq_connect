@@ -420,20 +420,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (addAlertBtn) {
     addAlertBtn.addEventListener("click", handleAlertReport);
   }
-
-  // Configure autocomplete in selectors
-  const routeSelects = document.querySelectorAll(
-    "#desktop-route-select, #mobile-route-select"
-  );
-  routeSelects.forEach((select) => {
-    select.addEventListener("change", (e) => {
-      if (e.target.value) {
-        showRoute(e.target.value);
-      } else {
-        clearRouteInfo();
-        clearCurrentRoute();
-      }
-    });
   });
 
   // Configure authentication
@@ -458,9 +444,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Configure logout
   logoutBtnCel?.addEventListener("click", () => {
     localStorage.removeItem("user");
-    window.location.href = "./index.html";
+    window.location.href = "/";
   });
-});
 
 // Resize map when window is resized
 window.addEventListener("resize", () => {

@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } else {
       // If not logged in and trying to access dashboard, redirect to login
-      if (window.location.pathname.includes("dashboardl")) {
+      if (window.location.pathname.includes("dashboard")) {
         window.location.href = "/src/pages/login.html";
         return;
       }
