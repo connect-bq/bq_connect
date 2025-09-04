@@ -387,7 +387,8 @@ async function handleAlertReport() {
 
   if (req.ok) {
     await fetchRoutes();
-    showRoute(currentRoute);
+      const route = routesData.find((r) => r.name === currentRoute);
+    showRoute(route._id);
     Toast.success("Alert reported successfully");
   } else {
     Toast.error("We cannot add your alert, please try again later");
