@@ -366,7 +366,8 @@ async function handleAlertReport() {
   };
 
   if (true) {
-    console.log(currentRoute);
+    const route = routesData.find((route) => route.name === currentRoute)
+    console.log(route);
     return;
   }
 
