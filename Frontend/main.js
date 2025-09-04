@@ -100,7 +100,10 @@ async function fetchRoutes(clear = false) {
     }
     const data = await response.json();
     routesData = data;
-    populateRouteSelects();
+    if (!clear) {
+      populateRouteSelects();
+    }
+
     console.log("Routes loaded from API:", routesData);
   } catch (error) {
     console.error("Error loading routes from API:", error);
@@ -108,10 +111,6 @@ async function fetchRoutes(clear = false) {
     Toast.error(
       "Error loading routes. Please check your connection and try again."
     );
-    routesData = [];
-    if (!clear) {
-      populateRouteSelects();
-    }
   }
 }
 
