@@ -239,6 +239,7 @@ function showRouteInfo(route) {
 // Function to show a route on the map
 function showRoute(routeId) {
   clearCurrentRoute();
+  addAlertSection?.classList.toggle("hidden");
 
   const route = routesData.find((r) => r._id === routeId);
   if (!route) {
@@ -386,6 +387,8 @@ async function handleAlertReport() {
 
   if (req.ok) {
     fetchRoutes();
+    showRoute();
+    showRouteInfo();
     Toast.success("Alert reported successfully");
   } else {
     Toast.error("We cannot add your alert, please try again later");
@@ -442,7 +445,6 @@ if (isAuth()) {
   logoutBtnCel?.classList.toggle("hidden");
   signinBtn?.classList.toggle("hidden");
   signinBtnCel?.classList.toggle("hidden");
-  addAlertSection?.classList.toggle("hidden");
   aboutBtn?.classList.toggle("hidden");
   loginAdvise.classList.toggle("hidden");
 }
