@@ -12,6 +12,11 @@ export default defineConfig({
         login: "src/pages/login.html",
         register: "src/pages/register.html",
         dashboard: "src/pages/dashboard.html",
+
+
+        404: "src/errors/404/404.html",
+        500: "src/errors/404/500.html",
+        401: "src/errors/404/404.html",
       },
     },
     outDir: "dist",
