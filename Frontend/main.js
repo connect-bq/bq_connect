@@ -242,6 +242,7 @@ function showRoute(routeId) {
     return;
   }
 
+  currentRoute = route.name;
   console.log("Showing route:", route.name);
 
   // Create coordinates array for the route
@@ -356,7 +357,7 @@ async function handleAlertReport() {
   }
 
   const route = routesData.find((route) => route.name === currentRoute);
-  console.log(typeof(routesData) , routesData, currentRoute);
+  console.log(typeof routesData, routesData, currentRoute);
   console.log(route);
 
   const username = localStorage.getItem("user").username;
