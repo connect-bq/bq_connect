@@ -135,13 +135,116 @@ function clearCurrentRoute() {
 function showRouteInfo(route) {
   const routeInfoContent = document.getElementById("route-info-content");
   const routeInfoSection = document.getElementById("route-info-section");
+  const routeInfoContentMobil = document.getElementById(
+    "route-info-content-mobil"
+  );
+  const routeInfoSectionMobil = document.getElementById(
+    "route-info-section-mobil"
+  );
   routeInfoSection.classList.remove("h-48");
   routeInfoSection.classList.add("h-64");
   routeInfoSection.classList.add("overflow-y-auto");
 
   routeInfoContent.innerHTML = "";
+  routeInfoContentMobil.innerHTML = "";
 
   routeInfoContent.innerHTML = `
+    <div class="space-y-4">
+      <div class="text-center pb-4 border-b border-white-300">
+        <h3 class="text-xl font-bold mb-2">${route.name}</h3>
+        <p class="text-white text-sm">Route Details</p>
+      </div>
+      
+      <div class="space-y-3">
+        <div class="flex justify-between items-center">
+          <span class="text-white">Distance:</span>
+          <span class="font-semibold">${route.distance} km</span>
+        </div>
+        <div class="flex justify-between items-center">
+          <span class="text-white">Estimated time:</span>
+          <span class="font-semibold">${route.estimated_time} min</span>
+        </div>
+        <div class="flex justify-between items-center">
+          <span class="text-white">Cost:</span>
+          <span class="font-semibold text-yellow-300">$${route.estimated_cost.toLocaleString()}</span>
+        </div>
+      </div>
+      
+      <div class="pt-3 border-t border-white-300 space-y-2">
+        <div class="text-sm">
+          <span class="font-medium text-white-200">Start:</span> 
+          <span class="text-white">${route.initial_point.name}</span>
+        </div>
+        <div class="text-sm">
+          <span class="font-medium text-white-200">Destination:</span> 
+          <span class="text-white">${route.end_point.name}</span>
+        </div>
+      </div>
+      
+      ${
+        route.alerts && route.alerts.length > 0
+          ? `
+        <div class="pt-3 border-t border-white-300">
+          <h4 class="font-semibold text-white-200 mb-2 flex items-center gap-2">
+            <span class="text-red-300">⚠️</span>
+            Active Alerts
+          </h4>
+          <div class="space-y-2">
+            ${route.alerts
+              .map((alert) => {
+                const severityColor = {
+                  low: "bg-yellow-500/20 text-yellow-200 border-yellow-400/30",
+                  medium:
+                    "bg-orange-500/20 text-orange-200 border-orange-400/30",
+                  high: "bg-red-500/20 text-red-200 border-red-400/30",
+                };
+
+                const severityText = {
+                  low: "Low",
+                  medium: "Medium",
+                  high: "High",
+                };
+
+                const typeText = {
+                  traffic: "Traffic",
+                  block: "Block",
+                  event: "Event",
+                };
+
+                return `
+                <div class="p-2 rounded-lg border ${
+                  severityColor[alert.severity] ||
+                  "bg-gray-500/20 text-gray-200 border-gray-400/30"
+                }">
+                  <div class="flex justify-between items-start mb-1">
+                    <span class="font-medium text-xs">${
+                      typeText[alert.type] || alert.type
+                    }</span>
+                    <span class="text-xs px-2 py-1 rounded-full ${
+                      severityColor[alert.severity] ||
+                      "bg-gray-500/30 text-gray-200"
+                    }">
+                      ${severityText[alert.severity] || alert.severity}
+                    </span>
+                  </div>
+                  <div class="text-xs text-white-200">
+                    Reported by: ${alert.username || "User"}
+                  </div>
+                  <div class="text-xs text-white-300 mt-1">
+                    ${new Date(alert.createdAt).toLocaleString("en-US")}
+                  </div>
+                </div>
+              `;
+              })
+              .join("")}
+          </div>
+        </div>
+      `
+          : ""
+      }
+    </div>
+  `;
+  routeInfoContentMobil.innerHTML = `
     <div class="space-y-4">
       <div class="text-center pb-4 border-b border-white-300">
         <h3 class="text-xl font-bold mb-2">${route.name}</h3>
