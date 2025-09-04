@@ -356,13 +356,10 @@ async function handleAlertReport() {
     return;
   }
 
-  const route = routesData.find((route) => route.name === currentRoute);
-  console.log(typeof routesData, routesData, currentRoute);
-  console.log(route);
-
   const username = localStorage.getItem("user").username;
+  const route = routesData.find((route) => route.name === currentRoute);
 
-  if (!username) return;
+  if (!username || !route) return;
 
   const newRoute = {
     type: alertType,
@@ -370,11 +367,8 @@ async function handleAlertReport() {
     username: username,
   };
 
-  if (true) {
-    return;
-  }
-
   const req = await fetch("https://deployment-connectbq.onrender.com/routes");
+  fetchRoutes();
   Toast.success("Alert reported successfully");
 
   // Clear selections
