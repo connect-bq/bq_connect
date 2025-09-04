@@ -1,5 +1,28 @@
 import { isAuth } from "../guards/auth-guard";
-import '../css/styles.css';
+import Toast from "../shared/alerts";
+import "../css/styles.css";
+
+async function deleteAlert(routeId, alertId) {
+  if (!routeId || !alertId) return false;
+
+  try {
+    const req = await fetch(
+      `https://deployment-connectbq.onrender.com/routes/${routeId}/alerts/${alertId}`,
+      { method: "DELETE" }
+    );
+
+    if (!req.ok) {
+      Toast.error("We cannot delete your alert, try again later");
+      return false;
+    }
+
+    Toast.success("Alert deleted successfully");
+    return true;
+  } catch (err) {
+    Toast.error("We cannot delete your alert, try again later");
+    return false;
+  }
+}
 
 document.addEventListener("DOMContentLoaded", async () => {
   if (!isAuth) {
@@ -7,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-    const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user"));
 
   document.getElementById("nameUser").textContent = user.username || "No Name";
   document.getElementById("emailUser").textContent = user.email || "No Email";
@@ -29,21 +52,24 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     // Fetch all routes
-    const response = await fetch(`https://deployment-connectbq.onrender.com/routes`);
+    const response = await fetch(
+      `https://deployment-connectbq.onrender.com/routes`
+    );
     const routes = await response.json();
 
     // Clear container
     alertsContainer.innerHTML = "";
 
     // Iterate through all routes and their alerts
-    routes.forEach(route => {
+    routes.forEach((route) => {
       if (route.alerts && route.alerts.length > 0) {
-        route.alerts.forEach(alert => {
+        route.alerts.forEach((alert) => {
           const article = document.createElement("article");
           article.className = "bg-gray-100 p-6 rounded-lg shadow-md";
 
           // Only show type, severity, and username
           article.innerHTML = `
+            <button class="font-bold text-red hover:size-1" onclick="deleteAlert('${route._id}', '${alert._id}')">X</button>
             <h4 class="font-semibold text-lg text-gray-800">${alert.type}</h4>
             <p class="text-sm text-gray-500">Route: ${route.name}</p>
             <p class="text-md font-bold text-orange-600">Severity: ${alert.severity}</p>
@@ -54,9 +80,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
       }
     });
-
   } catch (error) {
     console.error("Error fetching alerts:", error);
     alertsContainer.textContent = "Could not load alerts.";
   }
 });
+
+window.deleteAlert = deleteAlert;
