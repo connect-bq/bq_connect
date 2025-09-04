@@ -25,6 +25,18 @@
     {
       "source": "/about",
       "destination": "/src/pages/about.html"
+    },
+    {
+      "source": "401",
+      "destination": "/src/errors/401.html"
+    },
+    {
+      "source": "404",
+      "destination": "/src/errors/404.html"
+    },
+    {
+      "source": "500",
+      "destination": "/src/errors/500.html"
     }
   ]
 }
