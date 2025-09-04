@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
+  // Integrates Tailwind CSS into the build process.
   plugins: [tailwindcss()],
   build: {
     rollupOptions: {
@@ -13,6 +14,6 @@ export default defineConfig({
         dashboard: "src/pages/dashboard.html",
       },
     },
-    outDir: "dist", // siempre en la raíz
+    outDir: "dist",
   },
 });
