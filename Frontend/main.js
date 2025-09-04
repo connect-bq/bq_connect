@@ -90,7 +90,7 @@ function populateRouteSelects() {
 }
 
 // Function to get routes from API
-async function fetchRoutes() {
+async function fetchRoutes(clear = false) {
   try {
     const response = await fetch(
       "https://deployment-connectbq.onrender.com/routes"
@@ -109,7 +109,9 @@ async function fetchRoutes() {
       "Error loading routes. Please check your connection and try again."
     );
     routesData = [];
-    populateRouteSelects();
+    if (!clear) {
+      populateRouteSelects();
+    }
   }
 }
 
@@ -239,10 +241,8 @@ function showRouteInfo(route) {
 }
 
 // Function to show a route on the map
-function showRoute(routeId, clear = false) {
-  if (!clear) {
-    clearCurrentRoute();
-  }
+function showRoute(routeId) {
+  clearCurrentRoute();
 
   addAlertSection?.classList.toggle("hidden");
 
@@ -389,9 +389,9 @@ async function handleAlertReport() {
   );
 
   if (req.ok) {
-    await fetchRoutes();
+    await fetchRoutes(true);
     const route = routesData.find((r) => r.name === currentRoute);
-    showRoute(route._id, true);
+    showRoute(route._id);
     Toast.success("Alert reported successfully");
   } else {
     Toast.error("We cannot add your alert, please try again later");
