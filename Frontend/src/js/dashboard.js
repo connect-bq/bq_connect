@@ -14,17 +14,20 @@ async function getAlerts() {
 
     // Clear container
     alertsContainer.innerHTML = "";
-    const username = JSON.parse(localStorage.getItem('user')).username;
+    const username = JSON.parse(localStorage.getItem("user")).username;
 
     // Iterate through all routes and their alerts
     routes.forEach((route) => {
       if (route.alerts && route.alerts.length > 0) {
-        route.alerts.filter((alert) => alert.username === username).forEach((alert) => {
-          const article = document.createElement("article");
-          article.className = "bg-gray-100 p-2 rounded-lg shadow-md relative w-full";
+        route.alerts
+          .filter((alert) => alert.username === username)
+          .forEach((alert) => {
+            const article = document.createElement("article");
+            article.className =
+              "bg-gray-100 p-2 rounded-lg shadow-md relative w-full";
 
-          // Only show type, severity, and username
-          article.innerHTML = `
+            // Only show type, severity, and username
+            article.innerHTML = `
             <button class="font-bold text-orange-600 cursor-pointer absolute right-0 top-0" onclick="deleteAlert('${route._id}', '${alert._id}')">X</button>
             <h4 class="font-semibold text-lg text-gray-800 uppercase">${alert.type}</h4>
             <p class="text-sm text-gray-500 capitalize">Route: ${route.name}</p>
@@ -32,8 +35,8 @@ async function getAlerts() {
             <p class="text-sm text-gray-500">User: ${alert.username}</p>
           `;
 
-          alertsContainer.appendChild(article);
-        });
+            alertsContainer.appendChild(article);
+          });
       }
     });
   } catch (error) {
@@ -66,12 +69,13 @@ async function deleteAlert(routeId, alertId) {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  if (!isAuth) {
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (!user) {
+    // If not logged in and trying to access dashboard, redirect to login
     window.location.href = "/src/pages/login.html";
     return;
   }
-
-  const user = JSON.parse(localStorage.getItem("user"));
 
   document.getElementById("nameUser").textContent = user.username || "No Name";
   document.getElementById("emailUser").textContent = user.email || "No Email";
