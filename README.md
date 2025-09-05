@@ -1,8 +1,3 @@
-<style>
-  html {
-    scroll-behavior: smooth;
-  }
-</style>
 
 # 🌐 Connect BQ
 
