@@ -1,4 +1,9 @@
-html { scroll-behavior: smoth;}
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+</style>
+
 # 🌐 Connect BQ
 
 **Connect BQ** is a smart urban mobility platform designed to modernize public transport in Barranquilla. It offers citizens a centralized tool to plan routes, receive real-time alerts, and access personalized features.
